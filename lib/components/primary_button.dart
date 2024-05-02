@@ -12,16 +12,19 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size.width;
     return MaterialButton(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
-      minWidth: 200,
-      padding: const EdgeInsets.all(15.0 * 0.75),
+      minWidth: 300,
+      padding: const EdgeInsets.all(16.0 * 0.75),
       onPressed: onPressed,
       child: Text(
         text,
-        style: Theme.of(context).textTheme.bodyLarge,
+        style: size < 500
+            ? Theme.of(context).textTheme.bodyLarge
+            : Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 25),
       ),
     );
   }

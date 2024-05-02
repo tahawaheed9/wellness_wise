@@ -1,2 +1,2 @@
 const loginViewRoute = '/login/';
-const registerViewRoute = 'register';
+const registerViewRoute = '/register/';
