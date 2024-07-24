@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
+import '../../../views/welcome/controller/page_navigator.dart';
 import '../../../components/primary_button.dart';
-import '../../../constants/routes.dart';
 
 class WelcomeMobileLayout extends StatelessWidget {
   const WelcomeMobileLayout({super.key});
@@ -13,12 +12,6 @@ class WelcomeMobileLayout extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SvgPicture.asset(
-            'assets/svg/lined_heart.svg',
-            semanticsLabel: 'Lined Heart Icon',
-            height: 100,
-            width: 100,
-          ),
           const SizedBox(height: 20.0),
           Text(
             'WellnessWise',
@@ -34,15 +27,14 @@ class WelcomeMobileLayout extends StatelessWidget {
           PrimaryButton(
             text: 'Log in',
             onPressed: () {
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(loginViewRoute, (_) => false);
+              pushLoginView(context);
             },
           ),
+          const SizedBox(height: 20.0),
           PrimaryButton(
             text: 'Register',
             onPressed: () {
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(registerViewRoute, (_) => false);
+              pushRegisterView(context);
             },
           ),
         ],

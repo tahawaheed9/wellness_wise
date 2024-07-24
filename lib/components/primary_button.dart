@@ -14,10 +14,10 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size.width;
     return MaterialButton(
-      shape: RoundedRectangleBorder(
+      shape: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
-      minWidth: 300,
+      minWidth: 200,
       padding: const EdgeInsets.all(16.0 * 0.75),
       onPressed: onPressed,
       child: Text(

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
+import '../../../views/welcome/controller/page_navigator.dart';
 import '../../../components/primary_button.dart';
-import '../../../constants/routes.dart';
 
 class WelcomeTabletLayout extends StatelessWidget {
   const WelcomeTabletLayout({super.key});
@@ -13,11 +12,6 @@ class WelcomeTabletLayout extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          SvgPicture.asset(
-            'assets/svg/lined_heart.svg',
-            height: 300,
-            width: 300,
-          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -41,15 +35,13 @@ class WelcomeTabletLayout extends StatelessWidget {
               PrimaryButton(
                 text: 'Log in',
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(loginViewRoute, (_) => false);
+                  pushLoginView(context);
                 },
               ),
               PrimaryButton(
                 text: 'Register',
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(registerViewRoute, (_) => false);
+                  pushRegisterView(context);
                 },
               ),
             ],
