@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../screens/responsive/responsive.dart';
-import '../constants/sizes.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String text;
@@ -16,8 +15,8 @@ class PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: screenWidth(context) * k45Percent,
-      height: screenHeight(context) * k0Point50Percent,
+      width: screenWidth(context) * 0.45,
+      height: screenHeight(context) * 0.050,
       child: OutlinedButton(
         onPressed: onPressed,
         child: Text(text),

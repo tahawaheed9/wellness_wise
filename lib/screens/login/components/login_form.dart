@@ -10,19 +10,12 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final _loginFormKey = GlobalKey<_LoginFormState>();
+  final _loginFormKey = GlobalKey<FormState>();
 
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
   bool isObscureText = true;
-
-  @override
-  void initState() {
-    email = TextEditingController();
-    password = TextEditingController();
-    super.initState();
-  }
 
   @override
   void dispose() {

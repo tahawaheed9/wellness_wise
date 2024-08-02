@@ -23,7 +23,7 @@ class WelcomeScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 50.0),
             PrimaryButton(
               text: 'Log in',
               onPressed: () {
