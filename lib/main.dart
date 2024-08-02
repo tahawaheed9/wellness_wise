@@ -3,9 +3,10 @@ import 'package:flutter/services.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import '../views/register/register_view.dart';
-import '../views/login/login_view.dart';
-import '../views/welcome/welcome_view.dart';
+import '../screens/reset_password/reset_password_screen.dart';
+import '../screens/login/login_screen.dart';
+import '../screens/register/register_screen.dart';
+import '../screens/welcome/welcome_screen.dart';
 import '../constants/routes.dart';
 
 void main() async {
@@ -39,10 +40,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        loginViewRoute: (context) => const LoginView(),
-        registerViewRoute: (context) => const RegisterView(),
+        loginScreenRoute: (context) => const LoginScreen(),
+        registerScreenRoute: (context) => const RegisterScreen(),
+        resetPasswordScreenRoute: (context) => const ResetPasswordScreen(),
       },
-      home: const WelcomeView(),
+      home: const WelcomeScreen(),
     );
   }
 }

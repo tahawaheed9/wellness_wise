@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../screens/responsive/responsive.dart';
+import '../constants/sizes.dart';
+
 class PrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -12,19 +15,12 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size.width;
-    return MaterialButton(
-      shape: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      minWidth: 200,
-      padding: const EdgeInsets.all(16.0 * 0.75),
-      onPressed: onPressed,
-      child: Text(
-        text,
-        style: size < 500
-            ? Theme.of(context).textTheme.bodyLarge
-            : Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 25),
+    return SizedBox(
+      width: screenWidth(context) * k45Percent,
+      height: screenHeight(context) * k0Point50Percent,
+      child: OutlinedButton(
+        onPressed: onPressed,
+        child: Text(text),
       ),
     );
   }
