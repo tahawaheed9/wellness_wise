@@ -36,6 +36,7 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
           children: <Widget>[
             // Height & Weight Fields...
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 // Height Field...
                 Expanded(

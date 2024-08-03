@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../controller/responsive/responsive.dart';
+import '../controller/responsive_screen_controller.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String text;

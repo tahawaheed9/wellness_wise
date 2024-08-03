@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/screens/login/components/login_form.dart';
 import '/components/primary_button.dart';
-import '../../controller/page_navigator.dart';
+import '../../controller/screen_navigation_controller.dart';
 import '/screens/login/components/reset_password_button.dart';
 import '/components/screen_heading.dart';
 

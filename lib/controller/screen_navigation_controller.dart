@@ -17,3 +17,7 @@ pushResetPasswordScreen(BuildContext context) {
 pushBasicInformationScreen(BuildContext context) {
   Navigator.of(context).pushNamed(basicInformationScreenRoute);
 }
+
+pushAdditionalInformationScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(additionalInformationScreenRoute);
+}

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../controller/page_navigator.dart';
+import '../../controller/screen_navigation_controller.dart';
 import '../../../components/primary_button.dart';
 
 class WelcomeScreen extends StatelessWidget {

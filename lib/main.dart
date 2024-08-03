@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import '/screens/additional_information/additional_information_screen.dart';
 import '/screens/basic_information/basic_information_screen.dart';
 import '../screens/reset_password/reset_password_screen.dart';
 import '../screens/login/login_screen.dart';
@@ -51,6 +52,8 @@ class MyApp extends StatelessWidget {
         resetPasswordScreenRoute: (context) => const ResetPasswordScreen(),
         basicInformationScreenRoute: (context) =>
             const BasicInformationScreen(),
+        additionalInformationScreenRoute: (context) =>
+            const AdditionalInformationScreen(),
       },
       home: const WelcomeScreen(),
     );
