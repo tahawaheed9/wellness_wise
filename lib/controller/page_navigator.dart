@@ -13,3 +13,7 @@ pushRegisterScreen(BuildContext context) {
 pushResetPasswordScreen(BuildContext context) {
   Navigator.of(context).pushNamed(resetPasswordScreenRoute);
 }
+
+pushBasicInformationScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(basicInformationScreenRoute);
+}
