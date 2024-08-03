@@ -34,39 +34,48 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            // Height...
-            TextFormField(
-              controller: height,
-              keyboardType: TextInputType.number,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.height_outlined),
-                labelText: 'Height',
-                hintText: '165',
-                suffixText: 'cm',
-                border: OutlineInputBorder(),
-              ),
+            // Height & Weight Fields...
+            Row(
+              children: <Widget>[
+                // Height Field...
+                Expanded(
+                  child: TextFormField(
+                    controller: height,
+                    keyboardType: TextInputType.number,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.height_outlined),
+                      labelText: 'Height',
+                      hintText: '165',
+                      suffixText: 'cm',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 30.0),
+
+                // Weight Field...
+                Expanded(
+                  child: TextFormField(
+                    controller: weight,
+                    keyboardType: TextInputType.number,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.monitor_weight_outlined),
+                      labelText: 'Weight',
+                      hintText: '70',
+                      suffixText: 'Kg',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 30.0),
 
-            // Weight...
-            TextFormField(
-              controller: weight,
-              keyboardType: TextInputType.number,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.monitor_weight_outlined),
-                labelText: 'Weight',
-                hintText: '70',
-                suffixText: 'Kg',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 30.0),
-
-            // Lifestyle Habits...
+            // Lifestyle Habits Field...
             TextFormField(
               controller: lifestyleHabits,
               keyboardType: TextInputType.text,
@@ -82,7 +91,7 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
             ),
             const SizedBox(height: 30.0),
 
-            // Medical History...
+            // Medical History Field...
             TextFormField(
               controller: medicalHistory,
               keyboardType: TextInputType.text,
