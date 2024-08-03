@@ -2,15 +2,24 @@ import 'package:flutter/material.dart';
 
 import '../constants/routes.dart';
 
-pushLoginScreen(BuildContext context) {
+void pushLoginScreen(BuildContext context) {
   Navigator.of(context).pushNamed(loginScreenRoute);
 }
 
-pushRegisterScreen(BuildContext context) {
+void pushRegisterScreen(BuildContext context) {
   Navigator.of(context).pushNamed(registerScreenRoute);
 }
 
-pushResetPasswordScreen(BuildContext context) {
+void pushOTPVerificationScreen(BuildContext context) {
+  Navigator.of(context).pushNamedAndRemoveUntil(
+    otpVerificationScreenRoute,
+    ModalRoute.withName(
+      '/otp-verification/',
+    ),
+  );
+}
+
+void pushResetPasswordScreen(BuildContext context) {
   Navigator.of(context).pushNamed(resetPasswordScreenRoute);
 }
 

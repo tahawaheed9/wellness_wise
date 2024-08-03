@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import '/screens/otp_verification/otp_verification_screen.dart';
 import '/screens/additional_information/additional_information_screen.dart';
 import '/screens/basic_information/basic_information_screen.dart';
 import '../screens/reset_password/reset_password_screen.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
       routes: {
         loginScreenRoute: (context) => const LoginScreen(),
         registerScreenRoute: (context) => const RegisterScreen(),
+        otpVerificationScreenRoute: (context) => const OTPVerificationScreen(),
         resetPasswordScreenRoute: (context) => const ResetPasswordScreen(),
         basicInformationScreenRoute: (context) =>
             const BasicInformationScreen(),
