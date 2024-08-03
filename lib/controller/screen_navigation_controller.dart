@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 import '../constants/routes.dart';
 
 void pushLoginScreen(BuildContext context) {
-  Navigator.of(context).pushNamed(loginScreenRoute);
+  Navigator.of(context).pushNamedAndRemoveUntil(
+    loginScreenRoute,
+    ModalRoute.withName('/login/'),
+  );
 }
 
 void pushRegisterScreen(BuildContext context) {
-  Navigator.of(context).pushNamed(registerScreenRoute);
+  Navigator.of(context).pushNamedAndRemoveUntil(
+    registerScreenRoute,
+    ModalRoute.withName('/register/'),
+  );
 }
 
 void pushOTPVerificationScreen(BuildContext context) {

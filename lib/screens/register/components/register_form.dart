@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/screens/register/components/drop_down_field.dart';
+import '/components/text_form_field.dart';
 import '../../../components/primary_button.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -16,10 +18,8 @@ class _RegisterFormState extends State<RegisterForm> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController age = TextEditingController();
-  String? gender;
 
   bool isObscureText = true;
-  String? _selectedValue;
 
   @override
   void dispose() {
@@ -39,56 +39,61 @@ class _RegisterFormState extends State<RegisterForm> {
         child: Column(
           children: <Widget>[
             // Username Field...
-            TextFormField(
+            MyTextFormField(
               controller: username,
-              autocorrect: false,
+              autoCorrect: false,
               enableSuggestions: false,
               keyboardType: TextInputType.name,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.person_outline),
-                labelText: 'Username',
-                hintText: 'Abc',
-                border: OutlineInputBorder(),
-              ),
+              obscureText: false,
+              maxLines: 1,
+              prefixIcon: const Icon(Icons.person_outline),
+              labelText: 'Username',
+              alignLabelWithHint: null,
+              hintText: 'Abc',
+              suffixIcon: null,
+              suffixText: null,
             ),
             const SizedBox(height: 30.0),
 
             // Email Address Field...
-            TextFormField(
+            MyTextFormField(
               controller: email,
-              autocorrect: false,
+              autoCorrect: false,
               enableSuggestions: false,
               keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.email_outlined),
-                labelText: 'Email',
-                hintText: 'abc@example.com',
-                border: OutlineInputBorder(),
-              ),
+              obscureText: false,
+              maxLines: 1,
+              prefixIcon: const Icon(Icons.email_outlined),
+              labelText: 'Email',
+              alignLabelWithHint: null,
+              hintText: 'abc@example.com',
+              suffixIcon: null,
+              suffixText: null,
             ),
             const SizedBox(height: 30.0),
 
             // Password Field...
-            TextFormField(
+            MyTextFormField(
               controller: password,
-              autocorrect: false,
+              autoCorrect: false,
               enableSuggestions: false,
+              keyboardType: TextInputType.text,
               obscureText: isObscureText,
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.lock_outlined),
-                labelText: 'Password',
-                hintText: 'Example123',
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isObscureText = !isObscureText;
-                    });
-                  },
-                  child: isObscureText
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
-                ),
-                border: const OutlineInputBorder(),
+              maxLines: 1,
+              prefixIcon: const Icon(Icons.lock_outline),
+              labelText: 'Password',
+              alignLabelWithHint: null,
+              hintText: 'Example123',
+              suffixText: null,
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isObscureText = !isObscureText;
+                  });
+                },
+                child: isObscureText
+                    ? const Icon(Icons.visibility_off)
+                    : const Icon(Icons.visibility),
               ),
             ),
             const SizedBox(height: 30.0),
@@ -99,53 +104,26 @@ class _RegisterFormState extends State<RegisterForm> {
               children: <Widget>[
                 // Age Field...
                 Expanded(
-                  child: TextFormField(
+                  child: MyTextFormField(
                     controller: age,
-                    autocorrect: false,
+                    autoCorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.calendar_month_outlined),
-                      labelText: 'Age',
-                      hintText: '0',
-                      border: OutlineInputBorder(),
-                    ),
+                    obscureText: false,
+                    maxLines: 1,
+                    prefixIcon: const Icon(Icons.calendar_month_outlined),
+                    labelText: 'Age',
+                    alignLabelWithHint: null,
+                    hintText: '0',
+                    suffixIcon: null,
+                    suffixText: null,
                   ),
                 ),
-
                 const SizedBox(width: 30.0),
 
                 // Gender Field...
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    value: _selectedValue,
-                    hint: const Text('Gender'),
-                    alignment: Alignment.center,
-                    decoration: InputDecoration(
-                      prefixIcon: _selectedValue == null
-                          ? const Icon(Icons.person_outline)
-                          : _selectedValue == 'male'
-                              ? const Icon(Icons.male)
-                              : const Icon(Icons.female),
-                      border: const OutlineInputBorder(),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue = value;
-                        gender = value;
-                      });
-                    },
-                    items: const [
-                      DropdownMenuItem(
-                        value: 'male',
-                        child: Text('Male'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'female',
-                        child: Text('Female'),
-                      ),
-                    ],
-                  ),
+                const Expanded(
+                  child: DropDownField()
                 ),
               ],
             ),

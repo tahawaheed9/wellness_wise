@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/components/text_form_field.dart';
 import '/components/primary_button.dart';
 
 class BasicInformationForm extends StatefulWidget {
@@ -40,36 +41,38 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
               children: <Widget>[
                 // Height Field...
                 Expanded(
-                  child: TextFormField(
+                  child: MyTextFormField(
                     controller: height,
-                    keyboardType: TextInputType.number,
+                    autoCorrect: false,
                     enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.height_outlined),
-                      labelText: 'Height',
-                      hintText: '165',
-                      suffixText: 'cm',
-                      border: OutlineInputBorder(),
-                    ),
+                    keyboardType: TextInputType.number,
+                    obscureText: false,
+                    maxLines: 1,
+                    prefixIcon: const Icon(Icons.height_outlined),
+                    labelText: 'Height',
+                    alignLabelWithHint: null,
+                    hintText: '165',
+                    suffixIcon: null,
+                    suffixText: 'cm',
                   ),
                 ),
                 const SizedBox(width: 30.0),
 
                 // Weight Field...
                 Expanded(
-                  child: TextFormField(
+                  child: MyTextFormField(
                     controller: weight,
-                    keyboardType: TextInputType.number,
+                    autoCorrect: false,
                     enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.monitor_weight_outlined),
-                      labelText: 'Weight',
-                      hintText: '70',
-                      suffixText: 'Kg',
-                      border: OutlineInputBorder(),
-                    ),
+                    keyboardType: TextInputType.number,
+                    obscureText: false,
+                    maxLines: 1,
+                    prefixIcon: const Icon(Icons.monitor_weight_outlined),
+                    labelText: 'Weight',
+                    alignLabelWithHint: null,
+                    hintText: '70',
+                    suffixIcon: null,
+                    suffixText: 'Kg',
                   ),
                 ),
               ],
@@ -77,34 +80,36 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
             const SizedBox(height: 30.0),
 
             // Lifestyle Habits Field...
-            TextFormField(
+            MyTextFormField(
               controller: lifestyleHabits,
+              autoCorrect: true,
+              enableSuggestions: true,
               keyboardType: TextInputType.text,
-              enableSuggestions: false,
-              autocorrect: true,
+              obscureText: false,
               maxLines: 3,
-              decoration: const InputDecoration(
-                labelText: 'Lifestyle Habits',
-                alignLabelWithHint: true,
-                hintText: 'Your lifestyle habits...',
-                border: OutlineInputBorder(),
-              ),
+              prefixIcon: null,
+              labelText: 'Lifestyle Habits',
+              alignLabelWithHint: true,
+              hintText: 'Your lifestyle habits...',
+              suffixIcon: null,
+              suffixText: null,
             ),
             const SizedBox(height: 30.0),
 
             // Medical History Field...
-            TextFormField(
+            MyTextFormField(
               controller: medicalHistory,
+              autoCorrect: true,
+              enableSuggestions: true,
               keyboardType: TextInputType.text,
-              enableSuggestions: false,
-              autocorrect: true,
+              obscureText: false,
               maxLines: 3,
-              decoration: const InputDecoration(
-                labelText: 'Medical History',
-                alignLabelWithHint: true,
-                hintText: 'Your medical history...',
-                border: OutlineInputBorder(),
-              ),
+              prefixIcon: null,
+              labelText: 'Medical History',
+              alignLabelWithHint: true,
+              hintText: 'Your medical history...',
+              suffixIcon: null,
+              suffixText: null,
             ),
             const SizedBox(height: 30.0),
 

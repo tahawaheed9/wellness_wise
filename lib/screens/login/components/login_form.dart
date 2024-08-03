@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/components/text_form_field.dart';
 import '/components/primary_button.dart';
 
 class LoginForm extends StatefulWidget {
@@ -33,41 +34,44 @@ class _LoginFormState extends State<LoginForm> {
         child: Column(
           children: <Widget>[
             // Email Address Field...
-            TextFormField(
+            MyTextFormField(
               controller: email,
-              autocorrect: false,
+              autoCorrect: false,
               enableSuggestions: false,
               keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.email_outlined),
-                labelText: 'Email',
-                hintText: 'abc@example.com',
-                border: OutlineInputBorder(),
-              ),
+              obscureText: false,
+              maxLines: 1,
+              prefixIcon: const Icon(Icons.email_outlined),
+              labelText: 'Email',
+              alignLabelWithHint: null,
+              hintText: 'abc@example.com',
+              suffixIcon: null,
+              suffixText: null,
             ),
             const SizedBox(height: 30.0),
 
             // Password Field...
-            TextFormField(
+            MyTextFormField(
               controller: password,
-              autocorrect: false,
+              autoCorrect: false,
               enableSuggestions: false,
+              keyboardType: TextInputType.text,
               obscureText: isObscureText,
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.lock_outlined),
-                labelText: 'Password',
-                hintText: 'Example123',
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isObscureText = !isObscureText;
-                    });
-                  },
-                  child: isObscureText
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
-                ),
-                border: const OutlineInputBorder(),
+              maxLines: 1,
+              prefixIcon: const Icon(Icons.lock_outline),
+              labelText: 'Password',
+              alignLabelWithHint: null,
+              hintText: 'Example123',
+              suffixText: null,
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isObscureText = !isObscureText;
+                  });
+                },
+                child: isObscureText
+                    ? const Icon(Icons.visibility_off)
+                    : const Icon(Icons.visibility),
               ),
             ),
             const SizedBox(height: 30.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/components/text_form_field.dart';
 import '/components/primary_button.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -36,16 +37,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             const SizedBox(height: 30.0),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: TextField(
+              child: MyTextFormField(
                 controller: email,
+                autoCorrect: false,
+                enableSuggestions: false,
                 keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.email_outlined),
-                  labelText: 'Email',
-                  hintText: 'abc@example.com',
-                  border: OutlineInputBorder(),
-                ),
+                obscureText: false,
+                maxLines: 1,
+                prefixIcon: const Icon(Icons.email_outlined),
+                labelText: 'Email',
+                alignLabelWithHint: null,
+                hintText: 'abc@example.com',
+                suffixIcon: null,
+                suffixText: null,
               ),
             ),
             const SizedBox(height: 50.0),
