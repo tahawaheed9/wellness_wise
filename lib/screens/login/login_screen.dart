@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '/screens/login/components/login_form.dart';
-import '/components/primary_button.dart';
 import '../../controller/screen_navigation_controller.dart';
-import '/screens/login/components/reset_password_button.dart';
+import '../../components/text_button.dart';
 import '/components/screen_heading.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -23,18 +22,23 @@ class LoginScreen extends StatelessWidget {
                   headingText: 'Login',
                 ),
                 const SizedBox(height: 50.0),
-        
+
                 // Login Form
                 const LoginForm(),
-        
+
                 // Reset Password Button...
-                const ResetPasswordButton(),
+                MyTextButton(
+                  title: 'Reset Password',
+                  onTap: () {
+                    pushResetPasswordScreen(context);
+                  },
+                ),
                 const SizedBox(height: 75.0),
-        
+
                 // Create An Account...
-                PrimaryButton(
-                  text: 'Create new account',
-                  onPressed: () {
+                MyTextButton(
+                  title: 'Create an account',
+                  onTap: () {
                     pushRegisterScreen(context);
                   },
                 ),

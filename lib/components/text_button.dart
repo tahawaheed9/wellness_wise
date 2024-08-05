@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
-import '/controller/screen_navigation_controller.dart';
+class MyTextButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
 
-class ResetPasswordButton extends StatelessWidget {
-  const ResetPasswordButton({super.key});
+  const MyTextButton({
+    super.key,
+    required this.title,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        pushResetPasswordScreen(context);
-      },
+      onTap: onTap,
       child: Text(
-        'Reset Password',
+        title,
         style: Theme.of(context)
             .textTheme
             .bodyLarge

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wellness_wise/screens/home/home_screen.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         registerScreenRoute: (context) => const RegisterScreen(),
         otpVerificationScreenRoute: (context) => const OTPVerificationScreen(),
         resetPasswordScreenRoute: (context) => const ResetPasswordScreen(),
+        homeScreenRoute: (context) => const HomeScreen(),
         basicInformationScreenRoute: (context) =>
             const BasicInformationScreen(),
         additionalInformationScreenRoute: (context) =>

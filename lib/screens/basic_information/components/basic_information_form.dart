@@ -13,6 +13,7 @@ class BasicInformationForm extends StatefulWidget {
 class _BasicInformationFormState extends State<BasicInformationForm> {
   final _basicInformationFormKey = GlobalKey<_BasicInformationFormState>();
 
+  final TextEditingController age = TextEditingController();
   final TextEditingController height = TextEditingController();
   final TextEditingController weight = TextEditingController();
   final TextEditingController lifestyleHabits = TextEditingController();
@@ -20,6 +21,7 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
 
   @override
   void dispose() {
+    age.dispose();
     height.dispose();
     weight.dispose();
     lifestyleHabits.dispose();
@@ -35,6 +37,23 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
+            // Age Field...
+            MyTextFormField(
+              controller: age,
+              autoCorrect: false,
+              enableSuggestions: false,
+              keyboardType: TextInputType.number,
+              obscureText: false,
+              maxLines: 1,
+              prefixIcon: const Icon(Icons.calendar_month_outlined),
+              labelText: 'Age',
+              alignLabelWithHint: null,
+              hintText: '0',
+              suffixIcon: null,
+              suffixText: null,
+            ),
+            const SizedBox(height: 30.0),
+
             // Height & Weight Fields...
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

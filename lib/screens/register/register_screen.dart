@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wellness_wise/components/text_button.dart';
 
 import '/screens/register/components/register_form.dart';
-import '/components/primary_button.dart';
 import '/controller/screen_navigation_controller.dart';
 import '/components/screen_heading.dart';
 
@@ -28,9 +28,9 @@ class RegisterScreen extends StatelessWidget {
                 const SizedBox(height: 30.0),
 
                 // If user is registered, navigate to login screen...
-                PrimaryButton(
-                  text: 'Have an account?',
-                  onPressed: () {
+                MyTextButton(
+                  title: 'Already have an account?',
+                  onTap: () {
                     pushLoginScreen(context);
                   },
                 ),

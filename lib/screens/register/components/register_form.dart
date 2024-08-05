@@ -19,7 +19,7 @@ class _RegisterFormState extends State<RegisterForm> {
   TextEditingController password = TextEditingController();
   TextEditingController age = TextEditingController();
 
-  bool isObscureText = true;
+  bool _isObscureText = true;
 
   @override
   void dispose() {
@@ -78,22 +78,25 @@ class _RegisterFormState extends State<RegisterForm> {
               autoCorrect: false,
               enableSuggestions: false,
               keyboardType: TextInputType.text,
-              obscureText: isObscureText,
+              obscureText: _isObscureText,
               maxLines: 1,
               prefixIcon: const Icon(Icons.lock_outline),
               labelText: 'Password',
               alignLabelWithHint: null,
               hintText: 'Example123',
               suffixText: null,
-              suffixIcon: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isObscureText = !isObscureText;
-                  });
-                },
-                child: isObscureText
-                    ? const Icon(Icons.visibility_off)
-                    : const Icon(Icons.visibility),
+              suffixIcon: Tooltip(
+                message: _isObscureText ? 'Show Password' : 'Hide Password',
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isObscureText = !_isObscureText;
+                    });
+                  },
+                  child: _isObscureText
+                      ? const Icon(Icons.visibility_off)
+                      : const Icon(Icons.visibility),
+                ),
               ),
             ),
             const SizedBox(height: 30.0),
