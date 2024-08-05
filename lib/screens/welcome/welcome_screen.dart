@@ -24,13 +24,16 @@ class WelcomeScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 50.0),
+
             PrimaryButton(
               text: 'Log in',
               onPressed: () {
-                pushLoginScreen(context);
+                //pushLoginScreen(context);
+                pushHomeScreen(context);
               },
             ),
             const SizedBox(height: 16.0),
+
             PrimaryButton(
               text: 'Register',
               onPressed: () {

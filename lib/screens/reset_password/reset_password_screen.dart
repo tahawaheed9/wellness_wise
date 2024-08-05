@@ -53,6 +53,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               ),
             ),
             const SizedBox(height: 50.0),
+
             PrimaryButton(
               text: 'Reset Password',
               onPressed: () {},

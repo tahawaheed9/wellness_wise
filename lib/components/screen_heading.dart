@@ -20,6 +20,8 @@ class ScreenHeading extends StatelessWidget {
             icon,
             size: 27,
           ),
+          const SizedBox(width: 5.0),
+
           Text(
             headingText,
             style: Theme.of(context).textTheme.titleLarge,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/routes.dart';
 
+// Login...
 void pushLoginScreen(BuildContext context) {
   Navigator.of(context).pushNamedAndRemoveUntil(
     loginScreenRoute,
@@ -9,6 +10,7 @@ void pushLoginScreen(BuildContext context) {
   );
 }
 
+// Register...
 void pushRegisterScreen(BuildContext context) {
   Navigator.of(context).pushNamedAndRemoveUntil(
     registerScreenRoute,
@@ -16,6 +18,7 @@ void pushRegisterScreen(BuildContext context) {
   );
 }
 
+// OTP Verification...
 void pushOTPVerificationScreen(BuildContext context) {
   Navigator.of(context).pushNamedAndRemoveUntil(
     otpVerificationScreenRoute,
@@ -25,14 +28,35 @@ void pushOTPVerificationScreen(BuildContext context) {
   );
 }
 
+// Home...
+void pushHomeScreen(BuildContext context) {
+  Navigator.of(context).pushNamedAndRemoveUntil(
+    homeScreenRoute,
+    ModalRoute.withName('/home/'),
+  );
+}
+
+// Reset Password...
 void pushResetPasswordScreen(BuildContext context) {
   Navigator.of(context).pushNamed(resetPasswordScreenRoute);
 }
 
-pushBasicInformationScreen(BuildContext context) {
+// Basic Information...
+void pushBasicInformationScreen(BuildContext context) {
   Navigator.of(context).pushNamed(basicInformationScreenRoute);
 }
 
-pushAdditionalInformationScreen(BuildContext context) {
+// Additional Information...
+void pushAdditionalInformationScreen(BuildContext context) {
   Navigator.of(context).pushNamed(additionalInformationScreenRoute);
+}
+
+// Personalized Recommendations...
+void pushRecommendationsScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(recommendationsScreen);
+}
+
+// Charts...
+void pushChartsScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(chartsScreen);
 }

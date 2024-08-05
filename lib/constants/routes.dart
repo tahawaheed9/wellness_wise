@@ -5,3 +5,5 @@ const resetPasswordScreenRoute = '/reset-password/';
 const homeScreenRoute = '/home/';
 const basicInformationScreenRoute = '/basic-information/';
 const additionalInformationScreenRoute = '/additional-information/';
+const recommendationsScreen = '/recommendations/';
+const chartsScreen = '/charts/';

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wellness_wise/screens/home/home_screen.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import '/screens/charts/charts_screen.dart';
+import '/screens/home/home_screen.dart';
+import '/screens/personalized_recommendations/recommendations_screen.dart';
 import '/screens/otp_verification/otp_verification_screen.dart';
 import '/screens/additional_information/additional_information_screen.dart';
 import '/screens/basic_information/basic_information_screen.dart';
@@ -58,6 +60,8 @@ class MyApp extends StatelessWidget {
             const BasicInformationScreen(),
         additionalInformationScreenRoute: (context) =>
             const AdditionalInformationScreen(),
+        recommendationsScreen: (context) => const RecommendationsScreen(),
+        chartsScreen: (context) => const ChartsScreen(),
       },
       home: const WelcomeScreen(),
     );
