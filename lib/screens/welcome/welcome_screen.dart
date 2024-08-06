@@ -28,8 +28,7 @@ class WelcomeScreen extends StatelessWidget {
             PrimaryButton(
               text: 'Log in',
               onPressed: () {
-                //pushLoginScreen(context);
-                pushHomeScreen(context);
+                pushLoginScreen(context);
               },
             ),
             const SizedBox(height: 16.0),

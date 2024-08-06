@@ -11,31 +11,35 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final _loginFormKey = GlobalKey<FormState>();
-
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  late final TextEditingController _email;
+  late final TextEditingController _password;
 
   bool _isObscureText = true;
 
   @override
+  void initState() {
+    super.initState();
+    _email = TextEditingController();
+    _password = TextEditingController();
+  }
+
+  @override
   void dispose() {
-    email.dispose();
-    password.dispose();
+    _email.dispose();
+    _password.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _loginFormKey,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
             // Email Address Field...
             MyTextFormField(
-              controller: email,
+              controller: _email,
               autoCorrect: false,
               enableSuggestions: false,
               keyboardType: TextInputType.emailAddress,
@@ -52,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
 
             // Password Field...
             MyTextFormField(
-              controller: password,
+              controller: _password,
               autoCorrect: false,
               enableSuggestions: false,
               keyboardType: TextInputType.text,

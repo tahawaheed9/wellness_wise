@@ -12,35 +12,41 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  final _registerFormKey = GlobalKey<_RegisterFormState>();
-
-  TextEditingController username = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController age = TextEditingController();
+  late final TextEditingController _username;
+  late final TextEditingController _email;
+  late final TextEditingController _password;
+  late final TextEditingController _age;
 
   bool _isObscureText = true;
 
   @override
+  void initState() {
+    super.initState();
+    _username = TextEditingController();
+    _email = TextEditingController();
+    _password = TextEditingController();
+    _age = TextEditingController();
+  }
+
+  @override
   void dispose() {
-    username.dispose();
-    email.dispose();
-    password.dispose();
-    age.dispose();
+    _username.dispose();
+    _email.dispose();
+    _password.dispose();
+    _age.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _registerFormKey,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
             // Username Field...
             MyTextFormField(
-              controller: username,
+              controller: _username,
               autoCorrect: false,
               enableSuggestions: false,
               keyboardType: TextInputType.name,
@@ -57,7 +63,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
             // Email Address Field...
             MyTextFormField(
-              controller: email,
+              controller: _email,
               autoCorrect: false,
               enableSuggestions: false,
               keyboardType: TextInputType.emailAddress,
@@ -74,7 +80,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
             // Password Field...
             MyTextFormField(
-              controller: password,
+              controller: _password,
               autoCorrect: false,
               enableSuggestions: false,
               keyboardType: TextInputType.text,
@@ -108,7 +114,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 // Age Field...
                 Expanded(
                   child: MyTextFormField(
-                    controller: age,
+                    controller: _age,
                     autoCorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
@@ -125,9 +131,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 const SizedBox(width: 30.0),
 
                 // Gender Field...
-                const Expanded(
-                  child: DropDownField()
-                ),
+                const Expanded(child: DropDownField()),
               ],
             ),
             const SizedBox(height: 30.0),

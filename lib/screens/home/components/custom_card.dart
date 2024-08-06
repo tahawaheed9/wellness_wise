@@ -28,15 +28,11 @@ class CustomCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                CircleAvatar(
-                  maxRadius: 30,
-                  backgroundColor: Colors.black12,
-                  child: Icon(
-                    icon,
-                    size: 30,
-                  ),
+                Icon(
+                  icon,
+                  size: 32,
                 ),
-                const SizedBox(height: 30.0),
+                const SizedBox(height: 10.0),
                 Text(
                   cardTitle,
                   textAlign: TextAlign.start,
