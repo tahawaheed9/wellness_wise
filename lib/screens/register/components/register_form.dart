@@ -1,8 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '/components/dialogs/error_dialog.dart';
+import '/services/auth/auth_exceptions.dart';
+import '/services/auth/auth_service.dart';
 import '/controller/screen_navigation_controller.dart';
-import '/services/auth/firebase_auth_service.dart';
 import '/screens/register/components/drop_down_field.dart';
 import '/components/text_form_field.dart';
 import '../../../components/primary_button.dart';
@@ -15,8 +16,6 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  final FirebaseAuthService _authService = FirebaseAuthService();
-
   late final TextEditingController _username;
   late final TextEditingController _email;
   late final TextEditingController _password;
@@ -154,19 +153,35 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  void _createUser() async {
-    final String username = _username.text;
+  _createUser() async {
     final String email = _email.text;
     final String password = _password.text;
-    final String age = _age.text;
-
-    User? user = await _authService.createUser(
-      email,
-      password,
-    );
-    if (user != null) {
+    try {
+      await AuthService.firebase().loginUser(
+        email: email,
+        password: password,
+      );
+      final user = AuthService.firebase().currentUser;
+      if (user != null) {
+        if (!mounted) return;
+        pushHomeScreen(context);
+      }
+    } on InvalidCredentialAuthException {
       if (!mounted) return;
-      pushLoginScreen(context);
+      await showErrorDialog(context, 'Invalid Credential.');
+    } on InvalidEmailAuthException {
+      if (!mounted) return;
+      await showErrorDialog(context, 'Invalid Email or Email Badly Formatted.');
+    } on WeakPasswordAuthException {
+      if (!mounted) return;
+      await showErrorDialog(
+          context, 'Weak Password. Try using at least 6 characters.');
+    } on EmailAlreadyInUseAuthException {
+      if (!mounted) return;
+      await showErrorDialog(context, 'Email address is already in use.');
+    } on GenericAuthException {
+      if (!mounted) return;
+      await showErrorDialog(context, 'Authentication Error Occurred.');
     }
   }
 }

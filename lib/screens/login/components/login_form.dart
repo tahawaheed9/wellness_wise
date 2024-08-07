@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wellness_wise/controller/screen_navigation_controller.dart';
-import 'package:wellness_wise/services/auth/firebase_auth_service.dart';
 
+import '/components/dialogs/error_dialog.dart';
+import '/services/auth/auth_exceptions.dart';
+import '../../../services/auth/auth_service.dart';
 import '/components/text_form_field.dart';
 import '/components/primary_button.dart';
 
@@ -14,7 +14,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final FirebaseAuthService _authService = FirebaseAuthService();
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -103,15 +102,26 @@ class _LoginFormState extends State<LoginForm> {
   _loginUser() async {
     final String email = _email.text;
     final String password = _password.text;
-
-    User? user = await _authService.loginUser(
-      email,
-      password,
-    );
-
-    if (user != null) {
+    try {
+      await AuthService.firebase().loginUser(
+        email: email,
+        password: password,
+      );
+    } on UserNotLoggedInAuthException {
       if (!mounted) return;
-      pushHomeScreen(context);
+      await showErrorDialog(context, 'User not found.');
+    } on InvalidCredentialAuthException {
+      if (!mounted) return;
+      await showErrorDialog(context, 'Invalid Credential');
+    } on InvalidEmailAuthException {
+      if (!mounted) return;
+      await showErrorDialog(context, 'Invalid Email or Email Badly Formatted.');
+    } on TooManyRequestsAuthException {
+      if (!mounted) return;
+      await showErrorDialog(context, 'Too many tries. Please try again later.');
+    } on GenericAuthException {
+      if (!mounted) return;
+      await showErrorDialog(context, 'Authentication Error Occurred.');
     }
   }
 }
