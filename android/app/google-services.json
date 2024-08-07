@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "962642914126",
-    "project_id": "wellness-wise-app",
-    "storage_bucket": "wellness-wise-app.appspot.com"
+    "project_number": "783376293638",
+    "project_id": "wellness-wise-9db16",
+    "storage_bucket": "wellness-wise-9db16.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:962642914126:android:ed7d251e02a6a5cc1ecc1f",
+        "mobilesdk_app_id": "1:783376293638:android:6c0e533dedd9f22c680887",
         "android_client_info": {
           "package_name": "com.example.wellness_wise"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB_yAsBBYz3VOH6tMdagPyi_JPcMx5XoA4"
+          "current_key": "AIzaSyBICgTuEWRZRPL0qU-C7SsupzPTMUKy2Ig"
         }
       ],
       "services": {

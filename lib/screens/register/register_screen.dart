@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wellness_wise/components/text_button.dart';
 
+import '/components/text_button.dart';
 import '/screens/register/components/register_form.dart';
 import '/controller/screen_navigation_controller.dart';
 import '/components/screen_heading.dart';

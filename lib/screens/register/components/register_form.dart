@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '/controller/screen_navigation_controller.dart';
+import '/services/auth/firebase_auth_service.dart';
 import '/screens/register/components/drop_down_field.dart';
 import '/components/text_form_field.dart';
 import '../../../components/primary_button.dart';
@@ -12,6 +15,8 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
+  final FirebaseAuthService _authService = FirebaseAuthService();
+
   late final TextEditingController _username;
   late final TextEditingController _email;
   late final TextEditingController _password;
@@ -139,11 +144,29 @@ class _RegisterFormState extends State<RegisterForm> {
             // Register Button...
             PrimaryButton(
               text: 'Register',
-              onPressed: () {},
+              onPressed: () {
+                _createUser();
+              },
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _createUser() async {
+    final String username = _username.text;
+    final String email = _email.text;
+    final String password = _password.text;
+    final String age = _age.text;
+
+    User? user = await _authService.createUser(
+      email,
+      password,
+    );
+    if (user != null) {
+      if (!mounted) return;
+      pushLoginScreen(context);
+    }
   }
 }

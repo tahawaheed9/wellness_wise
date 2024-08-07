@@ -11,35 +11,42 @@ class BasicInformationForm extends StatefulWidget {
 }
 
 class _BasicInformationFormState extends State<BasicInformationForm> {
-  final _basicInformationFormKey = GlobalKey<_BasicInformationFormState>();
+  late final TextEditingController _age;
+  late final TextEditingController _height;
+  late final TextEditingController _weight;
+  late final TextEditingController _lifestyleHabits;
+  late final TextEditingController _medicalHistory;
 
-  final TextEditingController age = TextEditingController();
-  final TextEditingController height = TextEditingController();
-  final TextEditingController weight = TextEditingController();
-  final TextEditingController lifestyleHabits = TextEditingController();
-  final TextEditingController medicalHistory = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    _age = TextEditingController();
+    _height = TextEditingController();
+    _weight = TextEditingController();
+    _lifestyleHabits = TextEditingController();
+    _medicalHistory = TextEditingController();
+  }
 
   @override
   void dispose() {
-    age.dispose();
-    height.dispose();
-    weight.dispose();
-    lifestyleHabits.dispose();
-    medicalHistory.dispose();
+    _age.dispose();
+    _height.dispose();
+    _weight.dispose();
+    _lifestyleHabits.dispose();
+    _medicalHistory.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _basicInformationFormKey,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
             // Age Field...
             MyTextFormField(
-              controller: age,
+              controller: _age,
               autoCorrect: false,
               enableSuggestions: false,
               keyboardType: TextInputType.number,
@@ -61,7 +68,7 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
                 // Height Field...
                 Expanded(
                   child: MyTextFormField(
-                    controller: height,
+                    controller: _height,
                     autoCorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
@@ -80,7 +87,7 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
                 // Weight Field...
                 Expanded(
                   child: MyTextFormField(
-                    controller: weight,
+                    controller: _weight,
                     autoCorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
@@ -100,7 +107,7 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
 
             // Lifestyle Habits Field...
             MyTextFormField(
-              controller: lifestyleHabits,
+              controller: _lifestyleHabits,
               autoCorrect: true,
               enableSuggestions: true,
               keyboardType: TextInputType.text,
@@ -117,7 +124,7 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
 
             // Medical History Field...
             MyTextFormField(
-              controller: medicalHistory,
+              controller: _medicalHistory,
               autoCorrect: true,
               enableSuggestions: true,
               keyboardType: TextInputType.text,

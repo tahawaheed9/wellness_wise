@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wellness_wise/controller/screen_navigation_controller.dart';
+import 'package:wellness_wise/services/auth/firebase_auth_service.dart';
 
 import '/components/text_form_field.dart';
 import '/components/primary_button.dart';
@@ -11,6 +14,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final FirebaseAuthService _authService = FirebaseAuthService();
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -86,11 +90,28 @@ class _LoginFormState extends State<LoginForm> {
             // Login Button...
             PrimaryButton(
               text: 'Login',
-              onPressed: () {},
+              onPressed: () {
+                _loginUser();
+              },
             ),
           ],
         ),
       ),
     );
+  }
+
+  _loginUser() async {
+    final String email = _email.text;
+    final String password = _password.text;
+
+    User? user = await _authService.loginUser(
+      email,
+      password,
+    );
+
+    if (user != null) {
+      if (!mounted) return;
+      pushHomeScreen(context);
+    }
   }
 }

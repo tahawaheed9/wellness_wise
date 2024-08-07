@@ -10,11 +10,17 @@ class OTPVerificationScreen extends StatefulWidget {
 }
 
 class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
-  final TextEditingController otp = TextEditingController();
+  late final TextEditingController _otp;
+
+  @override
+  void initState() {
+    super.initState();
+    _otp = TextEditingController();
+  }
 
   @override
   void dispose() {
-    otp.dispose();
+    _otp.dispose();
     super.dispose();
   }
 
@@ -31,7 +37,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
               children: <Widget>[
                 const SizedBox(height: 50.0),
                 Text(
-                  'Please check your email address for the OTP.',
+                  'An OTP has been sent to your phone number.',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 30.0),
@@ -40,11 +46,12 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                 SizedBox(
                   width: 150,
                   child: TextField(
-                    controller: otp,
+                    controller: _otp,
                     maxLength: 6,
                     autocorrect: false,
                     enableSuggestions: false,
                     textAlign: TextAlign.center,
+                    keyboardType: TextInputType.phone,
                     style: const TextStyle(
                       letterSpacing: 10.0,
                     ),
