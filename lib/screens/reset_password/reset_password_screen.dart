@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '/components/dialogs/error_dialog.dart';
+import '/services/auth/auth_exceptions.dart';
+import '/services/auth/auth_service.dart';
 import '/components/text_form_field.dart';
 import '/components/primary_button.dart';
 
@@ -11,11 +14,17 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  final TextEditingController email = TextEditingController();
+  late final TextEditingController _email;
+
+  @override
+  void initState() {
+    super.initState();
+    _email = TextEditingController();
+  }
 
   @override
   void dispose() {
-    email.dispose();
+    _email.dispose();
     super.dispose();
   }
 
@@ -38,7 +47,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: MyTextFormField(
-                controller: email,
+                controller: _email,
                 autoCorrect: false,
                 enableSuggestions: false,
                 keyboardType: TextInputType.emailAddress,
@@ -53,14 +62,31 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               ),
             ),
             const SizedBox(height: 50.0),
-
             PrimaryButton(
               text: 'Reset Password',
-              onPressed: () {},
+              onPressed: () {
+                _sendResetPassword();
+              },
             ),
           ],
         ),
       ),
     );
+  }
+
+  _sendResetPassword() async {
+    final String toEmail = _email.text;
+    try {
+      await AuthService.firebase().sendResetPassword(toEmail: toEmail);
+    } on InvalidCredentialAuthException {
+      if (!mounted) return;
+      await showErrorDialog(context, 'Invalid Credential.');
+    } on InvalidEmailAuthException {
+      if (!mounted) return;
+      await showErrorDialog(context, 'Invalid Credential.');
+    } on GenericAuthException {
+      if (!mounted) return;
+      await showErrorDialog(context, 'Authentication Error Occurred.');
+    }
   }
 }
