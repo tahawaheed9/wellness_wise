@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/screens/welcome/welcome_screen.dart';
 import '../screens/additional_information/additional_information_screen.dart';
 import '../screens/basic_information/basic_information_screen.dart';
 import '../screens/charts/charts_screen.dart';
@@ -10,6 +11,8 @@ import '../screens/personalized_recommendations/recommendations_screen.dart';
 import '../screens/register/register_screen.dart';
 import '../screens/reset_password/reset_password_screen.dart';
 
+
+const welcomeScreenRoute = '/welcome/';
 const loginScreenRoute = '/login/';
 const registerScreenRoute = '/register/';
 const otpVerificationScreenRoute = '/otp-verification/';
@@ -21,6 +24,7 @@ const recommendationsScreen = '/recommendations/';
 const chartsScreen = '/charts/';
 
 Map<String, Widget Function(BuildContext)> routes = {
+  welcomeScreenRoute: (context) => const WelcomeScreen(),
   loginScreenRoute: (context) => const LoginScreen(),
   registerScreenRoute: (context) => const RegisterScreen(),
   otpVerificationScreenRoute: (context) => const OTPVerificationScreen(),

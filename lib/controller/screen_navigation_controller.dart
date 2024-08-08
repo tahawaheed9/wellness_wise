@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../constants/routes.dart';
 
+void pushWelcomeScreen(BuildContext context) {
+  Navigator.of(context).pushNamedAndRemoveUntil(
+    welcomeScreenRoute,
+    ModalRoute.withName('/welcome/'),
+  );
+}
+
 // Login...
 void pushLoginScreen(BuildContext context) {
   Navigator.of(context).pushNamedAndRemoveUntil(

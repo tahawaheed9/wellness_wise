@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 
+import '/firebase_options.dart';
+import '/screens/welcome/welcome_screen.dart';
 import 'constants/routes.dart';
-import '../screens/welcome/welcome_screen.dart';
 
-void main() {
+void main() async {
   // Ensuring all the widgets are ready for use
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   // Setting Preferred Orientation to PortraitUp...
   SystemChrome.setPreferredOrientations([

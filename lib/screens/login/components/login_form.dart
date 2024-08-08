@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '/components/dialogs/error_dialog.dart';
-import '/services/auth/auth_exceptions.dart';
-import '../../../services/auth/auth_service.dart';
+import '/services/auth/firebase_auth_services.dart';
+import '/controller/screen_navigation_controller.dart';
 import '/components/text_form_field.dart';
 import '/components/primary_button.dart';
 
@@ -90,38 +89,24 @@ class _LoginFormState extends State<LoginForm> {
             PrimaryButton(
               text: 'Login',
               onPressed: () {
-                _loginUser();
+                final String email = _email.text;
+                final String password = _password.text;
+                loginUser(
+                  context: context,
+                  email: email,
+                  password: password,
+                );
+                final user = currentUser;
+                if (user != null) {
+                  if (context.mounted) {
+                    pushHomeScreen(context);
+                  }
+                }
               },
             ),
           ],
         ),
       ),
     );
-  }
-
-  _loginUser() async {
-    final String email = _email.text;
-    final String password = _password.text;
-    try {
-      await AuthService.firebase().loginUser(
-        email: email,
-        password: password,
-      );
-    } on UserNotLoggedInAuthException {
-      if (!mounted) return;
-      await showErrorDialog(context, 'User not found.');
-    } on InvalidCredentialAuthException {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Invalid Credential');
-    } on InvalidEmailAuthException {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Invalid Email or Email Badly Formatted.');
-    } on TooManyRequestsAuthException {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Too many tries. Please try again later.');
-    } on GenericAuthException {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Authentication Error Occurred.');
-    }
   }
 }

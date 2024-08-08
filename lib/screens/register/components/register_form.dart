@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/components/dialogs/error_dialog.dart';
-import '/services/auth/auth_exceptions.dart';
-import '/services/auth/auth_service.dart';
-import '/controller/screen_navigation_controller.dart';
-import '/screens/register/components/drop_down_field.dart';
+import '/services/auth/firebase_auth_services.dart';
 import '/components/text_form_field.dart';
 import '../../../components/primary_button.dart';
 
@@ -20,6 +16,9 @@ class _RegisterFormState extends State<RegisterForm> {
   late final TextEditingController _email;
   late final TextEditingController _password;
   late final TextEditingController _age;
+  String? _gender;
+
+  String? _selectedValue;
 
   bool _isObscureText = true;
 
@@ -135,7 +134,37 @@ class _RegisterFormState extends State<RegisterForm> {
                 const SizedBox(width: 30.0),
 
                 // Gender Field...
-                const Expanded(child: DropDownField()),
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: _selectedValue,
+                    hint: const Text('Gender'),
+                    alignment: Alignment.center,
+                    decoration: InputDecoration(
+                      prefixIcon: _selectedValue == null
+                          ? const Icon(Icons.person_outline)
+                          : _selectedValue == 'male'
+                              ? const Icon(Icons.male)
+                              : const Icon(Icons.female),
+                      border: const OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedValue = value;
+                        _gender = value;
+                      });
+                    },
+                    items: const [
+                      DropdownMenuItem(
+                        value: 'male',
+                        child: Text('Male'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'female',
+                        child: Text('Female'),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 30.0),
@@ -144,44 +173,18 @@ class _RegisterFormState extends State<RegisterForm> {
             PrimaryButton(
               text: 'Register',
               onPressed: () {
-                _createUser();
+                final String email = _email.text;
+                final String password = _password.text;
+                createUser(
+                  context: context,
+                  email: email,
+                  password: password,
+                );
               },
             ),
           ],
         ),
       ),
     );
-  }
-
-  _createUser() async {
-    final String email = _email.text;
-    final String password = _password.text;
-    try {
-      await AuthService.firebase().loginUser(
-        email: email,
-        password: password,
-      );
-      final user = AuthService.firebase().currentUser;
-      if (user != null) {
-        if (!mounted) return;
-        pushHomeScreen(context);
-      }
-    } on InvalidCredentialAuthException {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Invalid Credential.');
-    } on InvalidEmailAuthException {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Invalid Email or Email Badly Formatted.');
-    } on WeakPasswordAuthException {
-      if (!mounted) return;
-      await showErrorDialog(
-          context, 'Weak Password. Try using at least 6 characters.');
-    } on EmailAlreadyInUseAuthException {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Email address is already in use.');
-    } on GenericAuthException {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Authentication Error Occurred.');
-    }
   }
 }

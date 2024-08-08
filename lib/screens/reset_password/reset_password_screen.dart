@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/components/dialogs/error_dialog.dart';
-import '/services/auth/auth_exceptions.dart';
-import '/services/auth/auth_service.dart';
+import '../../services/auth/firebase_auth_services.dart';
 import '/components/text_form_field.dart';
 import '/components/primary_button.dart';
 
@@ -15,6 +13,7 @@ class ResetPasswordScreen extends StatefulWidget {
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   late final TextEditingController _email;
+  bool isResetPasswordSent = false;
 
   @override
   void initState() {
@@ -39,9 +38,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             const SizedBox(height: 50.0),
-            Text(
-              'Please enter your email address.',
-              style: Theme.of(context).textTheme.bodyLarge,
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Please enter your email address and check your mail.',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
             ),
             const SizedBox(height: 30.0),
             Padding(
@@ -65,28 +67,16 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             PrimaryButton(
               text: 'Reset Password',
               onPressed: () {
-                _sendResetPassword();
+                final String email = _email.text;
+                sendResetPassword(
+                  context: context,
+                  toEmail: email,
+                );
               },
             ),
           ],
         ),
       ),
     );
-  }
-
-  _sendResetPassword() async {
-    final String toEmail = _email.text;
-    try {
-      await AuthService.firebase().sendResetPassword(toEmail: toEmail);
-    } on InvalidCredentialAuthException {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Invalid Credential.');
-    } on InvalidEmailAuthException {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Invalid Credential.');
-    } on GenericAuthException {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Authentication Error Occurred.');
-    }
   }
 }

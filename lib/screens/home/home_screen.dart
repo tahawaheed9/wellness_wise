@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+import '/components/dialogs/logout_dialog.dart';
+import '../../components/dialogs/error_dialog.dart';
 import '/controller/screen_navigation_controller.dart';
 import '/screens/home/components/custom_card.dart';
 import '../../components/named_divider.dart';
@@ -10,7 +13,33 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void>logoutUser() async {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseAuth.instance.signOut();
+      } else {
+        await showErrorDialog(context, 'User not logged in.');
+      }
+    }
+
     return Scaffold(
+      appBar: AppBar(
+        actions: <Widget>[
+          IconButton(
+            onPressed: () async {
+              final shouldLogout = await showLogoutDialog(context);
+              if (shouldLogout) {
+                await logoutUser();
+                if (context.mounted) {
+                  pushWelcomeScreen(context);
+                }
+              }
+            },
+            tooltip: 'Log out',
+            icon: const Icon(Icons.logout_outlined),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -20,7 +49,6 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   const UserInformationCard(),
-
                   const NamedDivider(title: 'Health Data'),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -41,7 +69,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   const NamedDivider(title: 'Health Analysis'),
                   CustomCard(
                     cardTitle: 'Personalized Recommendations',
@@ -50,7 +77,6 @@ class HomeScreen extends StatelessWidget {
                       pushRecommendationsScreen(context);
                     },
                   ),
-
                   const NamedDivider(title: 'Data Visualization'),
                   CustomCard(
                     cardTitle: 'Charts',
