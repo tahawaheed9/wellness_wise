@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:email_otp/email_otp.dart';
 
-import '/services/auth/firebase_auth_services.dart';
+import '../../../services/auth/firebase_auth_services.dart';
+import '../../otp_verification/otp_verification_screen.dart';
 import '/controller/screen_navigation_controller.dart';
 import '/components/text_form_field.dart';
 import '/components/primary_button.dart';
@@ -88,18 +90,39 @@ class _LoginFormState extends State<LoginForm> {
             // Login Button...
             PrimaryButton(
               text: 'Login',
-              onPressed: () {
-                final String email = _email.text;
-                final String password = _password.text;
-                loginUser(
-                  context: context,
-                  email: email,
-                  password: password,
-                );
-                final user = currentUser;
-                if (user != null) {
+              onPressed: () async {
+                // Trying to login the user...
+                if (context.mounted) {
+                  final email = _email.text;
+                  final password = _password.text;
+                  await loginUser(
+                    context: context,
+                    email: email,
+                    password: password,
+                  );
+
+                  // If user is logged in, send OTP Verification...
                   if (context.mounted) {
-                    pushHomeScreen(context);
+                    EmailOTP.sendOTP(email: email);
+                    // Wait for the response...
+                    bool isUserAuthorized = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            OTPVerificationScreen(email: email),
+                      ),
+                    );
+                    final user = currentUser;
+                    // If user exists and is authorized, push HomeScreen...
+                    if (user != null && isUserAuthorized) {
+                      if (context.mounted) {
+                        pushHomeScreen(context);
+                      }
+                    } else {
+                      if (context.mounted) {
+                        pushLoginScreen(context);
+                      }
+                    }
                   }
                 }
               },

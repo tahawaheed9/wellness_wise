@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:email_otp/email_otp.dart';
 
+import '/components/dialogs/error_dialog.dart';
 import '/components/primary_button.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
-  const OTPVerificationScreen({super.key});
+  final String email;
+
+  const OTPVerificationScreen({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
@@ -45,8 +52,9 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                 // OTP Field...
                 SizedBox(
                   width: 150,
-                  child: TextField(
+                  child: TextFormField(
                     controller: _otp,
+                    autofocus: true,
                     maxLength: 6,
                     autocorrect: false,
                     enableSuggestions: false,
@@ -65,22 +73,24 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
 
                 // Verify Button...
                 PrimaryButton(
-                  text: 'Verify',
-                  onPressed: () {},
-                ),
-                const SizedBox(height: 20.0),
-
-                // Resend OTP Button...
-                GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    'Resend Code',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: Colors.deepPurple),
-                  ),
-                ),
+                    text: 'Verify',
+                    onPressed: () async {
+                      final String otp = _otp.text;
+                      bool isOTPVerified = EmailOTP.verifyOTP(otp: otp);
+                      if (isOTPVerified) {
+                        if (context.mounted) {
+                          Navigator.pop(context, isOTPVerified);
+                        }
+                      } else {
+                        if (context.mounted) {
+                          await showErrorDialog(
+                            context,
+                            'Invalid OTP or failed to authorize the user. '
+                            'Please try again later',
+                          );
+                        }
+                      }
+                    }),
               ],
             ),
           ),

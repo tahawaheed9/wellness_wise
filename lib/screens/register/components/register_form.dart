@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:email_otp/email_otp.dart';
 
+import '/controller/screen_navigation_controller.dart';
+import '/screens/otp_verification/otp_verification_screen.dart';
 import '/services/auth/firebase_auth_services.dart';
 import '/components/text_form_field.dart';
 import '../../../components/primary_button.dart';
@@ -19,7 +22,6 @@ class _RegisterFormState extends State<RegisterForm> {
   String? _gender;
 
   String? _selectedValue;
-
   bool _isObscureText = true;
 
   @override
@@ -172,14 +174,30 @@ class _RegisterFormState extends State<RegisterForm> {
             // Register Button...
             PrimaryButton(
               text: 'Register',
-              onPressed: () {
+              onPressed: () async {
                 final String email = _email.text;
-                final String password = _password.text;
-                createUser(
-                  context: context,
-                  email: email,
-                  password: password,
+                // Send OTP to the user's email...
+                EmailOTP.sendOTP(email: email);
+                // Wait for the verification...
+                bool isUserAuthorized = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OTPVerificationScreen(email: email),
+                  ),
                 );
+                // If user is authorized, register the user...
+                if (isUserAuthorized) {
+                  final String password = _password.text;
+                  if (context.mounted) {
+                    createUser(
+                      context: context,
+                      email: email,
+                      password: password,
+                    );
+                    // Once user is registered, push LoginScreen...
+                    pushLoginScreen(context);
+                  }
+                }
               },
             ),
           ],

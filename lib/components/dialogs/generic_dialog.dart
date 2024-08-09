@@ -34,7 +34,9 @@ Future<T?> showGenericDialog<T>({
             child: Text(
               optionTitle,
               style: TextStyle(
-                color: value == true ? Colors.red : Colors.deepPurple,
+                color: value == true
+                    ? Colors.red
+                    : Theme.of(context).colorScheme.primary,
               ),
             ),
           );

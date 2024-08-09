@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:email_otp/email_otp.dart';
 
 import '/firebase_options.dart';
 import '/screens/welcome/welcome_screen.dart';
 import 'constants/routes.dart';
 
 void main() async {
-  // Ensuring all the widgets are ready for use
+  // Ensuring all the widgets are ready for use...
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initializing the firebase...
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -32,6 +34,16 @@ void main() async {
     ),
   );
 
+  // Configuring the OTP...
+  EmailOTP.config(
+    appName: 'Wellness Wise',
+    appEmail: 'noreply@wellness-wise.com',
+    otpType: OTPType.numeric,
+    otpLength: 6,
+    expiry: 60000,
+    emailTheme: EmailTheme.v1,
+  );
+
   runApp(const MyApp());
 }
 
@@ -45,6 +57,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
+        colorSchemeSeed: Colors.teal,
       ),
       routes: routes,
       home: const WelcomeScreen(),

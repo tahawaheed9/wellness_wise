@@ -25,16 +25,6 @@ void pushRegisterScreen(BuildContext context) {
   );
 }
 
-// OTP Verification...
-void pushOTPVerificationScreen(BuildContext context) {
-  Navigator.of(context).pushNamedAndRemoveUntil(
-    otpVerificationScreenRoute,
-    ModalRoute.withName(
-      '/otp-verification/',
-    ),
-  );
-}
-
 // Home...
 void pushHomeScreen(BuildContext context) {
   Navigator.of(context).pushNamedAndRemoveUntil(
