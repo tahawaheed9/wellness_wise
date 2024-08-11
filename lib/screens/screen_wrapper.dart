@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wellness_wise/screens/login/login_screen.dart';
 
+import '/services/auth/bloc/auth_event.dart';
+import '/screens/login/login_screen.dart';
 import '/screens/verification/email_verification_screen.dart';
 import '/screens/home/home_screen.dart';
 import '/screens/register/register_screen.dart';
@@ -15,6 +16,7 @@ class ScreenWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<AuthBloc>().add(const AuthEventInitialize());
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.isLoading) {

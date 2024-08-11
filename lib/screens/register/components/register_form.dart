@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '/components/dialogs/confirm_registration_dialog.dart';
 import '/components/dialogs/error_dialog.dart';
 import '/services/auth/auth_exceptions.dart';
 import '../../../components/text_button.dart';
@@ -180,12 +181,19 @@ class _RegisterFormState extends State<RegisterForm> {
               // Register Button...
               PrimaryButton(
                 text: 'Register',
-                onPressed: () {
-                  final String email = _email.text;
-                  final String password = _password.text;
-                  context
-                      .read<AuthBloc>()
-                      .add(AuthEventRegister(email, password));
+                onPressed: () async {
+                  final shouldRegister =
+                      await showConfirmRegistrationDialog(context);
+
+                  if (shouldRegister) {
+                    final String email = _email.text;
+                    final String password = _password.text;
+                    if (context.mounted) {
+                      context
+                          .read<AuthBloc>()
+                          .add(AuthEventRegister(email, password));
+                    }
+                  }
                 },
               ),
               const SizedBox(height: 30.0),
