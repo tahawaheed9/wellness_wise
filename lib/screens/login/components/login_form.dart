@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:email_otp/email_otp.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../services/auth/firebase_auth_services.dart';
-import '../../otp_verification/otp_verification_screen.dart';
-import '/controller/screen_navigation_controller.dart';
-import '/components/text_form_field.dart';
+import '../../../components/text_button.dart';
+import '/components/dialogs/error_dialog.dart';
+import '/services/auth/auth_exceptions.dart';
+import '../../../services/auth/bloc/auth_state.dart';
+import '/services/auth/bloc/auth_event.dart';
+import '../../../services/auth/bloc/auth_bloc.dart';
 import '/components/primary_button.dart';
 
 class LoginForm extends StatefulWidget {
@@ -36,98 +38,99 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            // Email Address Field...
-            MyTextFormField(
-              controller: _email,
-              autoCorrect: false,
-              enableSuggestions: false,
-              keyboardType: TextInputType.emailAddress,
-              obscureText: false,
-              maxLines: 1,
-              prefixIcon: const Icon(Icons.email_outlined),
-              labelText: 'Email',
-              alignLabelWithHint: null,
-              hintText: 'abc@example.com',
-              suffixIcon: null,
-              suffixText: null,
-            ),
-            const SizedBox(height: 30.0),
-
-            // Password Field...
-            MyTextFormField(
-              controller: _password,
-              autoCorrect: false,
-              enableSuggestions: false,
-              keyboardType: TextInputType.text,
-              obscureText: _isObscureText,
-              maxLines: 1,
-              prefixIcon: const Icon(Icons.lock_outline),
-              labelText: 'Password',
-              alignLabelWithHint: null,
-              hintText: 'Example123',
-              suffixText: null,
-              suffixIcon: Tooltip(
-                message: _isObscureText ? 'Show Password' : 'Hide Password',
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isObscureText = !_isObscureText;
-                    });
-                  },
-                  child: _isObscureText
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) async {
+        if (state is AuthStateLoggedOut) {
+          if (state.exception is InvalidCredentialAuthException) {
+            await showErrorDialog(context, 'Invalid Credentials');
+          } else if (state.exception is TooManyRequestsAuthException) {
+            await showErrorDialog(
+                context, 'Too many tries. Please try again later.');
+          } else if (state.exception is InvalidEmailAuthException) {
+            await showErrorDialog(context, 'Email address is badly formatted');
+          } else if (state.exception is GenericAuthException) {
+            await showErrorDialog(context, 'Authentication Error');
+          }
+        }
+      },
+      child: Form(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              // Email Address Field...
+              TextFormField(
+                controller: _email,
+                autofocus: true,
+                autocorrect: false,
+                enableSuggestions: false,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.email_outlined),
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
                 ),
               ),
-            ),
-            const SizedBox(height: 30.0),
 
-            // Login Button...
-            PrimaryButton(
-              text: 'Login',
-              onPressed: () async {
-                // Trying to login the user...
-                if (context.mounted) {
-                  final email = _email.text;
-                  final password = _password.text;
-                  await loginUser(
-                    context: context,
-                    email: email,
-                    password: password,
-                  );
+              const SizedBox(height: 30.0),
 
-                  // If user is logged in, send OTP Verification...
-                  if (context.mounted) {
-                    EmailOTP.sendOTP(email: email);
-                    // Wait for the response...
-                    bool isUserAuthorized = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            OTPVerificationScreen(email: email),
-                      ),
-                    );
-                    final user = currentUser;
-                    // If user exists and is authorized, push HomeScreen...
-                    if (user != null && isUserAuthorized) {
-                      if (context.mounted) {
-                        pushHomeScreen(context);
-                      }
-                    } else {
-                      if (context.mounted) {
-                        pushLoginScreen(context);
-                      }
-                    }
-                  }
-                }
-              },
-            ),
-          ],
+              // Password Field...
+              TextFormField(
+                controller: _password,
+                autocorrect: false,
+                enableSuggestions: false,
+                keyboardType: TextInputType.text,
+                obscureText: _isObscureText,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.lock_outline),
+                  labelText: 'Password',
+                  border: const OutlineInputBorder(),
+                  suffixIcon: Tooltip(
+                    message: _isObscureText ? 'Show Password' : 'Hide Password',
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _isObscureText = !_isObscureText;
+                        });
+                      },
+                      child: _isObscureText
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30.0),
+
+              // Login Button...
+              PrimaryButton(
+                text: 'Login',
+                onPressed: () {
+                  final String email = _email.text;
+                  final String password = _password.text;
+                  context.read<AuthBloc>().add(AuthEventLogin(email, password));
+                },
+              ),
+              const SizedBox(height: 30.0),
+
+              // Reset Password Button...
+              MyTextButton(
+                title: 'Reset Password',
+                onTap: () {
+                  context.read<AuthBloc>().add(const AuthEventResetPassword());
+                },
+              ),
+              const SizedBox(height: 75.0),
+
+              // Create An Account...
+              MyTextButton(
+                title: 'Create an account',
+                onTap: () {
+                  context.read<AuthBloc>().add(const AuthEventShouldRegister());
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

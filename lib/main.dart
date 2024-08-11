@@ -1,19 +1,25 @@
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:email_otp/email_otp.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '/firebase_options.dart';
-import '/screens/welcome/welcome_screen.dart';
+import '/services/auth/firebase_auth_provider.dart';
 import 'constants/routes.dart';
+import 'firebase_options.dart';
+import 'services/auth/bloc/auth_bloc.dart';
+import 'screens/screen_wrapper.dart';
 
 void main() async {
   // Ensuring all the widgets are ready for use...
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initializing the firebase...
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  FirebaseFirestore.instance.settings = const Settings(
+    persistenceEnabled: true,
   );
 
   // Setting Preferred Orientation to PortraitUp...
@@ -34,16 +40,6 @@ void main() async {
     ),
   );
 
-  // Configuring the OTP...
-  EmailOTP.config(
-    appName: 'Wellness Wise',
-    appEmail: 'noreply@wellness-wise.com',
-    otpType: OTPType.numeric,
-    otpLength: 6,
-    expiry: 60000,
-    emailTheme: EmailTheme.v1,
-  );
-
   runApp(const MyApp());
 }
 
@@ -60,7 +56,10 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.teal,
       ),
       routes: routes,
-      home: const WelcomeScreen(),
+      home: BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc(FirebaseAuthProvider()),
+        child: const ScreenWrapper(),
+      ),
     );
   }
 }

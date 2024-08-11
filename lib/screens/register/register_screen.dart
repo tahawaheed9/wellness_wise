@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/components/text_button.dart';
 import '/screens/register/components/register_form.dart';
-import '/controller/screen_navigation_controller.dart';
 import '/components/screen_heading.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -10,30 +8,22 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 50.0),
-                const ScreenHeading(
+                SizedBox(height: 50.0),
+                ScreenHeading(
                   icon: Icons.person_outline,
                   headingText: 'Register',
                 ),
-                const SizedBox(height: 50.0),
+                SizedBox(height: 50.0),
 
                 // Register Form...
-                const RegisterForm(),
-                const SizedBox(height: 30.0),
+                RegisterForm(),
 
-                // If user is registered, navigate to login screen...
-                MyTextButton(
-                  title: 'Already have an account?',
-                  onTap: () {
-                    pushLoginScreen(context);
-                  },
-                ),
               ],
             ),
           ),

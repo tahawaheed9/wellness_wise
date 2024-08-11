@@ -43,11 +43,8 @@ class _UserInformationCardState extends State<UserInformationCard> {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
-                  '%Username%',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge
-                      ?.copyWith(overflow: TextOverflow.ellipsis),
+                  'Username',
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),
@@ -57,14 +54,14 @@ class _UserInformationCardState extends State<UserInformationCard> {
           // Age & Gender...
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                '%Age%',
+                'Age',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               Text(
-                '%Gender%',
+                'Gender',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
