@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '/services/database/database_services.dart';
 import '/components/primary_button.dart';
 
 class BasicInformationForm extends StatefulWidget {
@@ -126,16 +125,7 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
             // Save Button...
             PrimaryButton(
               text: 'Save Information',
-              onPressed: () {
-                final Map<String, Object> data = {
-                  'age': int.parse(_age.text),
-                  'height': double.parse(_height.text),
-                  'weight': double.parse(_weight.text),
-                  'lifestyle-habits': _lifestyleHabits.text,
-                  'medical_history': _medicalHistory.text,
-                };
-                addBasicInformation(data);
-              },
+              onPressed: () {},
             ),
           ],
         ),

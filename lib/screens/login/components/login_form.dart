@@ -17,6 +17,8 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final _loginFormKey = GlobalKey<FormState>();
+
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -54,6 +56,7 @@ class _LoginFormState extends State<LoginForm> {
         }
       },
       child: Form(
+        key: _loginFormKey,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -65,6 +68,7 @@ class _LoginFormState extends State<LoginForm> {
                 autocorrect: false,
                 enableSuggestions: false,
                 keyboardType: TextInputType.emailAddress,
+                validator: _validateForm,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email_outlined),
                   labelText: 'Email',
@@ -81,6 +85,7 @@ class _LoginFormState extends State<LoginForm> {
                 enableSuggestions: false,
                 keyboardType: TextInputType.text,
                 obscureText: _isObscureText,
+                validator: _validateForm,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock_outline),
                   labelText: 'Password',
@@ -106,9 +111,13 @@ class _LoginFormState extends State<LoginForm> {
               PrimaryButton(
                 text: 'Login',
                 onPressed: () {
-                  final String email = _email.text;
-                  final String password = _password.text;
-                  context.read<AuthBloc>().add(AuthEventLogin(email, password));
+                  if (_loginFormKey.currentState!.validate()) {
+                    final String email = _email.text;
+                    final String password = _password.text;
+                    context
+                        .read<AuthBloc>()
+                        .add(AuthEventLogin(email, password));
+                  }
                 },
               ),
               const SizedBox(height: 30.0),
@@ -134,5 +143,12 @@ class _LoginFormState extends State<LoginForm> {
         ),
       ),
     );
+  }
+
+  String? _validateForm(value) {
+    if (value == null || value.isEmpty) {
+      return 'Required.';
+    }
+    return null;
   }
 }

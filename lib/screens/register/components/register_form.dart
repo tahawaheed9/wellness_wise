@@ -18,6 +18,8 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
+  final _registerFormKey = GlobalKey<FormState>();
+
   late final TextEditingController _username;
   late final TextEditingController _email;
   late final TextEditingController _password;
@@ -62,6 +64,7 @@ class _RegisterFormState extends State<RegisterForm> {
         }
       },
       child: Form(
+        key: _registerFormKey,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -71,6 +74,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 controller: _username,
                 autofocus: true,
                 keyboardType: TextInputType.name,
+                validator: _validateForm,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.person_outline),
                   labelText: 'Username',
@@ -86,6 +90,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 autocorrect: false,
                 enableSuggestions: false,
                 keyboardType: TextInputType.emailAddress,
+                validator: _validateForm,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email_outlined),
                   labelText: 'Email',
@@ -102,6 +107,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 enableSuggestions: false,
                 keyboardType: TextInputType.text,
                 obscureText: _isObscureText,
+                validator: _validateForm,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock_outline),
                   labelText: 'Password',
@@ -133,6 +139,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     child: TextFormField(
                       controller: _age,
                       keyboardType: TextInputType.number,
+                      validator: _validateForm,
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.calendar_month_outlined),
                         labelText: 'Age',
@@ -148,6 +155,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       value: _selectedValue,
                       hint: const Text('Gender'),
                       alignment: Alignment.center,
+                      validator: _validateForm,
                       decoration: InputDecoration(
                         prefixIcon: _selectedValue == null
                             ? const Icon(Icons.person_outline)
@@ -182,16 +190,18 @@ class _RegisterFormState extends State<RegisterForm> {
               PrimaryButton(
                 text: 'Register',
                 onPressed: () async {
-                  final shouldRegister =
-                      await showConfirmRegistrationDialog(context);
+                  if (_registerFormKey.currentState!.validate()) {
+                    final shouldRegister =
+                        await showConfirmRegistrationDialog(context);
 
-                  if (shouldRegister) {
-                    final String email = _email.text;
-                    final String password = _password.text;
-                    if (context.mounted) {
-                      context
-                          .read<AuthBloc>()
-                          .add(AuthEventRegister(email, password));
+                    if (shouldRegister) {
+                      final String email = _email.text;
+                      final String password = _password.text;
+                      if (context.mounted) {
+                        context
+                            .read<AuthBloc>()
+                            .add(AuthEventRegister(email, password));
+                      }
                     }
                   }
                 },
@@ -210,5 +220,12 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
       ),
     );
+  }
+
+  String? _validateForm(value) {
+    if (value == null || value.isEmpty) {
+      return 'Required.';
+    }
+    return null;
   }
 }

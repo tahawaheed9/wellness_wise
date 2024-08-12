@@ -16,6 +16,7 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+  final _resetPasswordFormKey = GlobalKey<FormState>();
   late final TextEditingController _email;
 
   @override
@@ -72,16 +73,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               const SizedBox(height: 30.0),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  controller: _email,
-                  autofocus: true,
-                  autocorrect: false,
-                  enableSuggestions: false,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.email_outlined),
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
+                child: Form(
+                  key: _resetPasswordFormKey,
+                  child: TextFormField(
+                    controller: _email,
+                    autofocus: true,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: _validateForm,
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.email_outlined),
+                      labelText: 'Email',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ),
               ),
@@ -89,10 +94,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               PrimaryButton(
                 text: 'Reset Password',
                 onPressed: () {
-                  final String email = _email.text;
-                  context
-                      .read<AuthBloc>()
-                      .add(AuthEventResetPassword(email: email));
+                  if (_resetPasswordFormKey.currentState!.validate()) {
+                    final String email = _email.text;
+                    context
+                        .read<AuthBloc>()
+                        .add(AuthEventResetPassword(email: email));
+                  }
                 },
               ),
             ],
@@ -100,5 +107,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         ),
       ),
     );
+  }
+
+  String? _validateForm(value) {
+    if (value == null || value.isEmpty) {
+      return 'Required.';
+    }
+    return null;
   }
 }
