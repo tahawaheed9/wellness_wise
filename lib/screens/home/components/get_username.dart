@@ -24,6 +24,7 @@ class _GetUsernameState extends State<GetUsername> {
           final username = snapshot.data!['username'];
             return Text(
               username,
+              overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyLarge,
             );
           }
