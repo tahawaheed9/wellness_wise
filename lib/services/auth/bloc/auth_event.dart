@@ -12,12 +12,18 @@ class AuthEventInitialize extends AuthEvent {
 
 // User Registration Events...
 class AuthEventRegister extends AuthEvent {
+  final String username;
   final String email;
   final String password;
+  final int age;
+  final String gender;
 
   const AuthEventRegister(
+    this.username,
     this.email,
     this.password,
+    this.age,
+    this.gender,
   );
 }
 

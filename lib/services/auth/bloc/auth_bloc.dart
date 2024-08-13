@@ -30,13 +30,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     // Register
     on<AuthEventRegister>((event, emit) async {
+      final username = event.username;
       final email = event.email;
       final password = event.password;
+      final age = event.age;
+      final gender = event.gender;
 
       try {
         await provider.createUser(
+          username: username,
           email: email,
           password: password,
+          age: age,
+          gender: gender,
         );
 
         await provider.sendEmailVerification();

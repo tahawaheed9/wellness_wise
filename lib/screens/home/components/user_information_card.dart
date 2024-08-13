@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '/screens/home/components/get_gender.dart';
+import '/screens/home/components/get_age.dart';
+import '/screens/home/components/get_username.dart';
+
 class UserInformationCard extends StatefulWidget {
   const UserInformationCard({super.key});
 
@@ -42,28 +46,19 @@ class _UserInformationCardState extends State<UserInformationCard> {
                   'Hello,',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                Text(
-                  'Username',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
+                const GetUsername(),
               ],
             ),
           ),
           const SizedBox(width: 20.0),
 
           // Age & Gender...
-          Column(
+          const Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                'Age',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              Text(
-                'Gender',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
+              GetAge(),
+              GetGender(),
             ],
           ),
         ],

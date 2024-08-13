@@ -195,12 +195,19 @@ class _RegisterFormState extends State<RegisterForm> {
                         await showConfirmRegistrationDialog(context);
 
                     if (shouldRegister) {
+                      final String username = _username.text;
                       final String email = _email.text;
                       final String password = _password.text;
+                      final int age = int.parse(_age.text);
+                      final String gender = _gender.toString();
                       if (context.mounted) {
-                        context
-                            .read<AuthBloc>()
-                            .add(AuthEventRegister(email, password));
+                        context.read<AuthBloc>().add(AuthEventRegister(
+                              username,
+                              email,
+                              password,
+                              age,
+                              gender,
+                            ));
                       }
                     }
                   }

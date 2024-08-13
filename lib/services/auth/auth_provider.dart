@@ -9,8 +9,11 @@ abstract class AuthProvider {
 
   // Creating a user...
   Future<AuthUser> createUser({
+    required String username,
     required String email,
     required String password,
+    required int age,
+    required String gender,
   });
 
   // Logging in the user...
