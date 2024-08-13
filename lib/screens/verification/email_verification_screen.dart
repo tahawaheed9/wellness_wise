@@ -33,8 +33,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
             const SizedBox(height: 50.0),
             Text(
               'We have sent you a verification email. '
-              'Please, verify your email address in order to continue.\n\n'
-                  'Once verified, press the continue button.',
+              'Please, verify your email address in order to continue.',
               textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
