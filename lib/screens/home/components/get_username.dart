@@ -25,7 +25,7 @@ class _GetUsernameState extends State<GetUsername> {
             return Text(
               username,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.titleLarge,
             );
           }
         return const SizedBox(
