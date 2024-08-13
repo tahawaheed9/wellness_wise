@@ -7,8 +7,8 @@ Future<bool> showConfirmRegistrationDialog(BuildContext context) {
     context: context,
     title: 'Confirmation',
     content:
-        'You will not be able to change any information except, the age.\n\n'
-        'Create an account with the provided information?',
+        'Please verify your information as you will not be able to edit except, '
+        'the age\n\n Create an account with the provided information?',
     optionsBuilder: () => {
       'Cancel': false,
       'Confirm': true,
