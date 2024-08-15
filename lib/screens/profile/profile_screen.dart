@@ -28,6 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: <Widget>[
               ProfileHeader(),
               SizedBox(height: 30.0),
+              Divider(),
               NamedDivider(title: 'Basic Information'),
               BasicInformation(),
               Divider(),

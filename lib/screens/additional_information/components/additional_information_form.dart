@@ -72,7 +72,7 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 30.0),
+                const SizedBox(width: 10.0),
 
                 Expanded(
                   child: TextFormField(
@@ -88,7 +88,7 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 30.0),
+                const SizedBox(width: 10.0),
 
                 // Heart Rate Field...
                 Expanded(
