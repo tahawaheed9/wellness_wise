@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '/screens/home/components/get_age.dart';
 import '/services/auth/auth_service.dart';
 import '/screens/home/components/get_gender.dart';
 
@@ -26,6 +25,7 @@ class _BasicInformationState extends State<BasicInformation> {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          final age = snapshot.data!['age'].toString();
           final height = snapshot.data!['height'].toString();
           final weight = snapshot.data!['weight'].toString();
           final lifestyleHabits = snapshot.data!['lifestyle-habits'].toString();
@@ -46,7 +46,10 @@ class _BasicInformationState extends State<BasicInformation> {
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    const GetAge(),
+                    Text(
+                      age,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10.0),
@@ -109,10 +112,13 @@ class _BasicInformationState extends State<BasicInformation> {
                         fontWeight: FontWeight.bold,
                       ),
                 ),
-                Text(
-                  lifestyleHabits,
-                  softWrap: true,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    ' — $lifestyleHabits',
+                    softWrap: true,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                 ),
                 const SizedBox(height: 10.0),
 
@@ -123,10 +129,13 @@ class _BasicInformationState extends State<BasicInformation> {
                         fontWeight: FontWeight.bold,
                       ),
                 ),
-                Text(
-                  medicalHistory,
-                  softWrap: true,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    ' — $medicalHistory',
+                    softWrap: true,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                 ),
                 const SizedBox(height: 20.0),
               ],
