@@ -48,24 +48,23 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            // Age Field...
-            TextFormField(
-              controller: _age,
-              keyboardType: TextInputType.number,
-              validator: _validateForm,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.calendar_month_outlined),
-                labelText: 'Age',
-                border: OutlineInputBorder(),
-              ),
-            ),
-
-            const SizedBox(height: 30.0),
-
             // Height & Weight Fields...
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+                // Age Field...
+                Expanded(
+                  child: TextFormField(
+                    controller: _age,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: const InputDecoration(
+                      labelText: 'Age',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10.0),
                 // Height Field...
                 Expanded(
                   child: TextFormField(
@@ -73,14 +72,13 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
                     decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.height_outlined),
                       labelText: 'Height',
                       suffixText: 'cm',
                       border: OutlineInputBorder(),
                     ),
                   ),
                 ),
-                const SizedBox(width: 30.0),
+                const SizedBox(width: 10.0),
 
                 // Weight Field...
                 Expanded(
