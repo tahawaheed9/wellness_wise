@@ -201,13 +201,15 @@ class _RegisterFormState extends State<RegisterForm> {
                       final int age = int.parse(_age.text);
                       final String gender = _gender.toString();
                       if (context.mounted) {
-                        context.read<AuthBloc>().add(AuthEventRegister(
-                              username,
-                              email,
-                              password,
-                              age,
-                              gender,
-                            ));
+                        context.read<AuthBloc>().add(
+                              AuthEventRegister(
+                                username,
+                                email,
+                                password,
+                                age,
+                                gender,
+                              ),
+                            );
                       }
                     }
                   }

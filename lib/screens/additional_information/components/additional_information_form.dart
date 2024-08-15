@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/components/named_divider.dart';
+import '/services/database/data_services.dart';
 import '/components/primary_button.dart';
 
 class AdditionalInformationForm extends StatefulWidget {
@@ -11,20 +13,33 @@ class AdditionalInformationForm extends StatefulWidget {
 }
 
 class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
-  final _additionalInformationFormKey =
-      GlobalKey<_AdditionalInformationFormState>();
+  final _additionalInformationFormKey = GlobalKey<FormState>();
 
-  final TextEditingController bloodPressure = TextEditingController();
-  final TextEditingController heartRate = TextEditingController();
-  final TextEditingController bloodSugarLevels = TextEditingController();
-  final TextEditingController cholesterolLevels = TextEditingController();
+  late final DatabaseServices _db = DatabaseServices();
+
+  late final TextEditingController _sysBloodPressure;
+  late final TextEditingController _diaBloodPressure;
+  late final TextEditingController _heartRate;
+  late final TextEditingController _bloodSugarLevels;
+  late final TextEditingController _cholesterolLevels;
+
+  @override
+  void initState() {
+    super.initState();
+    _sysBloodPressure = TextEditingController();
+    _diaBloodPressure = TextEditingController();
+    _heartRate = TextEditingController();
+    _bloodSugarLevels = TextEditingController();
+    _cholesterolLevels = TextEditingController();
+  }
 
   @override
   void dispose() {
-    bloodPressure.dispose();
-    heartRate.dispose();
-    bloodSugarLevels.dispose();
-    cholesterolLevels.dispose();
+    _sysBloodPressure.dispose();
+    _diaBloodPressure.dispose();
+    _heartRate.dispose();
+    _bloodSugarLevels.dispose();
+    _cholesterolLevels.dispose();
     super.dispose();
   }
 
@@ -37,19 +52,37 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
         child: Column(
           children: <Widget>[
             // Blood Pressure & Heart Rate Fields...
+            const NamedDivider(title: 'Blood Pressure'),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 // Blood Pressure Field...
+
                 Expanded(
                   child: TextFormField(
-                    controller: bloodPressure,
+                    controller: _sysBloodPressure,
                     autocorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
+                    validator: _validateForm,
                     decoration: const InputDecoration(
-                      labelText: 'Blood Pressure',
-                      hintText: '120 / 80',
+                      labelText: 'Systolic',
+                      suffixText: 'mmHg',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 30.0),
+
+                Expanded(
+                  child: TextFormField(
+                    controller: _diaBloodPressure,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: const InputDecoration(
+                      labelText: 'Diastolic',
                       suffixText: 'mmHg',
                       border: OutlineInputBorder(),
                     ),
@@ -60,70 +93,95 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                 // Heart Rate Field...
                 Expanded(
                   child: TextFormField(
-                    controller: heartRate,
+                    controller: _heartRate,
                     autocorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
+                    validator: _validateForm,
                     decoration: const InputDecoration(
                       labelText: 'Heart Rate',
-                      hintText: '72',
-                      suffixText: 'bps',
+                      suffixText: 'bpm',
                       border: OutlineInputBorder(),
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 30.0),
 
-            // Blood Sugar & Cholesterol Levels Fields...
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                // Blood Sugar Levels Field...
-                Expanded(
-                  child: TextFormField(
-                    controller: bloodSugarLevels,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Blood Sugar Levels',
-                      hintText: '90',
-                      suffixText: 'mg/dL',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 30.0),
+            // Blood Sugar Level Field...
+            const NamedDivider(title: 'Fasting Glucose Levels'),
+            TextFormField(
+              controller: _bloodSugarLevels,
+              autocorrect: false,
+              enableSuggestions: false,
+              keyboardType: TextInputType.number,
+              validator: _validateForm,
+              decoration: const InputDecoration(
+                labelText: 'Blood Sugar Levels',
+                suffixText: 'mg/dL',
+                border: OutlineInputBorder(),
+              ),
+            ),
 
-                // Cholesterol Levels Field...
-                Expanded(
-                  child: TextFormField(
-                    controller: cholesterolLevels,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Cholesterol Levels',
-                      hintText: 'LDL + HDL',
-                      suffixText: 'mg/dL',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-              ],
+            // Cholesterol Levels Field...
+            const NamedDivider(title: 'Lipids Profile'),
+            TextFormField(
+              controller: _cholesterolLevels,
+              autocorrect: false,
+              enableSuggestions: false,
+              keyboardType: TextInputType.number,
+              validator: _validateForm,
+              decoration: const InputDecoration(
+                labelText: 'Cholesterol Levels',
+                hintText: 'LDL + HDL',
+                suffixText: 'mg/dL',
+                border: OutlineInputBorder(),
+              ),
             ),
             const SizedBox(height: 50.0),
 
             // Save Information Button...
             PrimaryButton(
               text: 'Save Information',
-              onPressed: () {},
+              onPressed: () {
+                if (_additionalInformationFormKey.currentState!.validate()) {
+                  Map<String, Object?> data = {
+                    'systolic-blood-pressure':
+                        '${int.parse(_sysBloodPressure.text)} mmHg',
+                    'diastolic-blood-pressure':
+                        '${int.parse(_diaBloodPressure.text)} mmHg',
+                    'heart-rate': '${int.parse(_heartRate.text)} bpm',
+                    'blood-sugar-levels':
+                        '${double.parse(_bloodSugarLevels.text)} mg/dL',
+                    'cholesterol-levels':
+                        '${double.parse(_cholesterolLevels.text)} mg/dL',
+                  };
+                  _db.updateAdditionalInformation(data);
+                  ScaffoldMessenger.of(
+                          _additionalInformationFormKey.currentContext!)
+                      .showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Successfully updated.',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: Colors.green,
+                            ),
+                      ),
+                    ),
+                  );
+                }
+              },
             ),
           ],
         ),
       ),
     );
+  }
+
+  String? _validateForm(value) {
+    if (value == null || value.isEmpty) {
+      return 'Required';
+    }
+    return null;
   }
 }

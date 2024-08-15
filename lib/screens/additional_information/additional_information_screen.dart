@@ -11,14 +11,21 @@ class AdditionalInformationScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Additional Information'),
       ),
-      body: const SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 30.0),
-              AdditionalInformationForm(),
-            ],
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(height: 30.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                'Please fill in this form so that we stay up to date '
+                    'with your information.',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
+            const AdditionalInformationForm(),
+          ],
         ),
       ),
     );

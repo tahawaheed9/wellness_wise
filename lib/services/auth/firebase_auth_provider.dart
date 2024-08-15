@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
 import 'package:firebase_core/firebase_core.dart';
-import 'package:wellness_wise/services/database/data_services.dart';
 
+import '/services/database/data_services.dart';
 import '/firebase_options.dart';
 import '/services/auth/auth_user.dart';
 import '/services/auth/auth_provider.dart';
@@ -46,7 +46,21 @@ class FirebaseAuthProvider implements AuthProvider {
                 username,
                 gender,
               )
-              .then((value) => db.setBasicInformation(age)));
+              .then((value) => db.setBasicInformation({
+                    'age': age,
+                    'height': '',
+                    'weight': '',
+                    'lifestyle-habits': '',
+                    'medical-history': '',
+                  }).then(
+                    (value) => db.setAdditionalInformation({
+                      'systolic-blood-pressure': '',
+                      'diastolic-blood-pressure': '',
+                      'heart-rate': '',
+                      'blood-sugar-levels': '',
+                      'cholesterol-levels': '',
+                    }),
+                  )));
       final user = currentUser;
       if (user != null) {
         return user;

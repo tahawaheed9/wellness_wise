@@ -33,6 +33,11 @@ void pushAdditionalInformationScreen(BuildContext context) {
   Navigator.of(context).pushNamed(additionalInformationScreenRoute);
 }
 
+// Profile...
+void pushProfileScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(profileScreenRoute);
+}
+
 // Personalized Recommendations...
 void pushRecommendationsScreen(BuildContext context) {
   Navigator.of(context).pushNamed(recommendationsScreen);

@@ -1,6 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../../services/auth/auth_service.dart';
 
 class GetUsername extends StatefulWidget {
   const GetUsername({super.key});
@@ -10,7 +11,7 @@ class GetUsername extends StatefulWidget {
 }
 
 class _GetUsernameState extends State<GetUsername> {
-  final docId = FirebaseAuth.instance.currentUser!.uid;
+  final docId = AuthService.firebase().currentUser!.id;
 
   @override
   Widget build(BuildContext context) {

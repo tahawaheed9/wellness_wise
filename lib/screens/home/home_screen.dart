@@ -24,6 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Wellness Wise'),
         centerTitle: true,
         actions: <Widget>[
+          // Profile Screen Button...
+          IconButton(
+            onPressed: () {
+              pushProfileScreen(context);
+            },
+            tooltip: 'Profile',
+            icon: const Icon(Icons.person_outline),
+          ),
           // Log out Button...
           IconButton(
             onPressed: () async {
