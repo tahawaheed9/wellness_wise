@@ -26,7 +26,7 @@ class _GetAgeState extends State<GetAge> {
         if (snapshot.hasData) {
           final age = snapshot.data!['age'].toString();
           return Text(
-            age,
+            '$age yrs',
             style: Theme.of(context).textTheme.bodyLarge,
           );
         }

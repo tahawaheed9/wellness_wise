@@ -50,7 +50,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
                           ),
                     ),
                     Text(
-                      sysBloodPressure,
+                      '$sysBloodPressure mmHg',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
@@ -68,7 +68,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
                           ),
                     ),
                     Text(
-                      diaBloodPressure,
+                      '$diaBloodPressure mmHg',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
@@ -86,7 +86,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
                           ),
                     ),
                     Text(
-                      heartRate,
+                      '$heartRate bpm',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
@@ -98,13 +98,13 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Sugar Levels:',
+                      'Blood Sugar Levels:',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                     ),
                     Text(
-                      bloodSugarLevels,
+                      '$bloodSugarLevels mg/dL',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
@@ -123,7 +123,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
                           ),
                     ),
                     Text(
-                      cholesterolLevels,
+                      '$cholesterolLevels mg/dL',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],

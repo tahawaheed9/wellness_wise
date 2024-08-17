@@ -47,7 +47,7 @@ class _BasicInformationState extends State<BasicInformation> {
                           ),
                     ),
                     Text(
-                      age,
+                      '$age years',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
@@ -80,7 +80,7 @@ class _BasicInformationState extends State<BasicInformation> {
                           ),
                     ),
                     Text(
-                      height,
+                      '$height cm',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
@@ -98,7 +98,7 @@ class _BasicInformationState extends State<BasicInformation> {
                           ),
                     ),
                     Text(
-                      weight,
+                      '$weight Kg',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
@@ -113,7 +113,7 @@ class _BasicInformationState extends State<BasicInformation> {
                       ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
+                  padding: const EdgeInsets.only(left: 16.0, top: 10.0),
                   child: Text(
                     ' — $lifestyleHabits',
                     softWrap: true,
@@ -130,7 +130,7 @@ class _BasicInformationState extends State<BasicInformation> {
                       ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
+                  padding: const EdgeInsets.only(left: 16.0, top: 10.0),
                   child: Text(
                     ' — $medicalHistory',
                     softWrap: true,

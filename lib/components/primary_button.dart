@@ -15,7 +15,7 @@ class PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: screenWidth(context) * 0.45,
+      width: screenWidth(context) * 0.50,
       height: screenHeight(context) * 0.050,
       child: OutlinedButton(
         onPressed: onPressed,

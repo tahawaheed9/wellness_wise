@@ -147,14 +147,14 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                 if (_additionalInformationFormKey.currentState!.validate()) {
                   Map<String, Object?> data = {
                     'systolic-blood-pressure':
-                        '${int.parse(_sysBloodPressure.text)} mmHg',
+                        '${int.parse(_sysBloodPressure.text)}',
                     'diastolic-blood-pressure':
-                        '${int.parse(_diaBloodPressure.text)} mmHg',
-                    'heart-rate': '${int.parse(_heartRate.text)} bpm',
+                        '${int.parse(_diaBloodPressure.text)}',
+                    'heart-rate': '${int.parse(_heartRate.text)}',
                     'blood-sugar-levels':
-                        '${double.parse(_bloodSugarLevels.text)} mg/dL',
+                        '${double.parse(_bloodSugarLevels.text)}',
                     'cholesterol-levels':
-                        '${double.parse(_cholesterolLevels.text)} mg/dL',
+                        '${double.parse(_cholesterolLevels.text)}',
                   };
                   _db.updateAdditionalInformation(data);
                   ScaffoldMessenger.of(

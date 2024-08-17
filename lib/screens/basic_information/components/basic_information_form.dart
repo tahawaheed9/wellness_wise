@@ -132,8 +132,8 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
                 if (_basicInformationFormKey.currentState!.validate()) {
                   Map<String, Object?> data = {
                     'age': int.parse(_age.text),
-                    'height': '${double.parse(_height.text)} cm',
-                    'weight': '${double.parse(_weight.text)} Kg',
+                    'height': '${double.parse(_height.text)}',
+                    'weight': '${double.parse(_weight.text)}',
                     'lifestyle-habits': _lifestyleHabits.text,
                     'medical-history': _medicalHistory.text,
                   };
