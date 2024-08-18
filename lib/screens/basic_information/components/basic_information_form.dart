@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/components/success_snack_bar.dart';
 import '/services/database/data_services.dart';
 import '/components/primary_button.dart';
 
@@ -140,14 +141,7 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
                   _db.updateBasicInformation(data);
                   ScaffoldMessenger.of(_basicInformationFormKey.currentContext!)
                       .showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Successfully updated.',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Colors.green,
-                        ),
-                      ),
-                    ),
+                    showSuccessSnackBar(context),
                   );
                 }
               },

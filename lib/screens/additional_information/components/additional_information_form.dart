@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'sync_button.dart';
 import '/components/named_divider.dart';
 import '/services/database/data_services.dart';
 import '/components/primary_button.dart';
+import '/components/success_snack_bar.dart';
 
 class AdditionalInformationForm extends StatefulWidget {
   const AdditionalInformationForm({super.key});
@@ -88,8 +90,11 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 10.0),
-
+              ],
+            ),
+            const SizedBox(height: 30.0),
+            Row(
+              children: <Widget>[
                 // Heart Rate Field...
                 Expanded(
                   child: TextFormField(
@@ -103,6 +108,13 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                       suffixText: 'bpm',
                       border: OutlineInputBorder(),
                     ),
+                  ),
+                ),
+                const SizedBox(width: 10.0),
+
+                Expanded(
+                  child: SyncButton(
+                    onPressed: () {},
                   ),
                 ),
               ],
@@ -160,14 +172,7 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                   ScaffoldMessenger.of(
                           _additionalInformationFormKey.currentContext!)
                       .showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Successfully updated.',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: Colors.green,
-                            ),
-                      ),
-                    ),
+                    showSuccessSnackBar(context),
                   );
                 }
               },
