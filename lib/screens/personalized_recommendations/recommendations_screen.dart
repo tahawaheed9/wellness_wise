@@ -7,7 +7,7 @@ class RecommendationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Recommendations'),
+        title: const Text('Personalized Recommendations'),
       ),
       body: const SingleChildScrollView(
         child: Column(
