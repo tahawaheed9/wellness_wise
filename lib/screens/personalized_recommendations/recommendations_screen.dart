@@ -9,9 +9,19 @@ class RecommendationsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Personalized Recommendations'),
       ),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: <Widget>[],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              Text(
+                'Note: I could not find an AI Model to implement this. \n\n'
+                  'Will do it in the next phase either by finding the AI Model '
+                  'or by training the model myself.',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'sync_button.dart';
 import '/components/named_divider.dart';
 import '/services/database/data_services.dart';
 import '/components/primary_button.dart';
@@ -90,11 +89,8 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                     ),
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 30.0),
-            Row(
-              children: <Widget>[
+                const SizedBox(width: 10.0),
+
                 // Heart Rate Field...
                 Expanded(
                   child: TextFormField(
@@ -110,15 +106,15 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 10.0),
-
-                Expanded(
-                  child: SyncButton(
-                    onPressed: () {},
-                  ),
-                ),
               ],
             ),
+            const SizedBox(height: 30.0),
+
+            /*
+            SyncButton(
+              onPressed: () {},
+            ),
+            */
 
             // Blood Sugar Level Field...
             const NamedDivider(title: 'Fasting Glucose Levels'),
