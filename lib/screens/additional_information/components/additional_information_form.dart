@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../services/health_services/health_services.dart';
 import '/components/named_divider.dart';
-import '/services/database/data_services.dart';
+import '/services/database/database_services.dart';
 import '/components/primary_button.dart';
 import '/components/success_snack_bar.dart';
+import 'sync_button.dart';
 
 class AdditionalInformationForm extends StatefulWidget {
   const AdditionalInformationForm({super.key});
@@ -110,11 +112,14 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
             ),
             const SizedBox(height: 30.0),
 
-            /*
             SyncButton(
-              onPressed: () {},
+              onPressed: () async {
+                final HealthService service = HealthService();
+                final double heartRate = await service.fetchHeartRate();
+                final double systolic = await service.fetchSystolicBP();
+                final double diastolic = await service.fetchDiastolicBP();
+              },
             ),
-            */
 
             // Blood Sugar Level Field...
             const NamedDivider(title: 'Fasting Glucose Levels'),

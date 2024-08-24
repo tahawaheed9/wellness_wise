@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   const UserInformationCard(),
+
                   const NamedDivider(title: 'Health Data'),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -76,14 +77,35 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
+
                   const NamedDivider(title: 'Health Analysis'),
+                  Row(
+                    children: <Widget>[
+                      CustomCard(
+                        cardTitle: 'Health Outcomes',
+                        icon: Icons.health_and_safety_outlined,
+                        onTap: () {
+                          pushHealthOutcomeScreen(context);
+                        },
+                      ),
+                      CustomCard(
+                        cardTitle: 'Health Risks',
+                        icon: Icons.medical_services_outlined,
+                        onTap: () {
+                          pushHealthRiskScreen(context);
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10.0),
                   CustomCard(
-                    cardTitle: 'Personalized Recommendations',
+                    cardTitle: 'Recommendations',
                     icon: Icons.recommend_outlined,
                     onTap: () {
                       pushRecommendationsScreen(context);
                     },
                   ),
+
                   const NamedDivider(title: 'Data Visualization'),
                   CustomCard(
                     cardTitle: 'Charts',

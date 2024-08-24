@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/components/success_snack_bar.dart';
-import '/services/database/data_services.dart';
+import '/services/database/database_services.dart';
 import '/components/primary_button.dart';
 
 class BasicInformationForm extends StatefulWidget {
