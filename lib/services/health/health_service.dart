@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -6,25 +5,39 @@ class HealthService {
   final Health _health = Health();
 
   // defining the date range...
-  DateTime startTime = DateTime.now().subtract(const Duration(hours: 24));
+  DateTime startTime = DateTime.now().subtract(const Duration(days: 7));
   DateTime endTime = DateTime.now();
 
   // Initializing...
-  Future<void> initialize() async {
+  Future<List<double>> initialize() async {
     await requestPermission();
+
+    late final List<double> data;
+
     // Defining the data types to be accessed...
     final types = [
       HealthDataType.HEART_RATE,
       HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
       HealthDataType.BLOOD_PRESSURE_DIASTOLIC,
+      HealthDataType.BLOOD_GLUCOSE,
     ];
 
     // Requesting permission...
     bool hasPermission = await _health.requestAuthorization(types);
-    if (!hasPermission) {
-      debugPrint('Health data permission not granted.');
-      return;
+
+    if (hasPermission) {
+      // Accessing the Data...
+      final double heartRate = await fetchHeartRate();
+      final double systolic = await fetchSystolicBP();
+      final double diastolic = await fetchDiastolicBP();
+
+      data = [
+        heartRate,
+        systolic,
+        diastolic,
+      ];
     }
+    return data;
   }
 
   // Requesting the permission for the Health Connect...
@@ -40,7 +53,6 @@ class HealthService {
 
   // Fetching the heart rate...
   Future<double> fetchHeartRate() async {
-    initialize();
     late final double heartRate;
 
     // Fetching the heart rate data...
@@ -59,7 +71,6 @@ class HealthService {
 
   // Fetching the systolic blood pressure...
   Future<double> fetchSystolicBP() async {
-    initialize();
     late final double systolic;
 
     // Fetching the systolic blood pressure data...
@@ -77,8 +88,6 @@ class HealthService {
 
   // Fetching the diastolic blood pressure...
   Future<double> fetchDiastolicBP() async {
-    initialize();
-
     late final double diastolic;
 
     // Fetching the diastolic blood pressure data...

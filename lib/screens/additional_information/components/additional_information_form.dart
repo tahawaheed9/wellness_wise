@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../services/health_services/health_services.dart';
+import '../../../services/health/health_service.dart';
 import '/components/named_divider.dart';
-import '/services/database/database_services.dart';
+import '/services/database/database_service.dart';
 import '/components/primary_button.dart';
 import '/components/success_snack_bar.dart';
 import 'sync_button.dart';
@@ -60,7 +60,6 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 // Blood Pressure Field...
-
                 Expanded(
                   child: TextFormField(
                     controller: _sysBloodPressure,
@@ -115,9 +114,17 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
             SyncButton(
               onPressed: () async {
                 final HealthService service = HealthService();
-                final double heartRate = await service.fetchHeartRate();
-                final double systolic = await service.fetchSystolicBP();
-                final double diastolic = await service.fetchDiastolicBP();
+                final List<double> data = await service.initialize();
+
+                final double heartRate = data[0];
+                final double systolic = data[1];
+                final double diastolic = data[2];
+
+                setState(() {
+                  _heartRate.text = heartRate.toString();
+                  _sysBloodPressure.text = systolic.toString();
+                  _diaBloodPressure.text = diastolic.toString();
+                });
               },
             ),
 
@@ -160,10 +167,10 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                 if (_additionalInformationFormKey.currentState!.validate()) {
                   Map<String, Object?> data = {
                     'systolic-blood-pressure':
-                        '${int.parse(_sysBloodPressure.text)}',
+                        '${double.parse(_sysBloodPressure.text)}',
                     'diastolic-blood-pressure':
-                        '${int.parse(_diaBloodPressure.text)}',
-                    'heart-rate': '${int.parse(_heartRate.text)}',
+                        '${double.parse(_diaBloodPressure.text)}',
+                    'heart-rate': '${double.parse(_heartRate.text)}',
                     'blood-sugar-levels':
                         '${double.parse(_bloodSugarLevels.text)}',
                     'cholesterol-levels':
