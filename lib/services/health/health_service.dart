@@ -31,11 +31,11 @@ class HealthService {
       final double systolic = await fetchSystolicBP();
       final double diastolic = await fetchDiastolicBP();
 
-      data = [
-        heartRate,
-        systolic,
-        diastolic,
-      ];
+        data = [
+          heartRate,
+          systolic,
+          diastolic,
+        ];
     }
     return data;
   }

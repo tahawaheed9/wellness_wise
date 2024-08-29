@@ -55,9 +55,8 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
         child: Column(
           children: <Widget>[
             // Blood Pressure & Heart Rate Fields...
-            const NamedDivider(title: 'Blood Pressure'),
+            const NamedDivider(title: 'Blood Pressure Measurements'),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 // Blood Pressure Field...
                 Expanded(
@@ -90,8 +89,12 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 10.0),
+              ],
+            ),
+            const SizedBox(height: 30.0),
 
+            Row(
+              children: <Widget>[
                 // Heart Rate Field...
                 Expanded(
                   child: TextFormField(
@@ -107,25 +110,27 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                     ),
                   ),
                 ),
+                const SizedBox(width: 10.0),
+
+                Expanded(
+                  child: SyncButton(
+                    onPressed: () async {
+                      final HealthService service = HealthService();
+                      final List<double> data = await service.initialize();
+
+                      final double heartRate = data[0];
+                      final double systolic = data[1];
+                      final double diastolic = data[2];
+
+                      setState(() {
+                        _heartRate.text = heartRate.toString();
+                        _sysBloodPressure.text = systolic.toString();
+                        _diaBloodPressure.text = diastolic.toString();
+                      });
+                    },
+                  ),
+                ),
               ],
-            ),
-            const SizedBox(height: 30.0),
-
-            SyncButton(
-              onPressed: () async {
-                final HealthService service = HealthService();
-                final List<double> data = await service.initialize();
-
-                final double heartRate = data[0];
-                final double systolic = data[1];
-                final double diastolic = data[2];
-
-                setState(() {
-                  _heartRate.text = heartRate.toString();
-                  _sysBloodPressure.text = systolic.toString();
-                  _diaBloodPressure.text = diastolic.toString();
-                });
-              },
             ),
 
             // Blood Sugar Level Field...
