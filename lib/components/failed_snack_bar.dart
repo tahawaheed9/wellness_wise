@@ -21,6 +21,7 @@ showFailedSnackBar(BuildContext context) {
           const SizedBox(width: 20.0),
           Text(
             'An error occurred. Please, try again...',
+            softWrap: true,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
