@@ -38,7 +38,7 @@ class _GetAgeState extends State<GetAge> {
         } else {
           final age = snapshot.data?.docs.last['age'];
           return Text(
-            '$age yrs',
+            '$age y',
             style: Theme.of(context).textTheme.bodyLarge,
           );
         }
