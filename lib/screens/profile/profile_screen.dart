@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/screens/profile/components/user_created_on.dart';
 import '/screens/profile/components/additional_information.dart';
 import '/screens/profile/components/basic_information.dart';
 import '/components/named_divider.dart';
@@ -28,6 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: <Widget>[
               ProfileHeader(),
               SizedBox(height: 30.0),
+              UserCreatedOn(),
               Divider(),
               NamedDivider(title: 'Basic Information'),
               BasicInformation(),

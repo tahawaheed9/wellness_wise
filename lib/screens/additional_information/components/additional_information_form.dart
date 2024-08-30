@@ -18,7 +18,7 @@ class AdditionalInformationForm extends StatefulWidget {
 class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
   final _additionalInformationFormKey = GlobalKey<FormState>();
 
-  late final DatabaseServices _db = DatabaseServices();
+  final DatabaseServices _db = DatabaseServices();
 
   late final TextEditingController _sysBloodPressure;
   late final TextEditingController _diaBloodPressure;
@@ -54,83 +54,67 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            // Blood Pressure & Heart Rate Fields...
+            // Systolic Blood Pressure...
             const NamedDivider(title: 'Blood Pressure Measurements'),
-            Row(
-              children: <Widget>[
-                // Blood Pressure Field...
-                Expanded(
-                  child: TextFormField(
-                    controller: _sysBloodPressure,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: const InputDecoration(
-                      labelText: 'Systolic',
-                      suffixText: 'mmHg',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10.0),
-
-                Expanded(
-                  child: TextFormField(
-                    controller: _diaBloodPressure,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: const InputDecoration(
-                      labelText: 'Diastolic',
-                      suffixText: 'mmHg',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-              ],
+            TextFormField(
+              controller: _sysBloodPressure,
+              autocorrect: false,
+              enableSuggestions: false,
+              keyboardType: TextInputType.number,
+              validator: _validateForm,
+              decoration: const InputDecoration(
+                labelText: 'Systolic',
+                suffixText: 'mmHg',
+                border: OutlineInputBorder(),
+              ),
             ),
             const SizedBox(height: 30.0),
 
-            Row(
-              children: <Widget>[
-                // Heart Rate Field...
-                Expanded(
-                  child: TextFormField(
-                    controller: _heartRate,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: const InputDecoration(
-                      labelText: 'Heart Rate',
-                      suffixText: 'bpm',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10.0),
+            // Diastolic Blood Pressure...
+            TextFormField(
+              controller: _diaBloodPressure,
+              autocorrect: false,
+              enableSuggestions: false,
+              keyboardType: TextInputType.number,
+              validator: _validateForm,
+              decoration: const InputDecoration(
+                labelText: 'Diastolic',
+                suffixText: 'mmHg',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 30.0),
 
-                Expanded(
-                  child: SyncButton(
-                    onPressed: () async {
-                      final HealthService service = HealthService();
-                      final List<double> data = await service.initialize();
+            // Heart Rate Field...
+            TextFormField(
+              controller: _heartRate,
+              autocorrect: false,
+              enableSuggestions: false,
+              keyboardType: TextInputType.number,
+              validator: _validateForm,
+              decoration: const InputDecoration(
+                labelText: 'Heart Rate',
+                suffixText: 'bpm',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 30.0),
 
-                      final double heartRate = data[0];
-                      final double systolic = data[1];
-                      final double diastolic = data[2];
+            SyncButton(
+              onPressed: () async {
+                final HealthService service = HealthService();
+                final List<double> data = await service.initialize();
 
-                      setState(() {
-                        _heartRate.text = heartRate.toString();
-                        _sysBloodPressure.text = systolic.toString();
-                        _diaBloodPressure.text = diastolic.toString();
-                      });
-                    },
-                  ),
-                ),
-              ],
+                final double heartRate = data[0];
+                final double systolic = data[1];
+                final double diastolic = data[2];
+
+                setState(() {
+                  _heartRate.text = heartRate.toString();
+                  _sysBloodPressure.text = systolic.toString();
+                  _diaBloodPressure.text = diastolic.toString();
+                });
+              },
             ),
 
             // Blood Sugar Level Field...
@@ -168,7 +152,9 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
             // Save Information Button...
             PrimaryButton(
               text: 'Save Information',
-              onPressed: () {
+              onPressed: () async {
+                final createdOn = DateTime.now();
+
                 if (_additionalInformationFormKey.currentState!.validate()) {
                   Map<String, Object?> data = {
                     'systolic-blood-pressure':
@@ -180,8 +166,11 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                         '${double.parse(_bloodSugarLevels.text)}',
                     'cholesterol-levels':
                         '${double.parse(_cholesterolLevels.text)}',
+                    'created-on': createdOn,
                   };
-                  _db.updateAdditionalInformation(data);
+
+                  _db.addAdditionalInformation(data);
+
                   ScaffoldMessenger.of(
                           _additionalInformationFormKey.currentContext!)
                       .showSnackBar(
@@ -190,6 +179,7 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                 }
               },
             ),
+            const SizedBox(height: 50.0),
           ],
         ),
       ),

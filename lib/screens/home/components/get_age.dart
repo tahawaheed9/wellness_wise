@@ -15,26 +15,33 @@ class _GetAgeState extends State<GetAge> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<DocumentSnapshot>(
+    return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('user-data')
           .doc(docId)
           .collection('basic-information')
-          .doc(docId)
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final age = snapshot.data!['age'].toString();
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SizedBox(
+            height: 25.0,
+            width: 25.0,
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.data!.docs.isEmpty) {
+          return Center(
+            child: Text(
+              'N/A',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          );
+        } else {
+          final age = snapshot.data?.docs.last['age'];
           return Text(
             '$age yrs',
             style: Theme.of(context).textTheme.bodyLarge,
           );
         }
-        return const SizedBox(
-          height: 25,
-          width: 25,
-          child: CircularProgressIndicator(),
-        );
       },
     );
   }

@@ -49,51 +49,41 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            // Height & Weight Fields...
-            Row(
-              children: <Widget>[
-                // Age Field...
-                Expanded(
-                  child: TextFormField(
-                    controller: _age,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: const InputDecoration(
-                      labelText: 'Age',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10.0),
-                // Height Field...
-                Expanded(
-                  child: TextFormField(
-                    controller: _height,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: const InputDecoration(
-                      labelText: 'Height',
-                      suffixText: 'cm',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10.0),
+            // Age Field...
+            TextFormField(
+              controller: _age,
+              keyboardType: TextInputType.number,
+              validator: _validateForm,
+              decoration: const InputDecoration(
+                labelText: 'Age',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 30.0),
 
-                // Weight Field...
-                Expanded(
-                  child: TextFormField(
-                    controller: _weight,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: const InputDecoration(
-                      labelText: 'Weight',
-                      suffixText: 'Kg',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-              ],
+            // Height Field...
+            TextFormField(
+              controller: _height,
+              keyboardType: TextInputType.number,
+              validator: _validateForm,
+              decoration: const InputDecoration(
+                labelText: 'Height',
+                suffixText: 'cm',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 30.0),
+
+            // Weight Field...
+            TextFormField(
+              controller: _weight,
+              keyboardType: TextInputType.number,
+              validator: _validateForm,
+              decoration: const InputDecoration(
+                labelText: 'Weight',
+                suffixText: 'Kg',
+                border: OutlineInputBorder(),
+              ),
             ),
             const SizedBox(height: 30.0),
 
@@ -108,7 +98,6 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
                 border: OutlineInputBorder(),
               ),
             ),
-
             const SizedBox(height: 30.0),
 
             // Medical History Field...
@@ -122,7 +111,6 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
                 border: OutlineInputBorder(),
               ),
             ),
-
             const SizedBox(height: 30.0),
 
             // Save Button...
@@ -137,7 +125,9 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
                     'lifestyle-habits': _lifestyleHabits.text,
                     'medical-history': _medicalHistory.text,
                   };
-                  _db.updateBasicInformation(data);
+
+                  _db.addBasicInformation(data);
+
                   ScaffoldMessenger.of(_basicInformationFormKey.currentContext!)
                       .showSnackBar(
                     showSuccessSnackBar(context),

@@ -8,44 +8,35 @@ class DatabaseServices {
   final docId = AuthService.firebase().currentUser!.id;
 
   late final DocumentReference _userDataDocumentRef;
-  late final DocumentReference _basicInformationDocumentRef;
-  late final DocumentReference _additionalInformationDocumentRef;
+  late final CollectionReference _basicInformationCollectionRef;
+  late final CollectionReference _additionalInformationCollectionRef;
 
   DatabaseServices() {
     _userDataDocumentRef = _firestore.collection('user-data').doc(docId);
 
-    _basicInformationDocumentRef =
-        _userDataDocumentRef.collection('basic-information').doc(docId);
+    _basicInformationCollectionRef =
+        _userDataDocumentRef.collection('basic-information');
 
-    _additionalInformationDocumentRef =
-        _userDataDocumentRef.collection('additional-information').doc(docId);
+    _additionalInformationCollectionRef =
+        _userDataDocumentRef.collection('additional-information');
   }
 
   // Setting Username and Gender to main collection (user-data)...
-  Future setUserData(String username, String gender) async {
-    _userDataDocumentRef.set({
+  Future setUserData(String username, String gender, DateTime createdOn) async {
+    await _userDataDocumentRef.set({
       'username': username,
       'gender': gender,
+      'created-on': createdOn,
     });
   }
 
-  // Setting Age to the sub collection (basic-information)...
-  Future setBasicInformation(Map<String, Object?> data) async {
-    _basicInformationDocumentRef.set(data);
+  // Adding new document to the 'basic-information' collection...
+  Future addBasicInformation(Map<String, Object?> data) async {
+    await _basicInformationCollectionRef.add(data);
   }
 
-  // Updating the existing data in (basic-information) document...
-  Future updateBasicInformation(Map<String, Object?> data) async {
-    _basicInformationDocumentRef.update(data);
-  }
-
-  // Setting up an empty (additional-information) document...
-  Future setAdditionalInformation(Map<String, Object?> data) async {
-    _additionalInformationDocumentRef.set(data);
-  }
-
-  // Updating the existing data in (additional-information) document...
-  Future updateAdditionalInformation(Map<String, Object?> data) async {
-    _additionalInformationDocumentRef.update(data);
+  // Adding new document to the 'additional-information' collection...
+  Future addAdditionalInformation(Map<String, Object?> data) async {
+    await _additionalInformationCollectionRef.add(data);
   }
 }

@@ -20,21 +20,31 @@ class _AdditionalInformationBarGraphState
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('user-data')
           .doc(docId)
           .collection('additional-information')
-          .doc(docId)
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.data!.docs.isEmpty) {
+          return Center(
+            child: Text(
+              'No Record Found...',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          );
+        } else {
           List<double> userData = [
-            double.parse(snapshot.data!['systolic-blood-pressure']),
-            double.parse(snapshot.data!['diastolic-blood-pressure']),
-            double.parse(snapshot.data!['heart-rate']),
-            double.parse(snapshot.data!['blood-sugar-levels']),
-            double.parse(snapshot.data!['cholesterol-levels']),
+            double.parse(snapshot.data?.docs.first['systolic-blood-pressure']),
+            double.parse(snapshot.data?.docs.first['diastolic-blood-pressure']),
+            double.parse(snapshot.data?.docs.first['heart-rate']),
+            double.parse(snapshot.data?.docs.first['blood-sugar-levels']),
+            double.parse(snapshot.data?.docs.first['cholesterol-levels']),
           ];
 
           BarData barData = BarData(
@@ -89,12 +99,6 @@ class _AdditionalInformationBarGraphState
             ),
           );
         }
-        return Center(
-          child: Text(
-            'Fetching data...',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-        );
       },
     );
   }

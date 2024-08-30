@@ -17,6 +17,7 @@ class AuthEventRegister extends AuthEvent {
   final String password;
   final int age;
   final String gender;
+  final DateTime createdOn;
 
   const AuthEventRegister(
     this.username,
@@ -24,6 +25,7 @@ class AuthEventRegister extends AuthEvent {
     this.password,
     this.age,
     this.gender,
+    this.createdOn,
   );
 }
 

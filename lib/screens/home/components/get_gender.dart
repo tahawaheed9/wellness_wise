@@ -21,18 +21,24 @@ class _GetGenderState extends State<GetGender> {
           .doc(docId)
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SizedBox(
+            height: 25.0,
+            width: 25.0,
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.data!.exists) {
           final gender = snapshot.data!['gender'];
           return Text(
             gender,
             style: Theme.of(context).textTheme.bodyLarge,
           );
+        } else {
+          return Text(
+            'N/A',
+            style: Theme.of(context).textTheme.bodyLarge,
+          );
         }
-        return const SizedBox(
-          height: 25,
-          width: 25,
-          child: CircularProgressIndicator(),
-        );
       },
     );
   }

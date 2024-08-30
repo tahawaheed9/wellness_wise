@@ -14,6 +14,7 @@ abstract class AuthProvider {
     required String password,
     required int age,
     required String gender,
+    required DateTime createdOn,
   });
 
   // Logging in the user...

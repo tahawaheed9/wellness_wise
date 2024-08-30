@@ -13,8 +13,7 @@ class ProfileHeader extends StatelessWidget {
         children: <Widget>[
           CircleAvatar(
             maxRadius: 40,
-            backgroundColor:
-            Theme.of(context).colorScheme.primaryContainer,
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
             child: const Icon(
               Icons.person_outline,
               size: 40,
@@ -22,6 +21,7 @@ class ProfileHeader extends StatelessWidget {
           ),
           const SizedBox(height: 20.0),
           const GetUsername(),
+          const SizedBox(height: 20.0),
         ],
       ),
     );

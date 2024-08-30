@@ -33,6 +33,7 @@ class FirebaseAuthProvider implements AuthProvider {
     required String password,
     required int age,
     required String gender,
+    required DateTime createdOn,
   }) async {
     try {
       late final DatabaseServices db = DatabaseServices();
@@ -45,22 +46,12 @@ class FirebaseAuthProvider implements AuthProvider {
               .setUserData(
                 username,
                 gender,
+                createdOn,
               )
-              .then((value) => db.setBasicInformation({
+              .then((value) => db.addBasicInformation({
                     'age': age,
-                    'height': '',
-                    'weight': '',
-                    'lifestyle-habits': '',
-                    'medical-history': '',
-                  }).then(
-                    (value) => db.setAdditionalInformation({
-                      'systolic-blood-pressure': '',
-                      'diastolic-blood-pressure': '',
-                      'heart-rate': '',
-                      'blood-sugar-levels': '',
-                      'cholesterol-levels': '',
-                    }),
-                  )));
+                    'created-on': createdOn,
+                  })));
       final user = currentUser;
       if (user != null) {
         return user;

@@ -21,19 +21,25 @@ class _GetUsernameState extends State<GetUsername> {
           .doc(docId)
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SizedBox(
+            height: 25.0,
+            width: 25.0,
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.data!.exists) {
           final username = snapshot.data!['username'];
-            return Text(
-              username,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.titleLarge,
-            );
-          }
-        return const SizedBox(
-          height: 25,
-          width: 25,
-          child: CircularProgressIndicator(),
-        );
+          return Text(
+            username,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.titleLarge,
+          );
+        } else {
+          return Text(
+            'N/A',
+            style: Theme.of(context).textTheme.titleLarge,
+          );
+        }
       },
     );
   }

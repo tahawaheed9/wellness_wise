@@ -22,6 +22,7 @@ class AuthService implements AuthProvider {
     required String password,
     required int age,
     required String gender,
+    required DateTime createdOn,
   }) =>
       provider.createUser(
         username: username,
@@ -29,6 +30,7 @@ class AuthService implements AuthProvider {
         password: password,
         age: age,
         gender: gender,
+        createdOn: createdOn,
       );
 
   @override

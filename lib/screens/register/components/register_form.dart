@@ -200,6 +200,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       final String password = _password.text;
                       final int age = int.parse(_age.text);
                       final String gender = _gender.toString();
+                      final DateTime createdOn = DateTime.now();
                       if (context.mounted) {
                         context.read<AuthBloc>().add(
                               AuthEventRegister(
@@ -208,6 +209,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                 password,
                                 age,
                                 gender,
+                                createdOn,
                               ),
                             );
                       }
