@@ -129,7 +129,7 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
 
                   final isDataSaved = await _db.addBasicInformation(data);
 
-                  if (isDataSaved == null) {
+                  if (isDataSaved == true) {
                     if (context.mounted) {
                       ScaffoldMessenger.of(
                               _basicInformationFormKey.currentContext!)

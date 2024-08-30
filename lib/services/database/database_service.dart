@@ -5,10 +5,7 @@ import '../auth/auth_service.dart';
 final _firestore = FirebaseFirestore.instance;
 
 class DatabaseServices {
-  final docId = AuthService
-      .firebase()
-      .currentUser!
-      .id;
+  final docId = AuthService.firebase().currentUser!.id;
 
   late final DocumentReference _userDataDocumentRef;
   late final CollectionReference _basicInformationCollectionRef;
@@ -25,8 +22,11 @@ class DatabaseServices {
   }
 
   // Setting Username and Gender to main collection (user-data)...
-  Future setUserData(String username, String gender,
-      DateTime createdOn,) async {
+  Future setUserData(
+    String username,
+    String gender,
+    DateTime createdOn,
+  ) async {
     try {
       await _userDataDocumentRef.set({
         'username': username,
@@ -39,20 +39,22 @@ class DatabaseServices {
   }
 
   // Adding new document to the 'basic-information' collection...
-  Future addBasicInformation(Map<String, Object?> data) async {
+  Future<bool> addBasicInformation(Map<String, Object?> data) async {
     try {
-      await _basicInformationCollectionRef.add(data);
-    } catch (error) {
-      return error.toString();
-    }
+      await _basicInformationCollectionRef.add(data).then((_) {
+        return true;
+      });
+    } catch (_) {}
+    return false;
   }
 
   // Adding new document to the 'additional-information' collection...
-  Future addAdditionalInformation(Map<String, Object?> data) async {
+  Future<bool> addAdditionalInformation(Map<String, Object?> data) async {
     try {
-      await _additionalInformationCollectionRef.add(data);
-    } catch (error) {
-      return error.toString();
-    }
+      await _additionalInformationCollectionRef.add(data).then((_) {
+        return true;
+      });
+    } catch (_) {}
+    return false;
   }
 }

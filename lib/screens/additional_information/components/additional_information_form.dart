@@ -172,7 +172,7 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
 
                   final isDataSaved = await _db.addAdditionalInformation(data);
 
-                  if (isDataSaved == null) {
+                  if (isDataSaved == true) {
                     if (context.mounted) {
                       ScaffoldMessenger.of(
                               _additionalInformationFormKey.currentContext!)
