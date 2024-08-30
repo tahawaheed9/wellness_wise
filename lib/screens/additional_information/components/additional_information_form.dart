@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/components/failed_snack_bar.dart';
 import '../../../services/health/health_service.dart';
 import '/components/named_divider.dart';
 import '/services/database/database_service.dart';
@@ -169,13 +170,23 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                     'created-on': createdOn,
                   };
 
-                  _db.addAdditionalInformation(data);
+                  final isDataSaved = await _db.addAdditionalInformation(data);
 
-                  ScaffoldMessenger.of(
+                  if (isDataSaved == null) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(
+                              _additionalInformationFormKey.currentContext!)
+                          .showSnackBar(
+                        showSuccessSnackBar(context),
+                      );
+                    }
+                  } else {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(
                           _additionalInformationFormKey.currentContext!)
-                      .showSnackBar(
-                    showSuccessSnackBar(context),
-                  );
+                          .showSnackBar(showFailedSnackBar(context));
+                    }
+                  }
                 }
               },
             ),

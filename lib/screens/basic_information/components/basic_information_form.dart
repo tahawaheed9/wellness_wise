@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/components/failed_snack_bar.dart';
 import '/components/success_snack_bar.dart';
 import '/services/database/database_service.dart';
 import '/components/primary_button.dart';
@@ -116,7 +117,7 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
             // Save Button...
             PrimaryButton(
               text: 'Save Information',
-              onPressed: () {
+              onPressed: () async {
                 if (_basicInformationFormKey.currentState!.validate()) {
                   Map<String, Object?> data = {
                     'age': int.parse(_age.text),
@@ -126,12 +127,23 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
                     'medical-history': _medicalHistory.text,
                   };
 
-                  _db.addBasicInformation(data);
+                  final isDataSaved = await _db.addBasicInformation(data);
 
-                  ScaffoldMessenger.of(_basicInformationFormKey.currentContext!)
-                      .showSnackBar(
-                    showSuccessSnackBar(context),
-                  );
+                  if (isDataSaved == null) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(
+                              _basicInformationFormKey.currentContext!)
+                          .showSnackBar(
+                        showSuccessSnackBar(context),
+                      );
+                    }
+                  } else {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(
+                              _basicInformationFormKey.currentContext!)
+                          .showSnackBar(showFailedSnackBar(context));
+                    }
+                  }
                 }
               },
             ),

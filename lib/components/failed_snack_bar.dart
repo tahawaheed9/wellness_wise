@@ -20,7 +20,7 @@ showFailedSnackBar(BuildContext context) {
           ),
           const SizedBox(width: 20.0),
           Text(
-            'Could not save the information. Please, try again...',
+            'An error occurred. Please, try again...',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
