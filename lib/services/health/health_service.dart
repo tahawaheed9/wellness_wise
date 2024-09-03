@@ -31,11 +31,11 @@ class HealthService {
       final double systolic = await fetchSystolicBP();
       final double diastolic = await fetchDiastolicBP();
 
-        data = [
-          heartRate,
-          systolic,
-          diastolic,
-        ];
+      data = [
+        heartRate,
+        systolic,
+        diastolic,
+      ];
     }
     return data;
   }
@@ -62,7 +62,6 @@ class HealthService {
       endTime: endTime,
     );
 
-    // Getting the most latest value...
     heartRate =
         double.parse(data.last.value.toJson()['numeric_value'].toString());
 

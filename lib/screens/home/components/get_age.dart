@@ -15,11 +15,12 @@ class _GetAgeState extends State<GetAge> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance
           .collection('user-data')
           .doc(docId)
           .collection('basic-information')
+          .orderBy('created-on', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -29,19 +30,24 @@ class _GetAgeState extends State<GetAge> {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.data!.docs.isEmpty) {
-          return Center(
-            child: Text(
-              'N/A',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          );
-        } else {
-          final age = snapshot.data?.docs.last['age'];
           return Text(
-            '$age y',
+            'N/A',
+            style: Theme.of(context).textTheme.bodyLarge,
+          );
+        } else if (snapshot.hasError) {
+          return Text(
+            'N/A',
             style: Theme.of(context).textTheme.bodyLarge,
           );
         }
+        // Getting the recent document...
+        final recentDocument = snapshot.data!.docs.first;
+        // Fetching the data from the recent document...
+        final data = recentDocument.data();
+        return Text(
+          data['age'] != null ? '${data['age']} y' : 'N/A',
+          style: Theme.of(context).textTheme.bodyLarge,
+        );
       },
     );
   }

@@ -2,15 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../auth/auth_service.dart';
 
-final _firestore = FirebaseFirestore.instance;
-
 class DatabaseServices {
+  final _firestore = FirebaseFirestore.instance;
   final docId = AuthService.firebase().currentUser!.id;
+
+  late final bool isDataSaved;
 
   late final DocumentReference _userDataDocumentRef;
   late final CollectionReference _basicInformationCollectionRef;
   late final CollectionReference _additionalInformationCollectionRef;
 
+  // Initializing the Document & Collection References...
   DatabaseServices() {
     _userDataDocumentRef = _firestore.collection('user-data').doc(docId);
 
@@ -41,20 +43,28 @@ class DatabaseServices {
   // Adding new document to the 'basic-information' collection...
   Future<bool> addBasicInformation(Map<String, Object?> data) async {
     try {
-      await _basicInformationCollectionRef.add(data).then((_) {
-        return true;
+      await _basicInformationCollectionRef
+          .add(data)
+          .whenComplete(<bool>() {
+        isDataSaved = true;
       });
-    } catch (_) {}
-    return false;
+    } catch (_) {
+      isDataSaved = false;
+    }
+    return isDataSaved;
   }
 
   // Adding new document to the 'additional-information' collection...
   Future<bool> addAdditionalInformation(Map<String, Object?> data) async {
     try {
-      await _additionalInformationCollectionRef.add(data).then((_) {
-        return true;
+      await _additionalInformationCollectionRef
+          .add(data)
+          .whenComplete(<bool>() {
+        isDataSaved = true;
       });
-    } catch (_) {}
-    return false;
+    } catch (_) {
+      isDataSaved = false;
+    }
+    return isDataSaved;
   }
 }

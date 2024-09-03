@@ -19,12 +19,14 @@ showSuccessSnackBar(BuildContext context) {
             color: Colors.white,
           ),
           const SizedBox(width: 20.0),
-          Text(
-            'Successfully updated.',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+          Expanded(
+            child: Text(
+              'Successfully updated.',
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
           ),
         ],
       ),

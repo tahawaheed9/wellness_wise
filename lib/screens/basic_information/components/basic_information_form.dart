@@ -119,12 +119,14 @@ class _BasicInformationFormState extends State<BasicInformationForm> {
               text: 'Save Information',
               onPressed: () async {
                 if (_basicInformationFormKey.currentState!.validate()) {
+                  final DateTime createdOn = DateTime.now();
                   Map<String, Object?> data = {
                     'age': int.parse(_age.text),
                     'height': '${double.parse(_height.text)}',
                     'weight': '${double.parse(_weight.text)}',
                     'lifestyle-habits': _lifestyleHabits.text,
                     'medical-history': _medicalHistory.text,
+                    'created-on': createdOn,
                   };
 
                   final isDataSaved = await _db.addBasicInformation(data);
