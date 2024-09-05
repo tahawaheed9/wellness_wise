@@ -20,11 +20,12 @@ class _AdditionalInformationBarGraphState
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance
           .collection('user-data')
           .doc(docId)
           .collection('additional-information')
+          .orderBy('created-on', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -38,67 +39,79 @@ class _AdditionalInformationBarGraphState
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           );
-        } else {
-          List<double> userData = [
-            double.parse(snapshot.data?.docs.first['systolic-blood-pressure']),
-            double.parse(snapshot.data?.docs.first['diastolic-blood-pressure']),
-            double.parse(snapshot.data?.docs.first['heart-rate']),
-            double.parse(snapshot.data?.docs.first['blood-sugar-levels']),
-            double.parse(snapshot.data?.docs.first['cholesterol-levels']),
-          ];
-
-          BarData barData = BarData(
-            systolicBloodPressure: userData[0],
-            diastolicBloodPressure: userData[1],
-            heartRate: userData[2],
-            bloodSugarLevels: userData[3],
-            cholesterolLevels: userData[4],
-          );
-
-          barData.initializeBarData();
-
-          return SizedBox(
-            height: 300,
-            child: BarChart(
-              BarChartData(
-                maxY: userData.reduce(max),
-                minY: 0,
-                gridData: const FlGridData(show: false),
-                borderData: FlBorderData(show: true),
-                titlesData: FlTitlesData(
-                  show: true,
-                  topTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  rightTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false)),
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 30,
-                      getTitlesWidget: getBottomTiles,
-                    ),
-                  ),
-                ),
-                barGroups: barData.barData
-                    .map(
-                      (data) => BarChartGroupData(
-                        x: data.x,
-                        barRods: [
-                          BarChartRodData(
-                            toY: data.y,
-                            color: Colors.grey[800],
-                            width: 30,
-                            borderRadius: BorderRadius.zero,
-                          ),
-                        ],
-                      ),
-                    )
-                    .toList(),
-              ),
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text(
+              'Error retrieving data...',
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           );
         }
+        // Getting the recent document...
+        final recentDocument = snapshot.data!.docs.first;
+
+        // Fetching the data from the document...
+        final data = recentDocument.data();
+
+        List<double> userData = [
+          double.parse(data['systolic-blood-pressure']),
+          double.parse(data['diastolic-blood-pressure']),
+          double.parse(data['heart-rate']),
+          double.parse(data['blood-sugar-levels']),
+          double.parse(data['cholesterol-levels']),
+        ];
+
+        BarData barData = BarData(
+          systolicBloodPressure: userData[0],
+          diastolicBloodPressure: userData[1],
+          heartRate: userData[2],
+          bloodSugarLevels: userData[3],
+          cholesterolLevels: userData[4],
+        );
+
+        barData.initializeBarData();
+
+        return SizedBox(
+          height: 300,
+          child: BarChart(
+            BarChartData(
+              maxY: userData.reduce(max),
+              minY: 0,
+              gridData: const FlGridData(show: false),
+              borderData: FlBorderData(show: true),
+              titlesData: FlTitlesData(
+                show: true,
+                topTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+                rightTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: 30,
+                    getTitlesWidget: getBottomTiles,
+                  ),
+                ),
+              ),
+              barGroups: barData.barData
+                  .map(
+                    (data) => BarChartGroupData(
+                      x: data.x,
+                      barRods: [
+                        BarChartRodData(
+                          toY: data.y,
+                          color: Colors.grey[800],
+                          width: 30,
+                          borderRadius: BorderRadius.zero,
+                        ),
+                      ],
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        );
       },
     );
   }
