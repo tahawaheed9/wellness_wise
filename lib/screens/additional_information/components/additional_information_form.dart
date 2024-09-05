@@ -103,17 +103,21 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
 
             SyncButton(
               onPressed: () async {
-                final HealthService service = HealthService();
-                final List<double> data = await service.initialize();
-
-                final double heartRate = data[0];
-                final double systolic = data[1];
-                final double diastolic = data[2];
+                final HealthService healthService = HealthService();
+                final List<String?> data = await healthService.initialize();
 
                 setState(() {
-                  _heartRate.text = heartRate.toString();
-                  _sysBloodPressure.text = systolic.toString();
-                  _diaBloodPressure.text = diastolic.toString();
+                  if (data[0] != null) {
+                    _heartRate.text = data[0].toString();
+                  }
+
+                  if (data[1] != null) {
+                    _sysBloodPressure.text = data[1].toString();
+                  }
+
+                  if (data[2] != null) {
+                    _diaBloodPressure.text = data[2].toString();
+                  }
                 });
               },
             ),
@@ -183,7 +187,7 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                   } else {
                     if (context.mounted) {
                       ScaffoldMessenger.of(
-                          _additionalInformationFormKey.currentContext!)
+                              _additionalInformationFormKey.currentContext!)
                           .showSnackBar(showFailedSnackBar(context));
                     }
                   }
