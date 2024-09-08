@@ -138,7 +138,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   Expanded(
                     child: TextFormField(
                       controller: _age,
-                      keyboardType: TextInputType.number,
+                      readOnly: true,
+                      onTap: () => _pickDateOfBirth(context),
                       validator: _validateForm,
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.calendar_month_outlined),
@@ -238,5 +239,27 @@ class _RegisterFormState extends State<RegisterForm> {
       return 'Required.';
     }
     return null;
+  }
+
+  _pickDateOfBirth(BuildContext context) {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate != null) {
+        _calculateAge(pickedDate);
+      }
+    });
+  }
+
+  _calculateAge(DateTime date) {
+    DateTime now = DateTime.now();
+    Duration age = now.difference(date);
+    int years = age.inDays ~/ 365;
+    setState(() {
+      _age.text = years.toString();
+    });
   }
 }
