@@ -23,34 +23,14 @@ void pushResetPasswordScreen(BuildContext context) {
   Navigator.of(context).pushNamed(resetPasswordScreenRoute);
 }
 
-// Profile...
-void pushProfileScreen(BuildContext context) {
-  Navigator.of(context).pushNamed(profileScreenRoute);
-}
-
-// Health Outcomes...
-void pushHealthOutcomeScreen(BuildContext context) {
-  Navigator.of(context).pushNamed(healthOutcomeScreen);
-}
-
-// Health Risks...
-void pushHealthRiskScreen(BuildContext context) {
-  Navigator.of(context).pushNamed(healthRiskScreen);
-}
-
-// Basic Information...
-void pushBasicInformationScreen(BuildContext context) {
-  Navigator.of(context).pushNamed(basicInformationScreenRoute);
-}
-
 // Additional Information...
 void pushAdditionalInformationScreen(BuildContext context) {
   Navigator.of(context).pushNamed(additionalInformationScreenRoute);
 }
 
-// Personalized Recommendations...
-void pushRecommendationsScreen(BuildContext context) {
-  Navigator.of(context).pushNamed(recommendationsScreen);
+// General Disease...
+void pushGeneralDiseaseScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(generalDiseaseScreenRoute);
 }
 
 // Charts...

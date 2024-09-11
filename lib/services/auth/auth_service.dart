@@ -20,7 +20,7 @@ class AuthService implements AuthProvider {
     required String username,
     required String email,
     required String password,
-    required int age,
+    required DateTime dateOfBirth,
     required String gender,
     required DateTime createdOn,
   }) =>
@@ -28,7 +28,7 @@ class AuthService implements AuthProvider {
         username: username,
         email: email,
         password: password,
-        age: age,
+        dateOfBirth: dateOfBirth,
         gender: gender,
         createdOn: createdOn,
       );

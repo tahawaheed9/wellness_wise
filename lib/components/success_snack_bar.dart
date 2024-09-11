@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-showSuccessSnackBar(BuildContext context) {
+showSuccessSnackBar(
+  BuildContext context,
+  final String message,
+  final IconData icon,
+) {
   return SnackBar(
     backgroundColor: Theme.of(context).colorScheme.surface,
     behavior: SnackBarBehavior.floating,
@@ -13,15 +17,15 @@ showSuccessSnackBar(BuildContext context) {
       ),
       child: Row(
         children: <Widget>[
-          const Icon(
-            Icons.check_circle_outline,
+          Icon(
+            icon,
             size: 40,
             color: Colors.white,
           ),
           const SizedBox(width: 20.0),
           Expanded(
             child: Text(
-              'Successfully updated.',
+              message,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

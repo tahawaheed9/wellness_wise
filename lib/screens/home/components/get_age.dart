@@ -15,12 +15,10 @@ class _GetAgeState extends State<GetAge> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+    return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance
           .collection('user-data')
           .doc(docId)
-          .collection('basic-information')
-          .orderBy('created-on', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -29,25 +27,26 @@ class _GetAgeState extends State<GetAge> {
             width: 25.0,
             child: CircularProgressIndicator(),
           );
-        } else if (snapshot.data!.docs.isEmpty) {
+        } else if (snapshot.data!.exists) {
+          final date = snapshot.data!['date-of-birth'].toDate();
+
+          // Converting DOB to Age...
+          final now = DateTime.now();
+          final Duration age = now.difference(date);
+          final int years = age.inDays ~/ 365;
+
+          final formattedAge = years.toString();
+
           return Text(
-            'N/A',
+            '$formattedAge y',
             style: Theme.of(context).textTheme.bodyLarge,
           );
-        } else if (snapshot.hasError) {
+        } else {
           return Text(
             'N/A',
             style: Theme.of(context).textTheme.bodyLarge,
           );
         }
-        // Getting the recent document...
-        final recentDocument = snapshot.data!.docs.first;
-        // Fetching the data from the recent document...
-        final data = recentDocument.data();
-        return Text(
-          data['age'] != null ? '${data['age']} y' : 'N/A',
-          style: Theme.of(context).textTheme.bodyLarge,
-        );
       },
     );
   }

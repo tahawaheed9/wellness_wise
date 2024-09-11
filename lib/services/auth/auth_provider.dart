@@ -12,7 +12,7 @@ abstract class AuthProvider {
     required String username,
     required String email,
     required String password,
-    required int age,
+    required DateTime dateOfBirth,
     required String gender,
     required DateTime createdOn,
   });

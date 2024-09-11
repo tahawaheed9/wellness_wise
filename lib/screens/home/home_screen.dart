@@ -24,14 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Wellness Wise'),
         centerTitle: true,
         actions: <Widget>[
-          // Profile Screen Button...
-          IconButton(
-            onPressed: () {
-              pushProfileScreen(context);
-            },
-            tooltip: 'Profile',
-            icon: const Icon(Icons.person_outline),
-          ),
           // Log out Button...
           IconButton(
             onPressed: () async {
@@ -58,52 +50,36 @@ class _HomeScreenState extends State<HomeScreen> {
                   const UserInformationCard(),
 
                   const NamedDivider(title: 'Health Data'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CustomCard(
-                        cardTitle: 'Basic Information',
-                        icon: Icons.medical_information_outlined,
-                        onTap: () {
-                          pushBasicInformationScreen(context);
-                        },
-                      ),
-                      CustomCard(
-                        cardTitle: 'Additional Information',
-                        icon: Icons.medical_information_outlined,
-                        onTap: () {
-                          pushAdditionalInformationScreen(context);
-                        },
-                      ),
-                    ],
+                  CustomCard(
+                    cardTitle: 'Additional Information',
+                    icon: Icons.medical_information_outlined,
+                    onTap: () {
+                      pushAdditionalInformationScreen(context);
+                    },
                   ),
 
-                  const NamedDivider(title: 'Health Analysis'),
+                  const NamedDivider(title: 'Health Predictions'),
                   Row(
                     children: <Widget>[
                       CustomCard(
-                        cardTitle: 'Health Outcomes',
-                        icon: Icons.health_and_safety_outlined,
+                        cardTitle: 'General Disease',
+                        icon: Icons.medical_services_outlined,
                         onTap: () {
-                          pushHealthOutcomeScreen(context);
+                          pushGeneralDiseaseScreen(context);
                         },
                       ),
                       CustomCard(
-                        cardTitle: 'Health Risks',
-                        icon: Icons.medical_services_outlined,
-                        onTap: () {
-                          pushHealthRiskScreen(context);
-                        },
+                        cardTitle: 'Heart Disease',
+                        icon: Icons.favorite_outline,
+                        onTap: () {},
                       ),
                     ],
                   ),
                   const SizedBox(height: 10.0),
                   CustomCard(
-                    cardTitle: 'Recommendations',
-                    icon: Icons.recommend_outlined,
-                    onTap: () {
-                      pushRecommendationsScreen(context);
-                    },
+                    cardTitle: 'Kidney Disease',
+                    icon: Icons.medical_services_outlined,
+                    onTap: () {},
                   ),
 
                   const NamedDivider(title: 'Data Visualization'),

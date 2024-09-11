@@ -31,7 +31,7 @@ class FirebaseAuthProvider implements AuthProvider {
     required String username,
     required String email,
     required String password,
-    required int age,
+    required DateTime dateOfBirth,
     required String gender,
     required DateTime createdOn,
   }) async {
@@ -45,13 +45,10 @@ class FirebaseAuthProvider implements AuthProvider {
           .then((value) => db
               .setUserData(
                 username,
+                dateOfBirth,
                 gender,
                 createdOn,
-              )
-              .then((value) => db.addBasicInformation({
-                    'age': age,
-                    'created-on': createdOn,
-                  })));
+          ));
       final user = currentUser;
       if (user != null) {
         return user;

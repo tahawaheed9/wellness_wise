@@ -15,7 +15,7 @@ class AuthEventRegister extends AuthEvent {
   final String username;
   final String email;
   final String password;
-  final int age;
+  final DateTime dateOfBirth;
   final String gender;
   final DateTime createdOn;
 
@@ -23,7 +23,7 @@ class AuthEventRegister extends AuthEvent {
     this.username,
     this.email,
     this.password,
-    this.age,
+    this.dateOfBirth,
     this.gender,
     this.createdOn,
   );

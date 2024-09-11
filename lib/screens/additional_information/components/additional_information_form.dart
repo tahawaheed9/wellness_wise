@@ -181,14 +181,22 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                       ScaffoldMessenger.of(
                               _additionalInformationFormKey.currentContext!)
                           .showSnackBar(
-                        showSuccessSnackBar(context),
+                        showSuccessSnackBar(
+                          context,
+                          'Successfully updated.',
+                          Icons.check_circle_outline,
+                        ),
                       );
                     }
                   } else {
                     if (context.mounted) {
                       ScaffoldMessenger.of(
                               _additionalInformationFormKey.currentContext!)
-                          .showSnackBar(showFailedSnackBar(context));
+                          .showSnackBar(showFailedSnackBar(
+                        context,
+                        'An error occurred. Please, Try again or Contact Support.',
+                        Icons.cancel_outlined,
+                      ));
                     }
                   }
                 }

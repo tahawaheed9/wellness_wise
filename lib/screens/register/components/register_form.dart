@@ -23,7 +23,7 @@ class _RegisterFormState extends State<RegisterForm> {
   late final TextEditingController _username;
   late final TextEditingController _email;
   late final TextEditingController _password;
-  late final TextEditingController _age;
+  late final TextEditingController _dateOfBirth;
   late final String? _gender;
 
   String? _selectedValue;
@@ -35,7 +35,7 @@ class _RegisterFormState extends State<RegisterForm> {
     _username = TextEditingController();
     _email = TextEditingController();
     _password = TextEditingController();
-    _age = TextEditingController();
+    _dateOfBirth = TextEditingController();
   }
 
   @override
@@ -43,7 +43,7 @@ class _RegisterFormState extends State<RegisterForm> {
     _username.dispose();
     _email.dispose();
     _password.dispose();
-    _age.dispose();
+    _dateOfBirth.dispose();
     super.dispose();
   }
 
@@ -137,13 +137,13 @@ class _RegisterFormState extends State<RegisterForm> {
                   // Age Field...
                   Expanded(
                     child: TextFormField(
-                      controller: _age,
+                      controller: _dateOfBirth,
                       readOnly: true,
                       onTap: () => _pickDateOfBirth(context),
                       validator: _validateForm,
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.calendar_month_outlined),
-                        labelText: 'Age',
+                        labelText: 'Date of Birth',
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -199,7 +199,8 @@ class _RegisterFormState extends State<RegisterForm> {
                       final String username = _username.text;
                       final String email = _email.text;
                       final String password = _password.text;
-                      final int age = int.parse(_age.text);
+                      final DateTime dateOfBirth =
+                          DateTime.parse(_dateOfBirth.text);
                       final String gender = _gender.toString();
                       final DateTime createdOn = DateTime.now();
                       if (context.mounted) {
@@ -208,7 +209,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                 username,
                                 email,
                                 password,
-                                age,
+                                dateOfBirth,
                                 gender,
                                 createdOn,
                               ),
@@ -249,17 +250,10 @@ class _RegisterFormState extends State<RegisterForm> {
       lastDate: DateTime.now(),
     ).then((pickedDate) {
       if (pickedDate != null) {
-        _calculateAge(pickedDate);
+        setState(() {
+          _dateOfBirth.text = pickedDate.toString();
+        });
       }
-    });
-  }
-
-  _calculateAge(DateTime date) {
-    DateTime now = DateTime.now();
-    Duration age = now.difference(date);
-    int years = age.inDays ~/ 365;
-    setState(() {
-      _age.text = years.toString();
     });
   }
 }

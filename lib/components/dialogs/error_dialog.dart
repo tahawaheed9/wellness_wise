@@ -4,12 +4,12 @@ import '../dialogs/generic_dialog.dart';
 
 Future<void> showErrorDialog(
   BuildContext context,
-  String text,
+  final String text,
 ) {
   return showGenericDialog(
     context: context,
     title: 'Error',
-    content: text,
+    content: Text(text),
     optionsBuilder: () => {
       'OK': null,
     },

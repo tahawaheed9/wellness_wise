@@ -33,7 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final username = event.username;
       final email = event.email;
       final password = event.password;
-      final age = event.age;
+      final dateOfBirth = event.dateOfBirth;
       final gender = event.gender;
       final createdOn = event.createdOn;
 
@@ -42,7 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           username: username,
           email: email,
           password: password,
-          age: age,
+          dateOfBirth: dateOfBirth,
           gender: gender,
           createdOn: createdOn,
         );
