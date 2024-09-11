@@ -1,5 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import 'package:dropdown_search/dropdown_search.dart';
+import '/components/failed_snack_bar.dart';
+import '/components/success_snack_bar.dart';
+import '/services/database/database_service.dart';
 import '../../components/dialogs/save_prediction_dialog.dart';
 import '/components/dialogs/error_dialog.dart';
 import '/components/dialogs/general_disease_dialog.dart';
@@ -15,6 +21,8 @@ class GeneralDiseaseScreen extends StatefulWidget {
 
 class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
   final DiseaseModel _model = DiseaseModel();
+  final DatabaseServices _db = DatabaseServices();
+
   late final Future _future;
 
   late final List<String> _symptomsList;
@@ -24,17 +32,10 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
   late final String _description;
   late final List<dynamic> _precautions;
 
-  String? _selectedValue;
-
   @override
   void initState() {
     super.initState();
-    _symptomsList = [];
-    try {
-      _future = _model.fetchSymptomList();
-    } catch (error) {
-      showErrorDialog(context, error.toString());
-    }
+    _future = _model.fetchSymptomList();
   }
 
   @override
@@ -65,97 +66,155 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
               } else if (snapshot.hasError) {
                 return Center(
                   child: Text(
-                    'Could not fetch the list...',
+                    'Error: ${snapshot.error}',
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 );
               } else if (snapshot.hasData) {
-                final List<dynamic> symptoms = snapshot.data['symptoms'];
-                return Column(
-                  children: <Widget>[
-                    Text(
-                      'Please provide us with your symptoms.',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    const SizedBox(height: 30.0),
-                    DropdownButtonFormField<dynamic>(
-                      value: _selectedValue,
-                      hint: const Text('Select a symptom'),
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedValue = value;
-                          _symptomsList.add(value);
-                        });
-                      },
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                return Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Please provide us with your symptoms.',
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      items: symptoms.map((symptom) {
-                        return DropdownMenuItem(
-                          value: symptom,
-                          child: Text(symptom),
-                        );
-                      }).toList(),
-                    ),
-                    const SizedBox(height: 50.0),
-                    PrimaryButton(
-                      text: 'Predict General Disease',
-                      onPressed: () async {
-                        final Map<String, List<String>> symptoms = {
-                          'symptoms': _symptomsList
-                        };
-
-                        try {
-                          // Fetch predictions from the model...
-                          await _model
-                              .fetchGeneralDiseasePredictions(symptoms)
-                              .then((prediction) async {
-                            _disease = prediction['prediction'].toString();
-                            _probability = prediction['probability'].toString();
-                            _description = prediction['disease'].toString();
-                            _precautions = prediction['precautions'];
-                            if (context.mounted) {
-                              // Display the predictions to the user...
-                              await showGeneralDiseaseDialog(
-                                context,
-                                _disease,
-                                _probability,
-                                _description,
-                                _precautions,
-                                _symptomsList,
-                              ).then(<bool>(value) async {
-                                if (value) {
-                                  // When dialog is closed, show Save dialog...
-                                  await showSavePredictionDialog(context)
-                                      .then(<bool>(value) async {
-                                    if (value) {
-                                      // If Save, store the data on cloud...
-                                      print('Save on the cloud fire store...');
-                                    }
-                                  });
-                                }
-                              });
-                            }
+                      const SizedBox(height: 30.0),
+                      DropdownSearch.multiSelection(
+                        items: snapshot.data['symptoms'],
+                        clearButtonProps: const ClearButtonProps(
+                          isVisible: true,
+                          tooltip: 'Clear all symptoms'
+                        ),
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            hintText: 'Select a symptom',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        popupProps: const PopupPropsMultiSelection.menu(
+                          showSearchBox: true,
+                        ),
+                        onChanged: (selectedList) {
+                          setState(() {
+                            print(selectedList);
                           });
-                        } catch (error) {
-                          if (context.mounted) {
-                            await showErrorDialog(context, error.toString());
-                          }
-                        }
-                      },
-                    ),
-                  ],
+                        },
+                      ),
+                      const SizedBox(height: 50.0),
+                      PrimaryButton(
+                        text: 'Predict General Disease',
+                        onPressed: () async {
+                          await _makePrediction(context);
+                        },
+                      ),
+                    ],
+                  ),
                 );
               }
               return Center(
                 child: Text(
-                  'An error occurred...',
+                  'No data available',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               );
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Future<void> _makePrediction(BuildContext context) async {
+    if (_symptomsList.isNotEmpty) {
+      final Map<String, List<String>> symptoms = {'symptoms': _symptomsList};
+
+      try {
+        // Fetch predictions from the model...
+        await _model
+            .fetchGeneralDiseasePredictions(symptoms)
+            .then((prediction) async {
+          _disease = prediction['prediction'].toString();
+          _probability = prediction['probability'].toString();
+          _description = prediction['disease'].toString();
+          _precautions = prediction['precautions'];
+          if (context.mounted) {
+            // Display the predictions to the user...
+            await showGeneralDiseaseDialog(
+              context,
+              _disease,
+              _probability,
+              _description,
+              _precautions,
+              _symptomsList,
+            ).then(<bool>(value) async {
+              if (value) {
+                // When dialog is closed, show Save dialog...
+                await showSavePredictionDialog(context)
+                    .then(<bool>(value) async {
+                  if (value) {
+                    final createdOn = DateTime.now();
+                    Map<String, Object?> data = {
+                      'disease': _disease,
+                      'probability': _probability,
+                      'description': _description,
+                      'precautions': _precautions,
+                      'symptoms': _symptomsList,
+                      'created-on': createdOn,
+                    };
+                    // If Save, store the data on cloud...
+                    await _savePrediction(data, context);
+                  }
+                });
+              }
+            });
+          }
+          if (context.mounted) {
+            refreshScreen(context);
+          }
+        });
+      } catch (error) {
+        if (context.mounted) {
+          await showErrorDialog(context, error.toString());
+        }
+      }
+    } else {
+      await showErrorDialog(
+        context,
+        'Please at least select one (1) symptom.',
+      );
+    }
+  }
+
+  Future<void> _savePrediction(
+      Map<String, Object?> data, BuildContext context) async {
+    final isDataSaved = await _db.addPrediction(data);
+    if (isDataSaved) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          showSuccessSnackBar(
+            context,
+            'Successfully save',
+            Icons.check_circle_outline,
+          ),
+        );
+      }
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          showFailedSnackBar(
+            context,
+            'An error occurred. Please, Try again or Contact Support.',
+            Icons.cancel_outlined,
+          ),
+        );
+      }
+    }
+  }
+
+  void refreshScreen(BuildContext context) {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (BuildContext context) => const GeneralDiseaseScreen(),
       ),
     );
   }

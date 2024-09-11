@@ -11,9 +11,6 @@ Future<bool> showGeneralDiseaseDialog(
   final List<dynamic> precautions,
   final List<String> symptoms,
 ) {
-  final precautionsList = precautions.join('\n');
-  final symptomsList = symptoms.join('\n');
-
   return showGenericDialog(
     context: context,
     title: 'General Disease Prediction',
@@ -71,7 +68,7 @@ Future<bool> showGeneralDiseaseDialog(
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 5.0),
-            Text(precautionsList),
+            Text(precautions.map((item) => ' — $item\n').join()),
             const Divider(),
 
             // User's Given Symptoms...
@@ -80,10 +77,7 @@ Future<bool> showGeneralDiseaseDialog(
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 5.0),
-            Text(
-              symptomsList,
-              softWrap: true,
-            ),
+            Text(symptoms.map((item) => ' — $item\n').join()),
             const Divider(),
 
             // Disclaimer...
@@ -93,8 +87,7 @@ Future<bool> showGeneralDiseaseDialog(
             ),
             const SizedBox(height: 5.0),
             const Text(
-              'Please do not rely on these predictions. '
-              'Consult your doctor for valid evaluation.',
+              'Please consult your doctor for further evaluation.',
               softWrap: true,
             )
           ],

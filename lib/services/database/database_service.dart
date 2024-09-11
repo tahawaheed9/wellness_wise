@@ -4,28 +4,32 @@ import '../auth/auth_service.dart';
 
 class DatabaseServices {
   final _firestore = FirebaseFirestore.instance;
-  final docId = AuthService.firebase().currentUser!.id;
+  final _docId = AuthService
+      .firebase()
+      .currentUser!
+      .id;
 
-  late final bool isDataSaved;
+  late final bool _isDataSaved;
 
   late final DocumentReference _userDataDocumentRef;
+  late final CollectionReference _predictionCollectionRef;
   late final CollectionReference _additionalInformationCollectionRef;
 
   // Initializing the Document & Collection References...
   DatabaseServices() {
-    _userDataDocumentRef = _firestore.collection('user-data').doc(docId);
+    _userDataDocumentRef = _firestore.collection('user-data').doc(_docId);
+
+    _predictionCollectionRef = _userDataDocumentRef.collection('predictions');
 
     _additionalInformationCollectionRef =
         _userDataDocumentRef.collection('additional-information');
   }
 
   // Setting Username and Gender to main collection (user-data)...
-  Future setUserData(
-    String username,
-    DateTime dateOfBirth,
-    String gender,
-    DateTime createdOn,
-  ) async {
+  Future setUserData(String username,
+      DateTime dateOfBirth,
+      String gender,
+      DateTime createdOn,) async {
     try {
       await _userDataDocumentRef.set({
         'username': username,
@@ -38,17 +42,29 @@ class DatabaseServices {
     }
   }
 
+  // Adding new predictions to the 'predictions' collection..
+  Future<bool> addPrediction(Map<String, Object?> data) async {
+    try {
+      await _predictionCollectionRef.add(data).whenComplete(<bool>() {
+        _isDataSaved = true;
+      });
+    } catch (error) {
+      _isDataSaved = false;
+    }
+    return _isDataSaved;
+  }
+
   // Adding new document to the 'additional-information' collection...
   Future<bool> addAdditionalInformation(Map<String, Object?> data) async {
     try {
       await _additionalInformationCollectionRef
           .add(data)
           .whenComplete(<bool>() {
-        isDataSaved = true;
+        _isDataSaved = true;
       });
     } catch (_) {
-      isDataSaved = false;
+      _isDataSaved = false;
     }
-    return isDataSaved;
+    return _isDataSaved;
   }
 }
