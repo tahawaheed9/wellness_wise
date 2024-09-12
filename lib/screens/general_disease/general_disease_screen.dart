@@ -18,7 +18,7 @@ class GeneralDiseaseScreen extends StatefulWidget {
 }
 
 class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
-  late final DiseaseModel _model;
+  late final DiseaseModelServices _diseaseModel;
   late final DatabaseServices _db;
 
   List<String> symptomsList = [];
@@ -31,7 +31,7 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
   @override
   void initState() {
     super.initState();
-    _model = DiseaseModel();
+    _diseaseModel = DiseaseModelServices();
     _db = DatabaseServices();
   }
 
@@ -50,7 +50,7 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
                 child: DropdownSearch.multiSelection(
-                  asyncItems: (_) => _model.fetchSymptomList(),
+                  asyncItems: (_) => _diseaseModel.fetchSymptomList(),
                   onChanged: (selectedList) {
                     setState(() {
                       symptomsList.clear();
@@ -115,7 +115,7 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
 
       try {
         // Fetch predictions from the model...
-        await _model
+        await _diseaseModel
             .fetchGeneralDiseasePredictions(symptoms)
             .then((prediction) async {
           setState(() {

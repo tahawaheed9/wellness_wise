@@ -82,7 +82,7 @@ Future<bool> showGeneralDiseaseDialog(
 
             // Disclaimer...
             const Text(
-              'Disclaimer: ',
+              'Note: ',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 5.0),

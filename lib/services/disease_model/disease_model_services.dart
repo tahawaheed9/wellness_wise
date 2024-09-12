@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-class DiseaseModel {
+class DiseaseModelServices {
   // Api key...
   final _apiKey = 'http://192.168.1.9:5000';
 
