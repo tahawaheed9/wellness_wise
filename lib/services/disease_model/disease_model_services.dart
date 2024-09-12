@@ -7,14 +7,15 @@ class DiseaseModel {
   final _apiKey = 'http://192.168.1.9:5000';
 
   // Fetching the symptoms list...
-  Future<Map<String, dynamic>> fetchSymptomList() async {
+  Future<List<dynamic>> fetchSymptomList() async {
     try {
       final response =
           await http.get(Uri.parse('$_apiKey/retrieve_symptoms_list'));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
-        return data;
+        final List<dynamic> symptomList = data['symptoms'];
+        return symptomList;
       } else {
         throw Exception(
             'Unable to fetch the list. Status code: ${response.statusCode}.');

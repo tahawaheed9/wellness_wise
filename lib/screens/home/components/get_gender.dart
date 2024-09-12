@@ -11,15 +11,22 @@ class GetGender extends StatefulWidget {
 }
 
 class _GetGenderState extends State<GetGender> {
-  final docId = AuthService.firebase().currentUser!.id;
+  late final Stream<DocumentSnapshot> _stream;
+  final userId = AuthService.firebase().currentUser!.id;
+
+  @override
+  void initState() {
+    super.initState();
+    _stream = FirebaseFirestore.instance
+        .collection('user-data')
+        .doc(userId)
+        .snapshots();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<DocumentSnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection('user-data')
-          .doc(docId)
-          .snapshots(),
+    return StreamBuilder(
+      stream: _stream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedBox(

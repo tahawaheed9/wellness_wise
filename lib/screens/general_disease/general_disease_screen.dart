@@ -1,8 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-
 import 'package:dropdown_search/dropdown_search.dart';
+
 import '/components/failed_snack_bar.dart';
 import '/components/success_snack_bar.dart';
 import '/services/database/database_service.dart';
@@ -20,22 +18,21 @@ class GeneralDiseaseScreen extends StatefulWidget {
 }
 
 class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
-  final DiseaseModel _model = DiseaseModel();
-  final DatabaseServices _db = DatabaseServices();
+  late final DiseaseModel _model;
+  late final DatabaseServices _db;
 
-  late final Future _future;
+  List<String> symptomsList = [];
 
-  late final List<String> _symptomsList;
-
-  late final String _disease;
-  late final String _probability;
-  late final String _description;
-  late final List<dynamic> _precautions;
+  String _disease = '';
+  String _probability = '';
+  String _description = '';
+  List<dynamic> _precautions = [];
 
   @override
   void initState() {
     super.initState();
-    _future = _model.fetchSymptomList();
+    _model = DiseaseModel();
+    _db = DatabaseServices();
   }
 
   @override
@@ -47,77 +44,65 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: FutureBuilder(
-            future: _future,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: Column(
-                    children: <Widget>[
-                      const CircularProgressIndicator(),
-                      const SizedBox(height: 30.0),
-                      Text(
-                        'Fetching Symptom List...',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ],
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 30.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: DropdownSearch.multiSelection(
+                  asyncItems: (_) => _model.fetchSymptomList(),
+                  onChanged: (selectedList) {
+                    setState(() {
+                      symptomsList.clear();
+                      symptomsList.addAll(selectedList.cast<String>());
+                    });
+                  },
+                  clearButtonProps: const ClearButtonProps(
+                    isVisible: true,
+                    tooltip: 'Clear all',
                   ),
-                );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text(
-                    'Error: ${snapshot.error}',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: 'Select a symptom',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
-                );
-              } else if (snapshot.hasData) {
-                return Center(
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'Please provide us with your symptoms.',
-                        style: Theme.of(context).textTheme.bodyLarge,
+                  popupProps: PopupPropsMultiSelection.menu(
+                    showSearchBox: true,
+                    searchDelay: const Duration(milliseconds: 1),
+                    searchFieldProps: const TextFieldProps(
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        hintText: 'Search symptom',
+                        border: OutlineInputBorder(),
                       ),
-                      const SizedBox(height: 30.0),
-                      DropdownSearch.multiSelection(
-                        items: snapshot.data['symptoms'],
-                        clearButtonProps: const ClearButtonProps(
-                          isVisible: true,
-                          tooltip: 'Clear all symptoms'
+                    ),
+                    loadingBuilder: (context, _) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const CircularProgressIndicator(),
+                            const SizedBox(height: 30.0),
+                            Text(
+                              'Fetching data...',
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ],
                         ),
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            hintText: 'Select a symptom',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        popupProps: const PopupPropsMultiSelection.menu(
-                          showSearchBox: true,
-                        ),
-                        onChanged: (selectedList) {
-                          setState(() {
-                            print(selectedList);
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 50.0),
-                      PrimaryButton(
-                        text: 'Predict General Disease',
-                        onPressed: () async {
-                          await _makePrediction(context);
-                        },
-                      ),
-                    ],
+                      );
+                    },
                   ),
-                );
-              }
-              return Center(
-                child: Text(
-                  'No data available',
-                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
-              );
-            },
+              ),
+              const SizedBox(height: 50.0),
+              PrimaryButton(
+                text: 'Predict General Disease',
+                onPressed: () async {
+                  await _makePrediction(context);
+                },
+              ),
+            ],
           ),
         ),
       ),
@@ -125,18 +110,20 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
   }
 
   Future<void> _makePrediction(BuildContext context) async {
-    if (_symptomsList.isNotEmpty) {
-      final Map<String, List<String>> symptoms = {'symptoms': _symptomsList};
+    if (symptomsList.isNotEmpty) {
+      final Map<String, List<String>> symptoms = {'symptoms': symptomsList};
 
       try {
         // Fetch predictions from the model...
         await _model
             .fetchGeneralDiseasePredictions(symptoms)
             .then((prediction) async {
-          _disease = prediction['prediction'].toString();
-          _probability = prediction['probability'].toString();
-          _description = prediction['disease'].toString();
-          _precautions = prediction['precautions'];
+          setState(() {
+            _disease = prediction['prediction'].toString();
+            _probability = prediction['probability'].toString();
+            _description = prediction['disease'].toString();
+            _precautions = prediction['precautions'];
+          });
           if (context.mounted) {
             // Display the predictions to the user...
             await showGeneralDiseaseDialog(
@@ -145,7 +132,7 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
               _probability,
               _description,
               _precautions,
-              _symptomsList,
+              symptomsList,
             ).then(<bool>(value) async {
               if (value) {
                 // When dialog is closed, show Save dialog...
@@ -158,7 +145,7 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
                       'probability': _probability,
                       'description': _description,
                       'precautions': _precautions,
-                      'symptoms': _symptomsList,
+                      'symptoms': symptomsList,
                       'created-on': createdOn,
                     };
                     // If Save, store the data on cloud...
@@ -167,9 +154,6 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
                 });
               }
             });
-          }
-          if (context.mounted) {
-            refreshScreen(context);
           }
         });
       } catch (error) {
@@ -209,13 +193,5 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
         );
       }
     }
-  }
-
-  void refreshScreen(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (BuildContext context) => const GeneralDiseaseScreen(),
-      ),
-    );
   }
 }

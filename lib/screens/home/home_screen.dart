@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   const UserInformationCard(),
-
                   const NamedDivider(title: 'Health Data'),
                   CustomCard(
                     cardTitle: 'Additional Information',
@@ -57,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       pushAdditionalInformationScreen(context);
                     },
                   ),
-
                   const NamedDivider(title: 'Health Predictions'),
                   Row(
                     children: <Widget>[
@@ -71,25 +69,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       CustomCard(
                         cardTitle: 'Heart Disease',
                         icon: Icons.favorite_outline,
-                        onTap: () {},
+                        onTap: () {
+                          pushHeartDiseaseScreen(context);
+                        },
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10.0),
-                  CustomCard(
-                    cardTitle: 'Kidney Disease',
-                    icon: Icons.medical_services_outlined,
-                    onTap: () {},
-                  ),
-
-                  const NamedDivider(title: 'Data Visualization'),
-                  CustomCard(
-                    cardTitle: 'Charts',
-                    icon: Icons.bar_chart_sharp,
-                    onTap: () {
-                      pushChartsScreen(context);
-                    },
-                  ),
+                  const NamedDivider(title: 'Trends'),
                 ],
               ),
             ),

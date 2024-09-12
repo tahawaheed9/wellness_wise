@@ -33,7 +33,7 @@ void pushGeneralDiseaseScreen(BuildContext context) {
   Navigator.of(context).pushNamed(generalDiseaseScreenRoute);
 }
 
-// Charts...
-void pushChartsScreen(BuildContext context) {
-  Navigator.of(context).pushNamed(chartsScreen);
+// Heart Disease...
+void pushHeartDiseaseScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(heartDiseaseScreenRoute);
 }
