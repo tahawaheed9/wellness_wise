@@ -177,7 +177,7 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           showSuccessSnackBar(
             context,
-            'Successfully save',
+            'Successfully saved.',
             Icons.check_circle_outline,
           ),
         );
