@@ -28,6 +28,8 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
   String _description = '';
   List<dynamic> _precautions = [];
 
+  bool _isDataSaved = false;
+
   @override
   void initState() {
     super.initState();
@@ -171,26 +173,32 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
 
   Future<void> _savePrediction(
       Map<String, Object?> data, BuildContext context) async {
-    final isDataSaved = await _db.addPrediction(data);
-    if (isDataSaved) {
+    try {
+      await _db.addPrediction(data).whenComplete(<bool>() {
+        setState(() {
+          _isDataSaved = true;
+        });
+        if (_isDataSaved) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            showSuccessSnackBar(
+              context,
+              'Successfully saved.',
+              Icons.check_circle_outline,
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            showFailedSnackBar(
+              context,
+              'Could not save. Please try again or contact support.',
+              Icons.cancel_outlined,
+            ),
+          );
+        }
+      });
+    } catch (error) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          showSuccessSnackBar(
-            context,
-            'Successfully saved.',
-            Icons.check_circle_outline,
-          ),
-        );
-      }
-    } else {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          showFailedSnackBar(
-            context,
-            'An error occurred. Please, Try again or Contact Support.',
-            Icons.cancel_outlined,
-          ),
-        );
+        await showErrorDialog(context, error.toString());
       }
     }
   }

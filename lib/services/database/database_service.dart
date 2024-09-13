@@ -4,10 +4,7 @@ import '../auth/auth_service.dart';
 
 class DatabaseServices {
   final _firestore = FirebaseFirestore.instance;
-  final _docId = AuthService
-      .firebase()
-      .currentUser!
-      .id;
+  final _docId = AuthService.firebase().currentUser!.id;
 
   late final bool _isDataSaved;
 
@@ -17,6 +14,8 @@ class DatabaseServices {
 
   // Initializing the Document & Collection References...
   DatabaseServices() {
+    _isDataSaved = false;
+
     _userDataDocumentRef = _firestore.collection('user-data').doc(_docId);
 
     _predictionCollectionRef = _userDataDocumentRef.collection('predictions');
@@ -26,10 +25,12 @@ class DatabaseServices {
   }
 
   // Setting Username and Gender to main collection (user-data)...
-  Future setUserData(String username,
-      DateTime dateOfBirth,
-      String gender,
-      DateTime createdOn,) async {
+  Future setUserData(
+    String username,
+    DateTime dateOfBirth,
+    String gender,
+    DateTime createdOn,
+  ) async {
     try {
       await _userDataDocumentRef.set({
         'username': username,
@@ -43,15 +44,12 @@ class DatabaseServices {
   }
 
   // Adding new predictions to the 'predictions' collection..
-  Future<bool> addPrediction(Map<String, Object?> data) async {
+  Future<dynamic> addPrediction(Map<String, Object?> data) async {
     try {
-      await _predictionCollectionRef.add(data).whenComplete(<bool>() {
-        _isDataSaved = true;
-      });
+      await _predictionCollectionRef.add(data);
     } catch (error) {
-      _isDataSaved = false;
+      throw Exception(error.toString());
     }
-    return _isDataSaved;
   }
 
   // Adding new document to the 'additional-information' collection...
@@ -59,11 +57,10 @@ class DatabaseServices {
     try {
       await _additionalInformationCollectionRef
           .add(data)
-          .whenComplete(<bool>() {
-        _isDataSaved = true;
-      });
+          .whenComplete(<bool>() => true);
     } catch (_) {
-      _isDataSaved = false;
+      throw Exception(
+          'An error occurred. Please, Try again or Contact Support.');
     }
     return _isDataSaved;
   }
