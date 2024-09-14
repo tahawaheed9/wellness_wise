@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '/screens/heart_disease/heart_disease_screen.dart';
+import '/screens/diabetes_predictions/diabetes_predictions_screen.dart';
+import '/screens/heart_failure/heart_failure_screen.dart';
 import '/screens/general_disease/general_disease_screen.dart';
 import '/screens/register/register_screen.dart';
 import '/screens/reset_password/reset_password_screen.dart';
@@ -11,14 +12,17 @@ const loginScreenRoute = '/login/';
 const resetPasswordScreenRoute = '/reset-password/';
 const additionalInformationScreenRoute = '/additional-information/';
 const generalDiseaseScreenRoute = '/general-disease/';
-const heartDiseaseScreenRoute = '/heart-disease/';
+const heartFailureScreenRoute = '/heart-disease/';
+const diabetesPredictionsScreenRoute = '/diabetes-predictions/';
 
 Map<String, Widget Function(BuildContext)> routes = {
   registerScreenRoute: (context) => const RegisterScreen(),
   loginScreenRoute: (context) => const ResetPasswordScreen(),
   resetPasswordScreenRoute: (context) => const ResetPasswordScreen(),
   additionalInformationScreenRoute: (context) =>
-  const AdditionalInformationScreen(),
+      const AdditionalInformationScreen(),
   generalDiseaseScreenRoute: (context) => const GeneralDiseaseScreen(),
-  heartDiseaseScreenRoute: (context) => const HeartDiseaseScreen(),
+  heartFailureScreenRoute: (context) => const HeartFailureScreen(),
+  diabetesPredictionsScreenRoute: (context) =>
+      const DiabetesPredictionsScreen(),
 };

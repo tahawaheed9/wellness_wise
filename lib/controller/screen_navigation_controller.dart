@@ -33,7 +33,12 @@ void pushGeneralDiseaseScreen(BuildContext context) {
   Navigator.of(context).pushNamed(generalDiseaseScreenRoute);
 }
 
-// Heart Disease...
-void pushHeartDiseaseScreen(BuildContext context) {
-  Navigator.of(context).pushNamed(heartDiseaseScreenRoute);
+// Heart Failure...
+void pushHeartFailureScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(heartFailureScreenRoute);
+}
+
+// Diabetes Predictions...
+void pushDiabetesPredictionsScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(diabetesPredictionsScreenRoute);
 }
