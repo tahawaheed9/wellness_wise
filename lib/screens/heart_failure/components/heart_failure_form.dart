@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 
+import '/components/dialogs/heart_failure_dialog.dart';
+import '/components/dialogs/save_prediction_dialog.dart';
+import '/services/database/database_service.dart';
+import '../../../components/dialogs/error_dialog.dart';
+import '../../../components/failed_snack_bar.dart';
+import '../../../components/success_snack_bar.dart';
 import '/components/primary_button.dart';
+import '/services/disease_model/disease_model_services.dart';
 
 class HeartFailureForm extends StatefulWidget {
   const HeartFailureForm({super.key});
@@ -14,18 +20,27 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
   final _formKey = GlobalKey<FormState>();
 
   late final TextEditingController _age;
-  String gender = '';
-  String chestPainType = '';
+  int? _gender;
+  int? _chestPainType;
   late final TextEditingController _restingBloodPressure;
   late final TextEditingController _serumCholesterol;
-  String restingECG = '';
+  int? _restingECG;
   late final TextEditingController _maxHeartRate;
   late final TextEditingController _stDepression;
-  String peakSTSegment = '';
-  bool? isExerciseInducedAngina = false;
+  int? _peakSTSegment;
   late final TextEditingController _majorVessels;
-  String thalassemia = '';
-  bool? isFastingBloodSugar = false;
+  int? _thalassemia;
+  int? _isExerciseInducedAngina;
+  int? _isFastingBloodSugar;
+
+  List<Object> readingsList = [];
+
+  late final DiseaseModelServices _diseaseModel;
+  late final DatabaseServices _db;
+
+  String _response = '';
+
+  bool _isDataSaved = false;
 
   @override
   void initState() {
@@ -36,6 +51,8 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
     _maxHeartRate = TextEditingController();
     _stDepression = TextEditingController();
     _majorVessels = TextEditingController();
+    _diseaseModel = DiseaseModelServices();
+    _db = DatabaseServices();
   }
 
   @override
@@ -56,37 +73,27 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
                     autocorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-                      labelText: 'Age',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      suffixText: 'years',
-                      border: OutlineInputBorder(),
-                    ),
+                    validator: _validateForm,
+                    decoration:
+                        _decoration(labelText: 'Age', suffixText: 'years'),
                   ),
                 ),
                 const SizedBox(width: 10.0),
 
                 //Gender Field...
                 Expanded(
-                  child: DropdownSearch<String>(
+                  child: DropdownButtonFormField<int>(
+                    value: _gender,
                     items: const [
-                      'male',
-                      'female',
+                      DropdownMenuItem(value: 1, child: Text('Male')),
+                      DropdownMenuItem(value: 0, child: Text('Female')),
                     ],
-                    onChanged: (selectedItem) {
-                      setState(() {
-                        gender = selectedItem.toString();
-                      });
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Gender'),
+                    onChanged: (int? value) {
+                      setState(() => _gender = value);
                     },
-                    dropdownDecoratorProps: const DropDownDecoratorProps(
-                      dropdownSearchDecoration: InputDecoration(
-                        labelText: 'Gender',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
                   ),
                 ),
               ],
@@ -98,23 +105,22 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
               children: <Widget>[
                 // Chest Pain Type Field...
                 Expanded(
-                  child: DropdownSearch<String>(
+                  child: DropdownButtonFormField<int>(
+                    value: _chestPainType,
                     items: const [
-                      'typical angina',
-                      'atypical angina',
-                      'non — anginal pain',
-                      'asymptotic',
+                      DropdownMenuItem(value: 0, child: Text('Typical Angina')),
+                      DropdownMenuItem(
+                          value: 1, child: Text('Atypical Angina')),
+                      DropdownMenuItem(
+                          value: 2, child: Text('Non — Anginal Pain')),
+                      DropdownMenuItem(value: 3, child: Text('Asymptotic')),
                     ],
-                    onChanged: (selectedItem) {
-                      chestPainType = selectedItem.toString();
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Chest Pain Type'),
+                    onChanged: (int? value) {
+                      setState(() => _chestPainType = value);
                     },
-                    dropdownDecoratorProps: const DropDownDecoratorProps(
-                      dropdownSearchDecoration: InputDecoration(
-                        labelText: 'Chest Pain Type',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
                   ),
                 ),
                 const SizedBox(width: 10.0),
@@ -126,13 +132,9 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
                     autocorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-                      labelText: 'Resting Blood Pressure',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: OutlineInputBorder(),
-                    ),
+                    validator: _validateForm,
+                    decoration:
+                        _decoration(labelText: 'Resting Blood Pressure'),
                   ),
                 ),
               ],
@@ -149,35 +151,31 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
                     autocorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-                      labelText: 'Serum Cholesterol',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: OutlineInputBorder(),
-                    ),
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Serum Cholesterol'),
                   ),
                 ),
                 const SizedBox(width: 10.0),
 
                 // Resting ECG Field...
                 Expanded(
-                  child: DropdownSearch<String>(
+                  child: DropdownButtonFormField<int>(
+                    value: _restingECG,
                     items: const [
-                      'normal',
-                      'having ST-T wave abnormality',
-                      'left ventricular hyperthrophy',
+                      DropdownMenuItem(value: 0, child: Text('Normal')),
+                      DropdownMenuItem(
+                          value: 1,
+                          child: Text('Having ST-T Wave Abnormality')),
+                      DropdownMenuItem(
+                          value: 2,
+                          child: Text('Left Ventricular Hypertrophy')),
                     ],
-                    onChanged: (selectedItem) {
-                      restingECG = selectedItem.toString();
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Resting ECG'),
+                    onChanged: (int? value) {
+                      setState(() => _restingECG = value);
                     },
-                    dropdownDecoratorProps: const DropDownDecoratorProps(
-                      dropdownSearchDecoration: InputDecoration(
-                        labelText: 'Resting ECG',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
                   ),
                 ),
               ],
@@ -194,13 +192,8 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
                     autocorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-                      labelText: 'Max Heart Rate',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: OutlineInputBorder(),
-                    ),
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Max Heart Rate'),
                   ),
                 ),
                 const SizedBox(width: 10.0),
@@ -212,13 +205,9 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
                     autocorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-                      labelText: 'ST Depression Exercise',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: OutlineInputBorder(),
-                    ),
+                    validator: _validateForm,
+                    decoration:
+                        _decoration(labelText: 'ST Depression Exercise'),
                   ),
                 ),
               ],
@@ -230,22 +219,19 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
               children: <Widget>[
                 // Peak Exercise ST Segment
                 Expanded(
-                  child: DropdownSearch<String>(
+                  child: DropdownButtonFormField<int>(
+                    value: _peakSTSegment,
                     items: const [
-                      'upsloping',
-                      'flat',
-                      'downsloping',
+                      DropdownMenuItem(value: 0, child: Text('Up-sloping')),
+                      DropdownMenuItem(value: 1, child: Text('Flat')),
+                      DropdownMenuItem(value: 2, child: Text('Down-sloping')),
                     ],
-                    onChanged: (selectedItem) {
-                      peakSTSegment = selectedItem.toString();
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Peak ST Segment'),
+                    onChanged: (int? value) {
+                      setState(() => _peakSTSegment = value);
                     },
-                    dropdownDecoratorProps: const DropDownDecoratorProps(
-                      dropdownSearchDecoration: InputDecoration(
-                        labelText: 'Peak Exercise ST',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
                   ),
                 ),
                 const SizedBox(width: 10.0),
@@ -257,13 +243,8 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
                     autocorrect: false,
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-                      labelText: 'Major Vessels (0 - 3)',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: OutlineInputBorder(),
-                    ),
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Major Vessels (0 - 3)'),
                   ),
                 ),
               ],
@@ -273,22 +254,20 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: DropdownSearch<String>(
+                  child: DropdownButtonFormField<int>(
+                    value: _thalassemia,
                     items: const [
-                      'normal',
-                      'fixed defect',
-                      'reversible defect',
+                      DropdownMenuItem(value: 0, child: Text('Normal')),
+                      DropdownMenuItem(value: 1, child: Text('Fixed Defect')),
+                      DropdownMenuItem(
+                          value: 2, child: Text('Reversible Defect')),
                     ],
-                    onChanged: (selectedItem) {
-                      thalassemia = selectedItem.toString();
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Thalassemia'),
+                    onChanged: (int? value) {
+                      setState(() => _thalassemia = value);
                     },
-                    dropdownDecoratorProps: const DropDownDecoratorProps(
-                      dropdownSearchDecoration: InputDecoration(
-                        labelText: 'Thalassemia',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
                   ),
                 ),
                 const SizedBox(width: 10.0),
@@ -300,33 +279,150 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
             CheckboxListTile(
               title: const Text('Exercise induced angina'),
               controlAffinity: ListTileControlAffinity.leading,
-              value: isExerciseInducedAngina,
+              value: _isExerciseInducedAngina == 1 ? true : false,
               onChanged: (bool? value) {
                 setState(() {
-                  isExerciseInducedAngina = value;
+                  value == true
+                      ? _isExerciseInducedAngina = 1
+                      : _isExerciseInducedAngina = 0;
                 });
               },
             ),
             const SizedBox(height: 20.0),
-
             CheckboxListTile(
               title: const Text('Fasting Blood Sugar > 120 mg/dL'),
               controlAffinity: ListTileControlAffinity.leading,
-              value: isFastingBloodSugar,
+              value: _isFastingBloodSugar == 1 ? true : false,
               onChanged: (bool? value) {
                 setState(() {
-                  isFastingBloodSugar = value;
+                  value == true
+                      ? _isFastingBloodSugar = 1
+                      : _isFastingBloodSugar = 0;
                 });
               },
             ),
             const SizedBox(height: 30.0),
             PrimaryButton(
               text: 'Heart Disease Prediction',
-              onPressed: () {},
+              onPressed: () async {
+                await _makePrediction(context);
+              },
             ),
           ],
         ),
       ),
     );
+  }
+
+  _decoration({
+    required String labelText,
+    String? suffixText,
+  }) {
+    return InputDecoration(
+      labelText: labelText,
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      suffixText: suffixText,
+      border: const OutlineInputBorder(),
+    );
+  }
+
+  String? _validateForm(value) {
+    if (value == null || value.toString().isEmpty) {
+      return 'Required';
+    }
+    return null;
+  }
+
+  Future<void> _makePrediction(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        readingsList = [
+          int.parse(_age.text),
+          _gender!,
+          _chestPainType!,
+          int.parse(_restingBloodPressure.text),
+          int.parse(_serumCholesterol.text),
+          _isFastingBloodSugar ?? 0,
+          _restingECG!,
+          int.parse(_maxHeartRate.text),
+          _isExerciseInducedAngina ?? 0,
+          int.parse(_stDepression.text),
+          _peakSTSegment!,
+          int.parse(_majorVessels.text),
+          _thalassemia!,
+        ];
+      });
+
+      final Map<String, List<Object>> readings = {
+        'readings': readingsList,
+      };
+
+      try {
+        // Fetching the predictions from the model...
+        await _diseaseModel
+            .fetchHeartFailurePredictions(readings)
+            .then((response) async {
+          setState(() => _response = response);
+          if (context.mounted) {
+            await showHeartFailureDialog(
+              context,
+              _response,
+            ).then(<bool>(value) async {
+              if (value) {
+                await showSavePredictionDialog(context)
+                    .then(<bool>(value) async {
+                  if (value) {
+                    final createdOn = DateTime.now();
+                    Map<String, Object> data = {
+                      'prediction': _response,
+                      'created-on': createdOn,
+                    };
+
+                    // Save data on the cloud...
+                    await _savePrediction(context, data);
+                  }
+                });
+              }
+            });
+          }
+        });
+      } catch (error) {
+        if (context.mounted) {
+          await showErrorDialog(context, error.toString());
+        }
+      }
+    }
+  }
+
+  Future<void> _savePrediction(
+      BuildContext context, Map<String, Object> data) async {
+    try {
+      await _db.addPrediction(data).whenComplete(<bool>() {
+        setState(() {
+          _isDataSaved = true;
+        });
+        if (_isDataSaved) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            showSuccessSnackBar(
+              context,
+              'Successfully saved.',
+              Icons.check_circle_outline,
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            showFailedSnackBar(
+              context,
+              'Could not save. Please try again or contact support.',
+              Icons.cancel_outlined,
+            ),
+          );
+        }
+      });
+    } catch (error) {
+      if (context.mounted) {
+        await showErrorDialog(context, error.toString());
+      }
+    }
   }
 }

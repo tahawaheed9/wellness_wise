@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class DiseaseModelServices {
   // Api key...
-  final _apiKey = 'http://192.168.1.9:5000';
+  final _apiKey = 'http://192.168.1.10:5000';
 
   // Fetching the symptoms list...
   Future<List<dynamic>> fetchSymptomList() async {
@@ -39,6 +39,29 @@ class DiseaseModelServices {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
         return data;
+      } else {
+        throw Exception(
+            'Unable to retrieve predictions. Status code: ${response.statusCode}.');
+      }
+    } catch (error) {
+      throw Exception(error);
+    }
+  }
+
+  // Fetching the Heart Failure Predictions...
+  Future<String> fetchHeartFailurePredictions(
+      Map<String, List<Object>> readings) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$_apiKey/heart_failure_prediction'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(readings),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        final message = data['response'];
+        return message;
       } else {
         throw Exception(
             'Unable to retrieve predictions. Status code: ${response.statusCode}.');

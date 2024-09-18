@@ -80,7 +80,7 @@ Future<bool> showGeneralDiseaseDialog(
             Text(symptoms.map((item) => ' — $item\n').join()),
             const Divider(),
 
-            // Disclaimer...
+            // Note...
             const Text(
               'Note: ',
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -89,7 +89,7 @@ Future<bool> showGeneralDiseaseDialog(
             const Text(
               'Please consult your doctor for further evaluation.',
               softWrap: true,
-            )
+            ),
           ],
         ),
       ),

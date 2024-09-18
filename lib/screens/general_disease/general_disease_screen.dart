@@ -142,7 +142,7 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
                     .then(<bool>(value) async {
                   if (value) {
                     final createdOn = DateTime.now();
-                    Map<String, Object?> data = {
+                    Map<String, Object> data = {
                       'disease': _disease,
                       'probability': _probability,
                       'description': _description,
@@ -151,7 +151,7 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
                       'created-on': createdOn,
                     };
                     // If Save, store the data on cloud...
-                    await _savePrediction(data, context);
+                    await _savePrediction(context, data);
                   }
                 });
               }
@@ -172,7 +172,7 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
   }
 
   Future<void> _savePrediction(
-      Map<String, Object?> data, BuildContext context) async {
+      BuildContext context, Map<String, Object> data) async {
     try {
       await _db.addPrediction(data).whenComplete(<bool>() {
         setState(() {
