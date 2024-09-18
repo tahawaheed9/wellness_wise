@@ -133,8 +133,10 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
-                    decoration:
-                        _decoration(labelText: 'Resting Blood Pressure'),
+                    decoration: _decoration(
+                        labelText: 'Resting Blood Pressure',
+                        hintText: 'Systolic',
+                        suffixText: 'mmHg'),
                   ),
                 ),
               ],
@@ -152,7 +154,10 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
-                    decoration: _decoration(labelText: 'Serum Cholesterol'),
+                    decoration: _decoration(
+                        labelText: 'Serum Cholesterol',
+                        hintText: 'LDL + HDL',
+                        suffixText: 'mg/dL'),
                   ),
                 ),
                 const SizedBox(width: 10.0),
@@ -193,7 +198,10 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
                     enableSuggestions: false,
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
-                    decoration: _decoration(labelText: 'Max Heart Rate'),
+                    decoration: _decoration(
+                      labelText: 'Max Heart Rate',
+                      suffixText: 'bps',
+                    ),
                   ),
                 ),
                 const SizedBox(width: 10.0),
@@ -316,10 +324,12 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
 
   _decoration({
     required String labelText,
+    String? hintText,
     String? suffixText,
   }) {
     return InputDecoration(
       labelText: labelText,
+      hintText: hintText,
       floatingLabelBehavior: FloatingLabelBehavior.always,
       suffixText: suffixText,
       border: const OutlineInputBorder(),
