@@ -215,7 +215,7 @@ class _HeartFailureFormState extends State<HeartFailureForm> {
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
                     decoration:
-                        _decoration(labelText: 'ST Depression Exercise'),
+                        _decoration(labelText: 'ST Depression'),
                   ),
                 ),
               ],
