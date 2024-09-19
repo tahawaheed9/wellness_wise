@@ -51,20 +51,23 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
               const SizedBox(height: 30.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                child: DropdownSearch.multiSelection(
-                  asyncItems: (_) => _diseaseModel.fetchSymptomList(),
+                child: DropdownSearch<dynamic>.multiSelection(
+                  items: (_, __) => _diseaseModel.fetchSymptomList(),
+                  compareFn: (i, s) => i == s,
                   onChanged: (selectedList) {
                     setState(() {
                       symptomsList.clear();
                       symptomsList.addAll(selectedList.cast<String>());
                     });
                   },
-                  clearButtonProps: const ClearButtonProps(
-                    isVisible: true,
-                    tooltip: 'Clear all',
+                  suffixProps: const DropdownSuffixProps(
+                    clearButtonProps: ClearButtonProps(
+                      isVisible: true,
+                      tooltip: 'Clear all',
+                    ),
                   ),
-                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
+                  decoratorProps: const DropDownDecoratorProps(
+                    decoration: InputDecoration(
                       labelText: 'Select a symptom',
                       border: OutlineInputBorder(),
                     ),
