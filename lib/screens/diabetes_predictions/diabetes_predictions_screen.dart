@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/components/dialogs/generic_prediction_dialog.dart';
+import '/components/dialogs/save_prediction_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/failed_snack_bar.dart';
 import '../../components/success_snack_bar.dart';
@@ -21,18 +23,18 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
   late final DiseaseModelServices _diseaseModel;
   late final DatabaseServices _db;
 
-  late final TextEditingController _numberOfPregnancies;
-  late final TextEditingController _glucoseLevel;
-  late final TextEditingController _bloodPressureLevel;
+  late final TextEditingController _pregnancies;
+  late final TextEditingController _glucose;
+  late final TextEditingController _bloodPressure;
   late final TextEditingController _skinThickness;
   late final TextEditingController _insulinValue;
   late final TextEditingController _bmiValue;
-  late final TextEditingController _diabetesPedigreeFunctionValue;
+  late final TextEditingController _diabetesPedigreeFunction;
   late final TextEditingController _age;
 
   List<Object> readingsList = [];
 
-  String response = '';
+  String _response = '';
 
   bool _isDataSaved = false;
 
@@ -41,25 +43,25 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
     super.initState();
     _diseaseModel = DiseaseModelServices();
     _db = DatabaseServices();
-    _numberOfPregnancies = TextEditingController();
-    _glucoseLevel = TextEditingController();
-    _bloodPressureLevel = TextEditingController();
+    _pregnancies = TextEditingController();
+    _glucose = TextEditingController();
+    _bloodPressure = TextEditingController();
     _skinThickness = TextEditingController();
     _insulinValue = TextEditingController();
     _bmiValue = TextEditingController();
-    _diabetesPedigreeFunctionValue = TextEditingController();
+    _diabetesPedigreeFunction = TextEditingController();
     _age = TextEditingController();
   }
 
   @override
   void dispose() {
-    _numberOfPregnancies.dispose();
-    _glucoseLevel.dispose();
-    _bloodPressureLevel.dispose();
+    _pregnancies.dispose();
+    _glucose.dispose();
+    _bloodPressure.dispose();
     _skinThickness.dispose();
     _insulinValue.dispose();
     _bmiValue.dispose();
-    _diabetesPedigreeFunctionValue.dispose();
+    _diabetesPedigreeFunction.dispose();
     _age.dispose();
     super.dispose();
   }
@@ -86,17 +88,18 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                   children: <Widget>[
                     // Number of Pregnancies Field...
                     TextFormField(
-                      controller: _numberOfPregnancies,
+                      controller: _pregnancies,
                       autocorrect: false,
                       enableSuggestions: false,
                       keyboardType: TextInputType.number,
                       validator: _validateForm,
-                      decoration: _decoration(labelText: 'Number of Pregnancies'),
+                      decoration:
+                          _decoration(labelText: 'Number of Pregnancies'),
                     ),
 
                     // Glucose Level Field...
                     TextFormField(
-                      controller: _glucoseLevel,
+                      controller: _glucose,
                       autocorrect: false,
                       enableSuggestions: false,
                       keyboardType: TextInputType.number,
@@ -106,14 +109,15 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
 
                     // Systolic Blood Pressure Field...
                     TextFormField(
-                      controller: _bloodPressureLevel,
+                      controller: _bloodPressure,
                       autocorrect: false,
                       enableSuggestions: false,
                       keyboardType: TextInputType.number,
                       validator: _validateForm,
                       decoration: _decoration(
                         labelText: 'Blood Pressure',
-                        hintText: 'Systolic',
+                        hintText: 'Diastolic',
+                        suffixText: 'mmHg'
                       ),
                     ),
 
@@ -124,7 +128,8 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                       enableSuggestions: false,
                       keyboardType: TextInputType.number,
                       validator: _validateForm,
-                      decoration: _decoration(labelText: 'Skin Thickness Value'),
+                      decoration:
+                          _decoration(labelText: 'Skin Thickness Value'),
                     ),
 
                     // Insulin Value Field...
@@ -148,12 +153,12 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
 
                     // Diabetes Pedigree Function Value Field...
                     TextFormField(
-                      controller: _diabetesPedigreeFunctionValue,
+                      controller: _diabetesPedigreeFunction,
                       autocorrect: false,
                       enableSuggestions: false,
                       validator: _validateForm,
                       decoration:
-                      _decoration(labelText: 'Diabetes Pedigree Function'),
+                          _decoration(labelText: 'Diabetes Pedigree Function'),
                     ),
 
                     // Age Field...
@@ -163,7 +168,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                       enableSuggestions: false,
                       validator: _validateForm,
                       decoration:
-                      _decoration(labelText: 'Age', suffixText: 'years'),
+                          _decoration(labelText: 'Age', suffixText: 'years'),
                     ),
                   ],
                 ),
@@ -171,7 +176,9 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
               const SizedBox(height: 20.0),
               PrimaryButton(
                 text: 'Diabetes Prediction',
-                onPressed: () {},
+                onPressed: () async {
+                  await _makePrediction(context);
+                },
               ),
             ],
           ),
@@ -195,10 +202,77 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
   }
 
   String? _validateForm(value) {
-    if (value == null || value.toString().isEmpty) {
+    if (value == null || value.isEmpty) {
       return 'Required';
     }
     return null;
+  }
+
+  Future<void> _makePrediction(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        readingsList = [
+          int.parse(_pregnancies.text),
+          int.parse(_glucose.text),
+          int.parse(_bloodPressure.text),
+          int.parse(_skinThickness.text),
+          int.parse(_insulinValue.text),
+          double.parse(_bmiValue.text),
+          double.parse(_diabetesPedigreeFunction.text),
+          int.parse(_age.text),
+        ];
+      });
+
+      final Map<String, List<Object>> readings = {
+        'readings': readingsList,
+      };
+
+      try {
+        // Fetching the diabetes predictions...
+        await _diseaseModel
+            .fetchDiabetesPredictions(readings)
+            .then((response) async {
+          setState(() => _response = response);
+          if (context.mounted) {
+            await showGenericPredictionDialog(
+              context,
+              'Diabetes Predictions',
+              _response,
+            ).then(<bool>(value) async {
+              if (value) {
+                await showSavePredictionDialog(context).then(<bool>(value) async {
+                  if (value) {
+                    final createdOn = DateTime.now();
+
+                    final Map<String, Object> data = {
+                      'prediction' : _response,
+                      'readings' : <String, Object>{
+                        'number-of-pregnancies' : readingsList[0],
+                        'glucose-levels' : readingsList[1],
+                        'blood-pressure-levels' : readingsList[2],
+                        'skin-thickness-value' : readingsList[3],
+                        'insulin-value' : readingsList[4],
+                        'bmi-value' : readingsList[5],
+                        'diabetes-pedigree-function-value' : readingsList[6],
+                        'age' : readingsList[7],
+                      },
+                      'created-on' : createdOn,
+                    };
+
+                    // Save Predictions to the cloud...
+                    await _savePrediction(context, data);
+                  }
+                });
+              }
+            });
+          }
+        });
+      } catch (error) {
+        if (context.mounted) {
+          await showErrorDialog(context, error.toString());
+        }
+      }
+    }
   }
 
   Future<void> _savePrediction(

@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import '/controller/responsive_screen_controller.dart';
 import '/components/dialogs/generic_dialog.dart';
 
-Future<bool> showHeartFailureDialog(
+Future<bool> showGenericPredictionDialog(
   BuildContext context,
+  String title,
   String message,
 ) async {
   return showGenericDialog(
     context: context,
-    title: 'Heart Failure Prediction',
+    title: title,
     content: SizedBox(
       height: screenHeight(context) * 0.30,
       child: SingleChildScrollView(

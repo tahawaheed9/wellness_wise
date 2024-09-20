@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/components/dialogs/heart_failure_dialog.dart';
+import '/components/dialogs/generic_prediction_dialog.dart';
 import '/components/dialogs/save_prediction_dialog.dart';
 import '/services/database/database_service.dart';
 import '../../../components/dialogs/error_dialog.dart';
@@ -335,12 +335,13 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
       try {
         // Fetching the predictions from the model...
         await _diseaseModel
-            .fetchHeartFailurePredictions(readings)
+            .fetchHeartDiseasePredictions(readings)
             .then((response) async {
           setState(() => _response = response);
           if (context.mounted) {
-            await showHeartFailureDialog(
+            await showGenericPredictionDialog(
               context,
+              'Heart Disease Prediction',
               _response,
             ).then(<bool>(value) async {
               if (value) {
@@ -348,7 +349,7 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
                     .then(<bool>(value) async {
                   if (value) {
                     final createdOn = DateTime.now();
-                    Map<String, Object> data = {
+                    final Map<String, Object> data = {
                       'prediction': _response,
                       'created-on': createdOn,
                     };

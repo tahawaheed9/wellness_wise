@@ -48,12 +48,35 @@ class DiseaseModelServices {
     }
   }
 
-  // Fetching the Heart Failure Predictions...
-  Future<String> fetchHeartFailurePredictions(
+  // Fetching the Heart Disease Predictions...
+  Future<String> fetchHeartDiseasePredictions(
       Map<String, List<Object>> readings) async {
     try {
       final response = await http.post(
         Uri.parse('$_apiKey/heart_failure_prediction'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(readings),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        final message = data['response'];
+        return message;
+      } else {
+        throw Exception(
+            'Unable to retrieve predictions. Status code: ${response.statusCode}.');
+      }
+    } catch (error) {
+      throw Exception(error);
+    }
+  }
+
+  // Fetching the Diabetes Predictions...
+  Future<String> fetchDiabetesPredictions(
+      Map<String, List<Object>> readings) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$_apiKey/diabetes_prediction'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(readings),
       );
