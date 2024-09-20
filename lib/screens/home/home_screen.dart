@@ -67,10 +67,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       CustomCard(
-                        cardTitle: 'Heart Failure',
+                        cardTitle: 'Heart Disease',
                         icon: Icons.favorite_outline,
                         onTap: () {
-                          pushHeartFailureScreen(context);
+                          pushHeartDiseaseScreen(context);
                         },
                       ),
                     ],
@@ -82,7 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       pushDiabetesPredictionsScreen(context);
                     },
                   ),
-                  const NamedDivider(title: 'Trends'),
                 ],
               ),
             ),
