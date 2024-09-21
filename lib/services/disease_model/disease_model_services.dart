@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class DiseaseModelServices {
   // Api key...
-  final _apiKey = 'http://192.168.1.10:5000';
+  final _apiKey = 'http://192.168.100.13:5000';
 
   // Fetching the symptoms list...
   Future<List<dynamic>> fetchSymptomList() async {

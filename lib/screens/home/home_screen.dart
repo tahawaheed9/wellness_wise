@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '/screens/home/components/saved_prediction_list.dart';
 import '../../services/auth/bloc/auth_bloc.dart';
 import '../../services/auth/bloc/auth_event.dart';
 import '/components/dialogs/logout_dialog.dart';
@@ -82,6 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       pushDiabetesPredictionsScreen(context);
                     },
                   ),
+                  const NamedDivider(title: 'Trends'),
+                  const SavedPredictionList(),
                 ],
               ),
             ),

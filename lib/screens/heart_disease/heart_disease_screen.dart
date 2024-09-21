@@ -350,6 +350,7 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
                   if (value) {
                     final createdOn = DateTime.now();
                     final Map<String, Object> data = {
+                      'disease': 'Heart Disease',
                       'prediction': _response,
                       'created-on': createdOn,
                     };

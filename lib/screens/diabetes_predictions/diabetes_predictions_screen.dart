@@ -245,16 +245,17 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                     final createdOn = DateTime.now();
 
                     final Map<String, Object> data = {
-                      'prediction' : _response,
-                      'readings' : <String, Object>{
-                        'number-of-pregnancies' : readingsList[0],
-                        'glucose-levels' : readingsList[1],
-                        'blood-pressure-levels' : readingsList[2],
-                        'skin-thickness-value' : readingsList[3],
-                        'insulin-value' : readingsList[4],
-                        'bmi-value' : readingsList[5],
-                        'diabetes-pedigree-function-value' : readingsList[6],
-                        'age' : readingsList[7],
+                      'disease': 'Diabetes Predictions',
+                      'prediction': _response,
+                      'readings': <String, Object>{
+                        'number-of-pregnancies': readingsList[0],
+                        'glucose-levels': readingsList[1],
+                        'blood-pressure-levels': readingsList[2],
+                        'skin-thickness-value': readingsList[3],
+                        'insulin-value': readingsList[4],
+                        'bmi-value': readingsList[5],
+                        'diabetes-pedigree-function-value': readingsList[6],
+                        'age': readingsList[7],
                       },
                       'created-on' : createdOn,
                     };
