@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../services/auth/auth_service.dart';
+import '../../../../services/auth/auth_service.dart';
 
-class GetUsername extends StatefulWidget {
-  const GetUsername({super.key});
+class GetGender extends StatefulWidget {
+  const GetGender({super.key});
 
   @override
-  State<GetUsername> createState() => _GetUsernameState();
+  State<GetGender> createState() => _GetGenderState();
 }
 
-class _GetUsernameState extends State<GetUsername> {
+class _GetGenderState extends State<GetGender> {
   late final Stream<DocumentSnapshot> _stream;
   final userId = AuthService.firebase().currentUser!.id;
 
@@ -35,22 +35,15 @@ class _GetUsernameState extends State<GetUsername> {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.data!.exists) {
-          final username = snapshot.data!['username'];
+          final gender = snapshot.data!['gender'];
           return Text(
-            username,
-            overflow: TextOverflow.ellipsis,
-            style: Theme
-                .of(context)
-                .textTheme
-                .titleLarge,
+            gender,
+            style: Theme.of(context).textTheme.bodyLarge,
           );
         } else {
           return Text(
             'N/A',
-            style: Theme
-                .of(context)
-                .textTheme
-                .titleLarge,
+            style: Theme.of(context).textTheme.bodyLarge,
           );
         }
       },

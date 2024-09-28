@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-import '/screens/home/components/prediction_card.dart';
+import '/controller/responsive_screen_controller.dart';
+import 'trends_card.dart';
 import '/services/auth/auth_service.dart';
 
-class SavedPredictionList extends StatefulWidget {
-  const SavedPredictionList({super.key});
+class TrendsList extends StatefulWidget {
+  const TrendsList({super.key});
 
   @override
-  State<SavedPredictionList> createState() => _SavedPredictionListState();
+  State<TrendsList> createState() => _TrendsListState();
 }
 
-class _SavedPredictionListState extends State<SavedPredictionList> {
+class _TrendsListState extends State<TrendsList> {
   final userId = AuthService.firebase().currentUser!.id;
 
   @override
@@ -23,6 +24,7 @@ class _SavedPredictionListState extends State<SavedPredictionList> {
           .doc(userId)
           .collection('predictions')
           .orderBy('created-on', descending: true)
+          .limit(7)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -53,20 +55,29 @@ class _SavedPredictionListState extends State<SavedPredictionList> {
           );
         }
         return SizedBox(
-          height: 160,
+          height: screenHeight(context) * 0.18,
           width: double.infinity,
           child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: snapshot.data?.docs.length,
             scrollDirection: Axis.horizontal,
-            itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              final recentDocument = snapshot.data!.docs.first;
-              final data = recentDocument.data();
+              // Fetching the documents...
+              final DocumentSnapshot<Map<String, dynamic>> document =
+                  snapshot.data!.docs[index];
 
+              // Fetching the data from the documents...
+              final Map<String, dynamic> data = document.data()!;
+
+              // Assigning the data...
+              final disease = data['disease'] ?? 'N/A';
               final date = data['created-on'];
+
+              // Formatting the date...
               final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
 
-              return PredictionCard(
-                diseaseTitle: data['disease'] ?? 'N/A',
+              return TrendsCard(
+                diseaseTitle: disease,
                 date: createdOn,
               );
             },

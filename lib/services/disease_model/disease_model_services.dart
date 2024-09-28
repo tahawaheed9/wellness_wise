@@ -21,8 +21,9 @@ class DiseaseModelServices {
         throw Exception(
             'Unable to fetch the list. Status code: ${response.statusCode}.');
       }
-    } catch (error) {
-      throw Exception(error);
+    } catch (_) {
+      throw Exception(
+          'Please, check your internet connection or contact support.');
     }
   }
 
@@ -44,8 +45,9 @@ class DiseaseModelServices {
         throw Exception(
             'Unable to retrieve predictions. Status code: ${response.statusCode}.');
       }
-    } catch (error) {
-      throw Exception(error);
+    } catch (_) {
+      throw Exception(
+          'Please, check your internet connection or contact support.');
     }
   }
 
@@ -67,8 +69,9 @@ class DiseaseModelServices {
         throw Exception(
             'Unable to retrieve predictions. Status code: ${response.statusCode}.');
       }
-    } catch (error) {
-      throw Exception(error);
+    } catch (_) {
+      throw Exception(
+          'Please, check your internet connection or contact support.');
     }
   }
 
@@ -90,8 +93,9 @@ class DiseaseModelServices {
         throw Exception(
             'Unable to retrieve predictions. Status code: ${response.statusCode}.');
       }
-    } catch (error) {
-      throw Exception(error);
+    } catch (_) {
+      throw Exception(
+          'Please, check your internet connection or contact support.');
     }
   }
 }

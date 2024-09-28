@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '/screens/home/components/get_gender.dart';
-import '/screens/home/components/get_age.dart';
-import '/screens/home/components/get_username.dart';
+import 'get_gender.dart';
+import 'get_age.dart';
+import 'get_username.dart';
 
 class UserInformationCard extends StatefulWidget {
   const UserInformationCard({super.key});

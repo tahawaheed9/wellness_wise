@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '/screens/home/components/saved_prediction_list.dart';
+import 'components/trends/trends_list.dart';
 import '../../services/auth/bloc/auth_bloc.dart';
 import '../../services/auth/bloc/auth_event.dart';
 import '/components/dialogs/logout_dialog.dart';
 import '/controller/screen_navigation_controller.dart';
 import '/screens/home/components/custom_card.dart';
 import '../../components/named_divider.dart';
-import '/screens/home/components/user_information_card.dart';
+import 'components/user_information/user_information_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,7 +49,13 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 const UserInformationCard(),
                 const NamedDivider(title: 'Health Predictions'),
-                Row(
+                GridView.count(
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 5.0,
+                  childAspectRatio: 1.8,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     CustomCard(
                       cardTitle: 'General Disease',
@@ -65,21 +71,27 @@ class _HomeScreenState extends State<HomeScreen> {
                         pushHeartDiseaseScreen(context);
                       },
                     ),
+                    CustomCard(
+                      cardTitle: 'Diabetes Predictions',
+                      icon: Icons.medical_services_outlined,
+                      onTap: () {
+                        pushDiabetesPredictionsScreen(context);
+                      },
+                    ),
                   ],
                 ),
-                CustomCard(
-                  cardTitle: 'Diabetes Predictions',
-                  icon: Icons.medical_services_outlined,
-                  onTap: () {
-                    pushDiabetesPredictionsScreen(context);
-                  },
-                ),
                 const NamedDivider(title: 'Chronic Disease Predictions'),
-                Row(
+                GridView.count(
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 5.0,
+                  childAspectRatio: 1.8,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     CustomCard(
                       cardTitle: 'Kidney Predictions',
-                      icon: Icons.signal_cellular_alt_outlined,
+                      icon: Icons.medical_services_outlined,
                       onTap: () {
                         pushKidneyPredictionsScreen(context);
                       },
@@ -89,15 +101,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icons.person_outline,
                       onTap: () {},
                     ),
+                    CustomCard(
+                      cardTitle: 'Breast Cancer',
+                      icon: Icons.person_outline,
+                      onTap: () {},
+                    ),
                   ],
                 ),
-                CustomCard(
-                  cardTitle: 'Breast Cancer',
-                  icon: Icons.person_outline,
-                  onTap: () {},
-                ),
                 const NamedDivider(title: 'Trends'),
-                const SavedPredictionList(),
+                const TrendsList(),
               ],
             ),
           ),

@@ -2,26 +2,25 @@ import 'package:flutter/material.dart';
 
 import '/controller/responsive_screen_controller.dart';
 
-class PredictionCard extends StatefulWidget {
+class TrendsCard extends StatefulWidget {
   final String diseaseTitle;
   final String date;
 
-  const PredictionCard({
+  const TrendsCard({
     super.key,
     required this.diseaseTitle,
     required this.date,
   });
 
   @override
-  State<PredictionCard> createState() => _PredictionCardState();
+  State<TrendsCard> createState() => _TrendsCardState();
 }
 
-class _PredictionCardState extends State<PredictionCard> {
+class _TrendsCardState extends State<TrendsCard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 120,
-      width: screenWidth(context) * 0.46,
+      width: screenWidth(context) * 0.45,
       child: Card(
         elevation: 3,
         color: Theme.of(context).colorScheme.primaryContainer,
@@ -47,6 +46,7 @@ class _PredictionCardState extends State<PredictionCard> {
               Text(
                 widget.diseaseTitle,
                 textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 10.0),
               Row(
