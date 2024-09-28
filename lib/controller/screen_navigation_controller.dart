@@ -23,11 +23,6 @@ void pushResetPasswordScreen(BuildContext context) {
   Navigator.of(context).pushNamed(resetPasswordScreenRoute);
 }
 
-// Additional Information...
-void pushAdditionalInformationScreen(BuildContext context) {
-  Navigator.of(context).pushNamed(additionalInformationScreenRoute);
-}
-
 // General Disease...
 void pushGeneralDiseaseScreen(BuildContext context) {
   Navigator.of(context).pushNamed(generalDiseaseScreenRoute);
@@ -41,4 +36,9 @@ void pushHeartDiseaseScreen(BuildContext context) {
 // Diabetes Predictions...
 void pushDiabetesPredictionsScreen(BuildContext context) {
   Navigator.of(context).pushNamed(diabetesPredictionsScreenRoute);
+}
+
+// Kidney Predictions...
+void pushKidneyPredictionsScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(kidneyPredictionsScreenRoute);
 }

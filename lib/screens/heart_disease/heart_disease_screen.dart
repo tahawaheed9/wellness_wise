@@ -40,8 +40,6 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
 
   String _response = '';
 
-  bool _isDataSaved = false;
-
   @override
   void initState() {
     super.initState();
@@ -85,6 +83,7 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
                   mainAxisSpacing: 10.0,
                   crossAxisSpacing: 20.0,
                   childAspectRatio: 3.0,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     // Age Field...
                     TextFormField(
@@ -373,12 +372,13 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
 
   Future<void> _savePrediction(
       BuildContext context, Map<String, Object> data) async {
+    bool isDataSaved = false;
     try {
       await _db.addPrediction(data).whenComplete(<bool>() {
         setState(() {
-          _isDataSaved = true;
+          isDataSaved = true;
         });
-        if (_isDataSaved) {
+        if (isDataSaved) {
           ScaffoldMessenger.of(context).showSnackBar(
             showSuccessSnackBar(
               context,

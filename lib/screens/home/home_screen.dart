@@ -41,52 +41,64 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const UserInformationCard(),
-                  const NamedDivider(title: 'Health Data'),
-                  CustomCard(
-                    cardTitle: 'Additional Information',
-                    icon: Icons.medical_information_outlined,
-                    onTap: () {
-                      pushAdditionalInformationScreen(context);
-                    },
-                  ),
-                  const NamedDivider(title: 'Health Predictions'),
-                  Row(
-                    children: <Widget>[
-                      CustomCard(
-                        cardTitle: 'General Disease',
-                        icon: Icons.medical_services_outlined,
-                        onTap: () {
-                          pushGeneralDiseaseScreen(context);
-                        },
-                      ),
-                      CustomCard(
-                        cardTitle: 'Heart Disease',
-                        icon: Icons.favorite_outline,
-                        onTap: () {
-                          pushHeartDiseaseScreen(context);
-                        },
-                      ),
-                    ],
-                  ),
-                  CustomCard(
-                    cardTitle: 'Diabetes Predictions',
-                    icon: Icons.medical_services_outlined,
-                    onTap: () {
-                      pushDiabetesPredictionsScreen(context);
-                    },
-                  ),
-                  const NamedDivider(title: 'Trends'),
-                  const SavedPredictionList(),
-                ],
-              ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const UserInformationCard(),
+                const NamedDivider(title: 'Health Predictions'),
+                Row(
+                  children: <Widget>[
+                    CustomCard(
+                      cardTitle: 'General Disease',
+                      icon: Icons.medical_services_outlined,
+                      onTap: () {
+                        pushGeneralDiseaseScreen(context);
+                      },
+                    ),
+                    CustomCard(
+                      cardTitle: 'Heart Disease',
+                      icon: Icons.favorite_outline,
+                      onTap: () {
+                        pushHeartDiseaseScreen(context);
+                      },
+                    ),
+                  ],
+                ),
+                CustomCard(
+                  cardTitle: 'Diabetes Predictions',
+                  icon: Icons.medical_services_outlined,
+                  onTap: () {
+                    pushDiabetesPredictionsScreen(context);
+                  },
+                ),
+                const NamedDivider(title: 'Chronic Disease Predictions'),
+                Row(
+                  children: <Widget>[
+                    CustomCard(
+                      cardTitle: 'Kidney Predictions',
+                      icon: Icons.signal_cellular_alt_outlined,
+                      onTap: () {
+                        pushKidneyPredictionsScreen(context);
+                      },
+                    ),
+                    CustomCard(
+                      cardTitle: 'Lung Cancer',
+                      icon: Icons.person_outline,
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+                CustomCard(
+                  cardTitle: 'Breast Cancer',
+                  icon: Icons.person_outline,
+                  onTap: () {},
+                ),
+                const NamedDivider(title: 'Trends'),
+                const SavedPredictionList(),
+              ],
             ),
           ),
         ),

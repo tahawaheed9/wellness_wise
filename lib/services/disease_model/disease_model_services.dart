@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 
 class DiseaseModelServices {
   // Api key...
-  final _apiKey = 'http://192.168.100.13:5000';
+  /// Android Studio maps 127.0.0.1 (localhost) -> 10.0.2.2
+  final _apiKey = 'http://10.0.2.2:5000';
 
   // Fetching the symptoms list...
   Future<List<dynamic>> fetchSymptomList() async {

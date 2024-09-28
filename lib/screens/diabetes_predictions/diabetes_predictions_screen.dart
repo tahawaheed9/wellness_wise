@@ -36,8 +36,6 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
 
   String _response = '';
 
-  bool _isDataSaved = false;
-
   @override
   void initState() {
     super.initState();
@@ -85,6 +83,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                   mainAxisSpacing: 20.0,
                   crossAxisSpacing: 10.0,
                   childAspectRatio: 3.0,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     // Number of Pregnancies Field...
                     TextFormField(
@@ -104,7 +103,10 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                       enableSuggestions: false,
                       keyboardType: TextInputType.number,
                       validator: _validateForm,
-                      decoration: _decoration(labelText: 'Glucose Level'),
+                      decoration: _decoration(
+                        labelText: 'Glucose Level',
+                        suffixText: 'mg/dL',
+                      ),
                     ),
 
                     // Systolic Blood Pressure Field...
@@ -115,10 +117,9 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                       keyboardType: TextInputType.number,
                       validator: _validateForm,
                       decoration: _decoration(
-                        labelText: 'Blood Pressure',
-                        hintText: 'Diastolic',
-                        suffixText: 'mmHg'
-                      ),
+                          labelText: 'Blood Pressure',
+                          hintText: 'Diastolic',
+                          suffixText: 'mmHg'),
                     ),
 
                     // Skin Thickness Value Field...
@@ -147,6 +148,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                       controller: _bmiValue,
                       autocorrect: false,
                       enableSuggestions: false,
+                      keyboardType: TextInputType.number,
                       validator: _validateForm,
                       decoration: _decoration(labelText: 'BMI Value'),
                     ),
@@ -156,6 +158,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                       controller: _diabetesPedigreeFunction,
                       autocorrect: false,
                       enableSuggestions: false,
+                      keyboardType: TextInputType.number,
                       validator: _validateForm,
                       decoration:
                           _decoration(labelText: 'Diabetes Pedigree Function'),
@@ -166,6 +169,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                       controller: _age,
                       autocorrect: false,
                       enableSuggestions: false,
+                      keyboardType: TextInputType.number,
                       validator: _validateForm,
                       decoration:
                           _decoration(labelText: 'Age', suffixText: 'years'),
@@ -240,7 +244,8 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
               _response,
             ).then(<bool>(value) async {
               if (value) {
-                await showSavePredictionDialog(context).then(<bool>(value) async {
+                await showSavePredictionDialog(context)
+                    .then(<bool>(value) async {
                   if (value) {
                     final createdOn = DateTime.now();
 
@@ -257,7 +262,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                         'diabetes-pedigree-function-value': readingsList[6],
                         'age': readingsList[7],
                       },
-                      'created-on' : createdOn,
+                      'created-on': createdOn,
                     };
 
                     // Save Predictions to the cloud...
@@ -278,12 +283,13 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
 
   Future<void> _savePrediction(
       BuildContext context, Map<String, Object> data) async {
+    bool isDataSaved = false;
     try {
       await _db.addPrediction(data).whenComplete(<bool>() {
         setState(() {
-          _isDataSaved = true;
+          isDataSaved = true;
         });
-        if (_isDataSaved) {
+        if (isDataSaved) {
           ScaffoldMessenger.of(context).showSnackBar(
             showSuccessSnackBar(
               context,
