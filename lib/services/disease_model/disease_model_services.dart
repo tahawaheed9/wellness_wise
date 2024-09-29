@@ -98,4 +98,28 @@ class DiseaseModelServices {
           'Please, check your internet connection or contact support.');
     }
   }
+
+  // Fetching Chronic Kidney Predictions...
+  Future<String> fetchKidneyPredictions(
+      Map<String, List<Object>> readings) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$_apiKey/kidney_prediction'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(readings),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        final message = data['response'];
+        return message;
+      } else {
+        throw Exception(
+            'Unable to retrieve predictions. Status code: ${response.statusCode}.');
+      }
+    } catch (_) {
+      throw Exception(
+          'Please, check your internet connection or contact support.');
+    }
+  }
 }

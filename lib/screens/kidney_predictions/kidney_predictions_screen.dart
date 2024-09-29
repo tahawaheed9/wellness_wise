@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/components/dialogs/generic_prediction_dialog.dart';
+import '/components/dialogs/save_prediction_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/failed_snack_bar.dart';
 import '../../components/success_snack_bar.dart';
@@ -45,6 +47,10 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
   int? _appetite;
   int? _pedalEdema;
   int? _anemia;
+
+  List<Object> _readingsList = [];
+
+  String _response = '';
 
   @override
   void initState() {
@@ -104,7 +110,7 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
                   crossAxisCount: 2,
                   mainAxisSpacing: 20.0,
                   crossAxisSpacing: 10.0,
-                  childAspectRatio: 3.0,
+                  childAspectRatio: 3,
                   physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     // Age Field...
@@ -114,8 +120,10 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
                       enableSuggestions: false,
                       keyboardType: TextInputType.number,
                       validator: _validateForm,
-                      decoration:
-                          _decoration(labelText: 'Age', suffixText: 'years'),
+                      decoration: _decoration(
+                        labelText: 'Age',
+                        suffixText: 'years',
+                      ),
                     ),
 
                     // Systolic Blood Pressure Field...
@@ -416,8 +424,7 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
                       ],
                       isExpanded: true,
                       validator: _validateForm,
-                      decoration:
-                      _decoration(labelText: 'Appetite'),
+                      decoration: _decoration(labelText: 'Appetite'),
                       onChanged: (value) {
                         setState(() {
                           _appetite = value;
@@ -434,8 +441,7 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
                       ],
                       isExpanded: true,
                       validator: _validateForm,
-                      decoration:
-                      _decoration(labelText: 'Pedal Edema'),
+                      decoration: _decoration(labelText: 'Pedal Edema'),
                       onChanged: (value) {
                         setState(() {
                           _pedalEdema = value;
@@ -452,8 +458,7 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
                       ],
                       isExpanded: true,
                       validator: _validateForm,
-                      decoration:
-                      _decoration(labelText: 'Anemia'),
+                      decoration: _decoration(labelText: 'Anemia'),
                       onChanged: (value) {
                         setState(() {
                           _anemia = value;
@@ -466,7 +471,9 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
               const SizedBox(height: 20.0),
               PrimaryButton(
                 text: 'Kidney Prediction',
-                onPressed: () async {},
+                onPressed: () async {
+                  await _makePrediction(context);
+                },
               ),
             ],
           ),
@@ -490,10 +497,117 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
   }
 
   String? _validateForm(value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.toString().isEmpty) {
       return 'Required';
     }
     return null;
+  }
+
+  Future<void> _makePrediction(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _readingsList = [
+          int.parse(_age.text),
+          int.parse(_systolicBloodPressure.text),
+          double.parse(_specificGravity.text),
+          int.parse(_albumin.text),
+          int.parse(_hba1c.text),
+          _rbc!,
+          _pusCells!,
+          _pusCellClumps!,
+          _bacteria!,
+          int.parse(_randomGlucose.text),
+          int.parse(_bloodUrea.text),
+          double.parse(_serumCreatinine.text),
+          int.parse(_sodium.text),
+          int.parse(_potassium.text),
+          int.parse(_hemoglobin.text),
+          int.parse(_packedCellVolume.text),
+          int.parse(_whiteBloodCell.text),
+          int.parse(_redBloodCell.text),
+          _hypertension!,
+          _diabetesMellitus!,
+          _coronaryArteryDisease!,
+          _appetite!,
+          _pedalEdema!,
+          _anemia!,
+        ];
+      });
+
+      final Map<String, List<Object>> readings = {
+        'readings': _readingsList,
+      };
+
+      try {
+        await _diseaseModel
+            .fetchKidneyPredictions(readings)
+            .then((response) async {
+          setState(() {
+            _response = response;
+          });
+          if (context.mounted) {
+            await showGenericPredictionDialog(
+              context,
+              'Kidney Predictions',
+              _response,
+            ).then(<bool>(value) async {
+              if (value) {
+                await showSavePredictionDialog(context)
+                    .then(<bool>(value) async {
+                  if (value) {
+                    final createdOn = DateTime.now();
+
+                    final Map<String, Object> data = {
+                      'disease': 'Kidney Prediction',
+                      'prediction': _response,
+                      'readings': {
+                        'age': _readingsList[0],
+                        'systolic-blood-pressure': _readingsList[1],
+                        'specific-gravity': _readingsList[2],
+                        'albumin': _readingsList[3],
+                        'hba1c': _readingsList[4],
+                        'red-blood-cells':
+                            _readingsList[5] == 1 ? 'Normal' : 'Abnormal',
+                        'pus-cells':
+                            _readingsList[6] == 1 ? 'Normal' : 'Abnormal',
+                        'pus-cell-clumps':
+                            _readingsList[7] == 1 ? 'Present' : 'Not Present',
+                        'bacteria':
+                            _readingsList[8] == 1 ? 'Present' : 'Not Present',
+                        'random-blood-glucose': _readingsList[9],
+                        'blood-urea': _readingsList[10],
+                        'serum-creatinine': _readingsList[11],
+                        'sodium': _readingsList[12],
+                        'potassium': _readingsList[13],
+                        'hemoglobin': _readingsList[14],
+                        'packed-cell-volume': _readingsList[15],
+                        'white-blood-cell-count': _readingsList[16],
+                        'red-blood-cell-count': _readingsList[17],
+                        'hypertension': _readingsList[18] == 1 ? 'Yes' : 'No',
+                        'diabetes-mellitus':
+                            _readingsList[19] == 1 ? 'Yes' : 'No',
+                        'coronary-artery-disease':
+                            _readingsList[20] == 1 ? 'Yes' : 'No',
+                        'appetite': _readingsList[21] == 1 ? 'Good' : 'Poor',
+                        'pedal-edema': _readingsList[22] == 1 ? 'Yes' : 'No',
+                        'anemia': _readingsList[23] == 1 ? 'Yes' : 'No',
+                      },
+                      'created-on': createdOn,
+                    };
+
+                    await _savePrediction(context, data);
+                  }
+                });
+              }
+            });
+          }
+        });
+      } catch (error) {
+        if (context.mounted) {
+          await showErrorDialog(context, error.toString());
+        }
+      }
+    }
   }
 
   Future<void> _savePrediction(

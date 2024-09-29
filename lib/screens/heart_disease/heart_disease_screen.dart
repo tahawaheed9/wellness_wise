@@ -80,9 +80,9 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
                 child: GridView.count(
                   shrinkWrap: true,
                   crossAxisCount: 2,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 20.0,
-                  childAspectRatio: 3.0,
+                  mainAxisSpacing: 20.0,
+                  crossAxisSpacing: 10.0,
+                  childAspectRatio: 3,
                   physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     // Age Field...

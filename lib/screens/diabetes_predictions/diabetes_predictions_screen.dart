@@ -82,7 +82,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                   crossAxisCount: 2,
                   mainAxisSpacing: 20.0,
                   crossAxisSpacing: 10.0,
-                  childAspectRatio: 3.0,
+                  childAspectRatio: 3,
                   physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     // Number of Pregnancies Field...
