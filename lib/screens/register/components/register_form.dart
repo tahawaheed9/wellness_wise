@@ -72,7 +72,6 @@ class _RegisterFormState extends State<RegisterForm> {
               // Username Field...
               TextFormField(
                 controller: _username,
-                autofocus: true,
                 keyboardType: TextInputType.name,
                 validator: _validateForm,
                 decoration: const InputDecoration(

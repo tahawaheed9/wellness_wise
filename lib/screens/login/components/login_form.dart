@@ -64,7 +64,6 @@ class _LoginFormState extends State<LoginForm> {
               // Email Address Field...
               TextFormField(
                 controller: _email,
-                autofocus: true,
                 autocorrect: false,
                 enableSuggestions: false,
                 keyboardType: TextInputType.emailAddress,
