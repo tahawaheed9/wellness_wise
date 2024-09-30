@@ -4,14 +4,9 @@ import 'get_gender.dart';
 import 'get_age.dart';
 import 'get_username.dart';
 
-class UserInformationCard extends StatefulWidget {
+class UserInformationCard extends StatelessWidget {
   const UserInformationCard({super.key});
 
-  @override
-  State<UserInformationCard> createState() => _UserInformationCardState();
-}
-
-class _UserInformationCardState extends State<UserInformationCard> {
   @override
   Widget build(BuildContext context) {
     return Container(

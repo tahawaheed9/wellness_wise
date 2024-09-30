@@ -6,18 +6,13 @@ import '../../services/auth/bloc/auth_bloc.dart';
 import '../../services/auth/bloc/auth_event.dart';
 import '/components/dialogs/logout_dialog.dart';
 import '/controller/screen_navigation_controller.dart';
-import '/screens/home/components/custom_card.dart';
+import '/screens/home/components/screen_navigation_card.dart';
 import '../../components/named_divider.dart';
 import 'components/user_information/user_information_card.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,21 +52,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   childAspectRatio: 1.8,
                   physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
-                    CustomCard(
+                    ScreenNavigationCard(
                       cardTitle: 'General Disease',
                       icon: Icons.medical_services_outlined,
                       onTap: () {
                         pushGeneralDiseaseScreen(context);
                       },
                     ),
-                    CustomCard(
+                    ScreenNavigationCard(
                       cardTitle: 'Heart Disease',
                       icon: Icons.favorite_outline,
                       onTap: () {
                         pushHeartDiseaseScreen(context);
                       },
                     ),
-                    CustomCard(
+                    ScreenNavigationCard(
                       cardTitle: 'Diabetes Predictions',
                       icon: Icons.medical_services_outlined,
                       onTap: () {
@@ -89,19 +84,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   childAspectRatio: 1.8,
                   physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
-                    CustomCard(
+                    ScreenNavigationCard(
                       cardTitle: 'Kidney Predictions',
                       icon: Icons.medical_services_outlined,
                       onTap: () {
                         pushKidneyPredictionsScreen(context);
                       },
                     ),
-                    CustomCard(
+                    ScreenNavigationCard(
                       cardTitle: 'Lung Cancer',
                       icon: Icons.person_outline,
-                      onTap: () {},
+                      onTap: () {
+                        pushLungCancerScreen(context);
+                      },
                     ),
-                    CustomCard(
+                    ScreenNavigationCard(
                       cardTitle: 'Breast Cancer',
                       icon: Icons.person_outline,
                       onTap: () {},

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+
 import '/controller/responsive_screen_controller.dart';
 
-class CustomCard extends StatelessWidget {
+class ScreenNavigationCard extends StatelessWidget {
   final String cardTitle;
   final IconData icon;
   final VoidCallback onTap;
 
-  const CustomCard({
+  const ScreenNavigationCard({
     super.key,
     required this.cardTitle,
     required this.icon,

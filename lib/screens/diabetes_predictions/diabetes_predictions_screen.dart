@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/components/dialogs/generic_prediction_dialog.dart';
+import '/components/dialogs/diabetes_prediction_dialog.dart';
 import '/components/dialogs/save_prediction_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/failed_snack_bar.dart';
@@ -32,7 +32,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
   late final TextEditingController _diabetesPedigreeFunction;
   late final TextEditingController _age;
 
-  List<Object> readingsList = [];
+  List<Object> _readingsList = [];
 
   String _response = '';
 
@@ -75,12 +75,17 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              Text(
+                'Please provide us with your medical details.',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 30.0),
               Form(
                 key: _formKey,
                 child: GridView.count(
                   shrinkWrap: true,
                   crossAxisCount: 2,
-                  mainAxisSpacing: 20.0,
+                  mainAxisSpacing: 10.0,
                   crossAxisSpacing: 10.0,
                   childAspectRatio: 3,
                   physics: const NeverScrollableScrollPhysics(),
@@ -117,8 +122,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                       keyboardType: TextInputType.number,
                       validator: _validateForm,
                       decoration: _decoration(
-                          labelText: 'Blood Pressure',
-                          hintText: 'Diastolic',
+                          labelText: 'Diastolic Blood Pressure',
                           suffixText: 'mmHg'),
                     ),
 
@@ -215,7 +219,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
   Future<void> _makePrediction(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        readingsList = [
+        _readingsList = [
           int.parse(_pregnancies.text),
           int.parse(_glucose.text),
           int.parse(_bloodPressure.text),
@@ -228,7 +232,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
       });
 
       final Map<String, List<Object>> readings = {
-        'readings': readingsList,
+        'readings': _readingsList,
       };
 
       try {
@@ -238,10 +242,10 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
             .then((response) async {
           setState(() => _response = response);
           if (context.mounted) {
-            await showGenericPredictionDialog(
-              context,
-              'Diabetes Predictions',
-              _response,
+            await showDiabetesPredictionDialog(
+              context: context,
+              message: _response,
+              readings: _readingsList,
             ).then(<bool>(value) async {
               if (value) {
                 await showSavePredictionDialog(context)
@@ -253,14 +257,14 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                       'disease': 'Diabetes Predictions',
                       'prediction': _response,
                       'readings': <String, Object>{
-                        'number-of-pregnancies': readingsList[0],
-                        'glucose-levels': readingsList[1],
-                        'blood-pressure-levels': readingsList[2],
-                        'skin-thickness-value': readingsList[3],
-                        'insulin-value': readingsList[4],
-                        'bmi-value': readingsList[5],
-                        'diabetes-pedigree-function-value': readingsList[6],
-                        'age': readingsList[7],
+                        'number-of-pregnancies': _readingsList[0],
+                        'glucose-levels': _readingsList[1],
+                        'blood-pressure-levels': _readingsList[2],
+                        'skin-thickness-value': _readingsList[3],
+                        'insulin-value': _readingsList[4],
+                        'bmi-value': _readingsList[5],
+                        'diabetes-pedigree-function-value': _readingsList[6],
+                        'age': _readingsList[7],
                       },
                       'created-on': createdOn,
                     };

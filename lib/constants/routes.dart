@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/screens/lung_cancer/lung_cancer_screen.dart';
 import '/screens/kidney_predictions/kidney_predictions_screen.dart';
 import '/screens/diabetes_predictions/diabetes_predictions_screen.dart';
 import '/screens/heart_disease/heart_disease_screen.dart';
@@ -14,6 +15,7 @@ const generalDiseaseScreenRoute = '/general-disease/';
 const heartDiseaseScreenRoute = '/heart-disease/';
 const diabetesPredictionsScreenRoute = '/diabetes-predictions/';
 const kidneyPredictionsScreenRoute = '/kidney-predictions/';
+const lungCancerScreenRoute = '/lung-cancer/';
 
 Map<String, Widget Function(BuildContext)> routes = {
   registerScreenRoute: (context) => const RegisterScreen(),
@@ -24,4 +26,5 @@ Map<String, Widget Function(BuildContext)> routes = {
   diabetesPredictionsScreenRoute: (context) =>
       const DiabetesPredictionScreen(),
   kidneyPredictionsScreenRoute: (context) => const KidneyPredictionsScreen(),
+  lungCancerScreenRoute: (context) => const LungCancerScreen(),
 };

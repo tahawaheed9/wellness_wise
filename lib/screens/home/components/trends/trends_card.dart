@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/controller/responsive_screen_controller.dart';
 
-class TrendsCard extends StatefulWidget {
+class TrendsCard extends StatelessWidget {
   final String diseaseTitle;
   final String date;
 
@@ -12,11 +12,6 @@ class TrendsCard extends StatefulWidget {
     required this.date,
   });
 
-  @override
-  State<TrendsCard> createState() => _TrendsCardState();
-}
-
-class _TrendsCardState extends State<TrendsCard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -44,7 +39,7 @@ class _TrendsCardState extends State<TrendsCard> {
                 ),
               ),
               Text(
-                widget.diseaseTitle,
+                diseaseTitle,
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -53,7 +48,7 @@ class _TrendsCardState extends State<TrendsCard> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Text(
-                    widget.date,
+                    date,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),

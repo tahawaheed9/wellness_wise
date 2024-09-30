@@ -42,3 +42,8 @@ void pushDiabetesPredictionsScreen(BuildContext context) {
 void pushKidneyPredictionsScreen(BuildContext context) {
   Navigator.of(context).pushNamed(kidneyPredictionsScreenRoute);
 }
+
+// Lung Cancer...
+void pushLungCancerScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(lungCancerScreenRoute);
+}

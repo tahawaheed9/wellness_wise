@@ -47,6 +47,11 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
           child: Column(
             children: <Widget>[
               const SizedBox(height: 30.0),
+              Text(
+                'Please select your symptoms.',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 30.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
                 child: DropdownSearch<dynamic>.multiSelection(

@@ -103,12 +103,17 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
+              Text(
+                'Please provide us with your medical details.',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 30.0),
               Form(
                 key: _formKey,
                 child: GridView.count(
                   shrinkWrap: true,
                   crossAxisCount: 2,
-                  mainAxisSpacing: 20.0,
+                  mainAxisSpacing: 10.0,
                   crossAxisSpacing: 10.0,
                   childAspectRatio: 3,
                   physics: const NeverScrollableScrollPhysics(),
