@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:health/health.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+/// health: ^10.2.0
+
 class HealthService {
   final Health _health = Health();
 
