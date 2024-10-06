@@ -418,7 +418,7 @@ class _LungCancerScreenState extends State<LungCancerScreen> {
                       'disease': 'Lung Cancer',
                       'prediction': _response,
                       'readings': {
-                        'gender': _readingList[0],
+                        'gender': _readingList[0] == 'M' ? 'Male' : 'Female',
                         'age': _readingList[1],
                         'smoking': _readingList[2] == 1 ? 'No' : 'Yes',
                         'yellow-fingers': _readingList[3] == 1 ? 'No' : 'Yes',
