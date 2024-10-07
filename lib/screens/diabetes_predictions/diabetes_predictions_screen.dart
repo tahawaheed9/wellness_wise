@@ -71,125 +71,121 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
         title: const Text('Diabetes Prediction'),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Text(
-                'Please provide us with your medical details.',
-                style: Theme.of(context).textTheme.bodyLarge,
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Text(
+              'Please provide us with your medical details.',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 30.0),
+            Form(
+              key: _formKey,
+              child: GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+                childAspectRatio: 3,
+                physics: const NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  // Number of Pregnancies Field...
+                  TextFormField(
+                    controller: _pregnancies,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Number of Pregnancies'),
+                  ),
+
+                  // Glucose Level Field...
+                  TextFormField(
+                    controller: _glucose,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(
+                      labelText: 'Glucose Level',
+                      suffixText: 'mg/dL',
+                    ),
+                  ),
+
+                  // Systolic Blood Pressure Field...
+                  TextFormField(
+                    controller: _bloodPressure,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(
+                        labelText: 'Diastolic Blood Pressure',
+                        suffixText: 'mmHg'),
+                  ),
+
+                  // Skin Thickness Value Field...
+                  TextFormField(
+                    controller: _skinThickness,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Skin Thickness Value'),
+                  ),
+
+                  // Insulin Value Field...
+                  TextFormField(
+                    controller: _insulinValue,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Insulin Value'),
+                  ),
+
+                  // BMI Value Field...
+                  TextFormField(
+                    controller: _bmiValue,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'BMI Value'),
+                  ),
+
+                  // Diabetes Pedigree Function Value Field...
+                  TextFormField(
+                    controller: _diabetesPedigreeFunction,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration:
+                        _decoration(labelText: 'Diabetes Pedigree Function'),
+                  ),
+
+                  // Age Field...
+                  TextFormField(
+                    controller: _age,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration:
+                        _decoration(labelText: 'Age', suffixText: 'years'),
+                  ),
+                ],
               ),
-              const SizedBox(height: 30.0),
-              Form(
-                key: _formKey,
-                child: GridView.count(
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0,
-                  childAspectRatio: 3,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    // Number of Pregnancies Field...
-                    TextFormField(
-                      controller: _pregnancies,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration:
-                          _decoration(labelText: 'Number of Pregnancies'),
-                    ),
-
-                    // Glucose Level Field...
-                    TextFormField(
-                      controller: _glucose,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration: _decoration(
-                        labelText: 'Glucose Level',
-                        suffixText: 'mg/dL',
-                      ),
-                    ),
-
-                    // Systolic Blood Pressure Field...
-                    TextFormField(
-                      controller: _bloodPressure,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration: _decoration(
-                          labelText: 'Diastolic Blood Pressure',
-                          suffixText: 'mmHg'),
-                    ),
-
-                    // Skin Thickness Value Field...
-                    TextFormField(
-                      controller: _skinThickness,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration:
-                          _decoration(labelText: 'Skin Thickness Value'),
-                    ),
-
-                    // Insulin Value Field...
-                    TextFormField(
-                      controller: _insulinValue,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Insulin Value'),
-                    ),
-
-                    // BMI Value Field...
-                    TextFormField(
-                      controller: _bmiValue,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'BMI Value'),
-                    ),
-
-                    // Diabetes Pedigree Function Value Field...
-                    TextFormField(
-                      controller: _diabetesPedigreeFunction,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration:
-                          _decoration(labelText: 'Diabetes Pedigree Function'),
-                    ),
-
-                    // Age Field...
-                    TextFormField(
-                      controller: _age,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration:
-                          _decoration(labelText: 'Age', suffixText: 'years'),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              PrimaryButton(
-                text: 'Diabetes Prediction',
-                onPressed: () async {
-                  await _makePrediction(context);
-                },
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 20.0),
+            PrimaryButton(
+              text: 'Diabetes Prediction',
+              onPressed: () async {
+                await _makePrediction(context);
+              },
+            ),
+          ],
         ),
       ),
     );

@@ -42,76 +42,74 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
         title: const Text('General Disease'),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 30.0),
-              Text(
-                'Please select your symptoms.',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              const SizedBox(height: 30.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                child: DropdownSearch<dynamic>.multiSelection(
-                  items: (_, __) => _diseaseModel.fetchSymptomList(),
-                  compareFn: (i, s) => i == s,
-                  onChanged: (selectedList) {
-                    setState(() {
-                      symptomsList.clear();
-                      symptomsList.addAll(selectedList.cast<String>());
-                    });
-                  },
-                  suffixProps: const DropdownSuffixProps(
-                    clearButtonProps: ClearButtonProps(
-                      isVisible: true,
-                      tooltip: 'Clear all',
-                    ),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 30.0),
+            Text(
+              'Please select your symptoms.',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 30.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: DropdownSearch<dynamic>.multiSelection(
+                items: (_, __) => _diseaseModel.fetchSymptomList(),
+                compareFn: (i, s) => i == s,
+                onChanged: (selectedList) {
+                  setState(() {
+                    symptomsList.clear();
+                    symptomsList.addAll(selectedList.cast<String>());
+                  });
+                },
+                suffixProps: const DropdownSuffixProps(
+                  clearButtonProps: ClearButtonProps(
+                    isVisible: true,
+                    tooltip: 'Clear all',
                   ),
-                  decoratorProps: const DropDownDecoratorProps(
+                ),
+                decoratorProps: const DropDownDecoratorProps(
+                  decoration: InputDecoration(
+                    labelText: 'Select a symptom',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                popupProps: PopupPropsMultiSelection.menu(
+                  showSearchBox: true,
+                  searchDelay: const Duration(milliseconds: 1),
+                  searchFieldProps: const TextFieldProps(
+                    keyboardType: TextInputType.text,
                     decoration: InputDecoration(
-                      labelText: 'Select a symptom',
+                      hintText: 'Search symptom',
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  popupProps: PopupPropsMultiSelection.menu(
-                    showSearchBox: true,
-                    searchDelay: const Duration(milliseconds: 1),
-                    searchFieldProps: const TextFieldProps(
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                        hintText: 'Search symptom',
-                        border: OutlineInputBorder(),
+                  loadingBuilder: (context, _) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const CircularProgressIndicator(),
+                          const SizedBox(height: 30.0),
+                          Text(
+                            'Fetching data...',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ],
                       ),
-                    ),
-                    loadingBuilder: (context, _) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            const CircularProgressIndicator(),
-                            const SizedBox(height: 30.0),
-                            Text(
-                              'Fetching data...',
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                    );
+                  },
                 ),
               ),
-              const SizedBox(height: 50.0),
-              PrimaryButton(
-                text: 'Predict General Disease',
-                onPressed: () async {
-                  await _makePrediction(context);
-                },
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 50.0),
+            PrimaryButton(
+              text: 'Predict General Disease',
+              onPressed: () async {
+                await _makePrediction(context);
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -181,26 +179,30 @@ class _GeneralDiseaseScreenState extends State<GeneralDiseaseScreen> {
       BuildContext context, Map<String, Object> data) async {
     bool isDataSaved = false;
     try {
-      await _db.addPrediction(data).whenComplete(<bool>() {
+      await _db.addPrediction(data).whenComplete(() {
         setState(() {
           isDataSaved = true;
         });
         if (isDataSaved) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            showSuccessSnackBar(
-              context,
-              'Successfully saved.',
-              Icons.check_circle_outline,
-            ),
-          );
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              showSuccessSnackBar(
+                context,
+                'Successfully saved.',
+                Icons.check_circle_outline,
+              ),
+            );
+          }
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            showFailedSnackBar(
-              context,
-              'Could not save. Please try again or contact support.',
-              Icons.cancel_outlined,
-            ),
-          );
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              showFailedSnackBar(
+                context,
+                'Could not save. Please try again or contact support.',
+                Icons.cancel_outlined,
+              ),
+            );
+          }
         }
       });
     } catch (error) {

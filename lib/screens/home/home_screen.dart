@@ -36,79 +36,79 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const UserInformationCard(),
-                const NamedDivider(title: 'Health Predictions'),
-                GridView.count(
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 5.0,
-                  childAspectRatio: 1.8,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    ScreenNavigationCard(
-                      cardTitle: 'General Disease',
-                      icon: Icons.medical_services_outlined,
-                      onTap: () {
-                        pushGeneralDiseaseScreen(context);
-                      },
-                    ),
-                    ScreenNavigationCard(
-                      cardTitle: 'Heart Disease',
-                      icon: Icons.favorite_outline,
-                      onTap: () {
-                        pushHeartDiseaseScreen(context);
-                      },
-                    ),
-                    ScreenNavigationCard(
-                      cardTitle: 'Diabetes Predictions',
-                      icon: Icons.medical_services_outlined,
-                      onTap: () {
-                        pushDiabetesPredictionsScreen(context);
-                      },
-                    ),
-                  ],
-                ),
-                const NamedDivider(title: 'Chronic Disease Predictions'),
-                GridView.count(
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 5.0,
-                  childAspectRatio: 1.8,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    ScreenNavigationCard(
-                      cardTitle: 'Kidney Predictions',
-                      icon: Icons.medical_services_outlined,
-                      onTap: () {
-                        pushKidneyPredictionsScreen(context);
-                      },
-                    ),
-                    ScreenNavigationCard(
-                      cardTitle: 'Lung Cancer',
-                      icon: Icons.person_outline,
-                      onTap: () {
-                        pushLungCancerScreen(context);
-                      },
-                    ),
-                    ScreenNavigationCard(
-                      cardTitle: 'Breast Cancer',
-                      icon: Icons.person_outline,
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-                const NamedDivider(title: 'Trends'),
-                const TrendsList(),
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const UserInformationCard(),
+              const NamedDivider(title: 'Health Predictions'),
+              GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 5.0,
+                childAspectRatio: 1.8,
+                physics: const NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  ScreenNavigationCard(
+                    cardTitle: 'General Disease',
+                    icon: Icons.medical_services_outlined,
+                    onTap: () {
+                      pushGeneralDiseaseScreen(context);
+                    },
+                  ),
+                  ScreenNavigationCard(
+                    cardTitle: 'Heart Disease',
+                    icon: Icons.favorite_outline,
+                    onTap: () {
+                      pushHeartDiseaseScreen(context);
+                    },
+                  ),
+                  ScreenNavigationCard(
+                    cardTitle: 'Diabetes Predictions',
+                    icon: Icons.medical_services_outlined,
+                    onTap: () {
+                      pushDiabetesPredictionsScreen(context);
+                    },
+                  ),
+                ],
+              ),
+              const NamedDivider(title: 'Chronic Disease Predictions'),
+              GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 5.0,
+                childAspectRatio: 1.8,
+                physics: const NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  ScreenNavigationCard(
+                    cardTitle: 'Kidney Predictions',
+                    icon: Icons.medical_services_outlined,
+                    onTap: () {
+                      pushKidneyPredictionsScreen(context);
+                    },
+                  ),
+                  ScreenNavigationCard(
+                    cardTitle: 'Lung Cancer',
+                    icon: Icons.person_outline,
+                    onTap: () {
+                      pushLungCancerScreen(context);
+                    },
+                  ),
+                  ScreenNavigationCard(
+                    cardTitle: 'Breast Cancer',
+                    icon: Icons.person_outline,
+                    onTap: () {
+                      pushBreastCancerScreen(context);
+                    },
+                  ),
+                ],
+              ),
+              const NamedDivider(title: 'Trends'),
+              const TrendsList(),
+            ],
           ),
         ),
       ),

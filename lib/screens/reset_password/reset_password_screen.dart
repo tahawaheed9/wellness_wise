@@ -58,22 +58,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             icon: const Icon(Icons.arrow_back),
           ),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(height: 50.0),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: 50.0),
+                Text(
                   'Please enter your email address and check your mail.',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
-              ),
-              const SizedBox(height: 30.0),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Form(
+                const SizedBox(height: 30.0),
+                Form(
                   key: _resetPasswordFormKey,
                   child: TextFormField(
                     controller: _email,
@@ -89,20 +86,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 50.0),
-              PrimaryButton(
-                text: 'Reset Password',
-                onPressed: () {
-                  if (_resetPasswordFormKey.currentState!.validate()) {
-                    final String email = _email.text;
-                    context
-                        .read<AuthBloc>()
-                        .add(AuthEventResetPassword(email: email));
-                  }
-                },
-              ),
-            ],
+                const SizedBox(height: 50.0),
+                PrimaryButton(
+                  text: 'Reset Password',
+                  onPressed: () {
+                    if (_resetPasswordFormKey.currentState!.validate()) {
+                      final String email = _email.text;
+                      context
+                          .read<AuthBloc>()
+                          .add(AuthEventResetPassword(email: email));
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

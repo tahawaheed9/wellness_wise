@@ -57,88 +57,83 @@ class _LoginFormState extends State<LoginForm> {
       },
       child: Form(
         key: _loginFormKey,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              // Email Address Field...
-              TextFormField(
-                controller: _email,
-                autocorrect: false,
-                enableSuggestions: false,
-                keyboardType: TextInputType.emailAddress,
-                validator: _validateForm,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.email_outlined),
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                ),
+        child: Column(
+          children: <Widget>[
+            // Email Address Field...
+            TextFormField(
+              controller: _email,
+              autocorrect: false,
+              enableSuggestions: false,
+              keyboardType: TextInputType.emailAddress,
+              validator: _validateForm,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.email_outlined),
+                labelText: 'Email',
+                border: OutlineInputBorder(),
               ),
+            ),
 
-              const SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
 
-              // Password Field...
-              TextFormField(
-                controller: _password,
-                autocorrect: false,
-                enableSuggestions: false,
-                keyboardType: TextInputType.text,
-                obscureText: _isObscureText,
-                validator: _validateForm,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.lock_outline),
-                  labelText: 'Password',
-                  border: const OutlineInputBorder(),
-                  suffixIcon: Tooltip(
-                    message: _isObscureText ? 'Show Password' : 'Hide Password',
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _isObscureText = !_isObscureText;
-                        });
-                      },
-                      child: _isObscureText
-                          ? const Icon(Icons.visibility_off)
-                          : const Icon(Icons.visibility),
-                    ),
+            // Password Field...
+            TextFormField(
+              controller: _password,
+              autocorrect: false,
+              enableSuggestions: false,
+              keyboardType: TextInputType.text,
+              obscureText: _isObscureText,
+              validator: _validateForm,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.lock_outline),
+                labelText: 'Password',
+                border: const OutlineInputBorder(),
+                suffixIcon: Tooltip(
+                  message: _isObscureText ? 'Show Password' : 'Hide Password',
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _isObscureText = !_isObscureText;
+                      });
+                    },
+                    child: _isObscureText
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.visibility),
                   ),
                 ),
               ),
-              const SizedBox(height: 30.0),
+            ),
+            const SizedBox(height: 30.0),
 
-              // Login Button...
-              PrimaryButton(
-                text: 'Login',
-                onPressed: () {
-                  if (_loginFormKey.currentState!.validate()) {
-                    final String email = _email.text;
-                    final String password = _password.text;
-                    context
-                        .read<AuthBloc>()
-                        .add(AuthEventLogin(email, password));
-                  }
-                },
-              ),
-              const SizedBox(height: 30.0),
+            // Login Button...
+            PrimaryButton(
+              text: 'Login',
+              onPressed: () {
+                if (_loginFormKey.currentState!.validate()) {
+                  final String email = _email.text;
+                  final String password = _password.text;
+                  context.read<AuthBloc>().add(AuthEventLogin(email, password));
+                }
+              },
+            ),
+            const SizedBox(height: 30.0),
 
-              // Reset Password Button...
-              MyTextButton(
-                title: 'Reset Password',
-                onTap: () {
-                  context.read<AuthBloc>().add(const AuthEventResetPassword());
-                },
-              ),
-              const SizedBox(height: 75.0),
+            // Reset Password Button...
+            MyTextButton(
+              title: 'Reset Password',
+              onTap: () {
+                context.read<AuthBloc>().add(const AuthEventResetPassword());
+              },
+            ),
+            const SizedBox(height: 75.0),
 
-              // Create An Account...
-              MyTextButton(
-                title: 'Create an account',
-                onTap: () {
-                  context.read<AuthBloc>().add(const AuthEventShouldRegister());
-                },
-              ),
-            ],
-          ),
+            // Create An Account...
+            MyTextButton(
+              title: 'Create an account',
+              onTap: () {
+                context.read<AuthBloc>().add(const AuthEventShouldRegister());
+              },
+            ),
+          ],
         ),
       ),
     );

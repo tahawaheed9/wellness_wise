@@ -20,7 +20,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       appBar: AppBar(
         title: const Text('Email Verification'),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

@@ -62,287 +62,284 @@ class _LungCancerScreenState extends State<LungCancerScreen> {
         title: const Text('Lung Cancer'),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              Text(
-                'Please provide us with your medical details.',
-                style: Theme.of(context).textTheme.bodyLarge,
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            Text(
+              'Please provide us with your medical details.',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 30.0),
+            Form(
+              key: _formKey,
+              child: GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+                childAspectRatio: 3,
+                physics: const NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  // Gender Field...
+                  DropdownButtonFormField<String>(
+                    value: _gender,
+                    items: const [
+                      DropdownMenuItem(value: 'M', child: Text('Male')),
+                      DropdownMenuItem(value: 'F', child: Text('Female')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Gender'),
+                    onChanged: (value) {
+                      setState(() {
+                        _gender = value;
+                      });
+                    },
+                  ),
+
+                  // Age Field...
+                  TextFormField(
+                    controller: _age,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(
+                      labelText: 'Age',
+                      suffixText: 'years',
+                    ),
+                  ),
+
+                  // Smoking Field...
+                  DropdownButtonFormField<int>(
+                    value: _smoking,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Smoking'),
+                    onChanged: (value) {
+                      setState(() {
+                        _smoking = value;
+                      });
+                    },
+                  ),
+
+                  // Yellow Fingers Field...
+                  DropdownButtonFormField<int>(
+                    value: _hasYellowFingers,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Yellow Fingers'),
+                    onChanged: (value) {
+                      setState(() {
+                        _hasYellowFingers = value;
+                      });
+                    },
+                  ),
+
+                  // Anxiety Field...
+                  DropdownButtonFormField<int>(
+                    value: _hasAnxiety,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Anxiety'),
+                    onChanged: (value) {
+                      setState(() {
+                        _hasAnxiety = value;
+                      });
+                    },
+                  ),
+
+                  // Peer Pressure Field...
+                  DropdownButtonFormField<int>(
+                    value: _hasPeerPressure,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Peer Pressure'),
+                    onChanged: (value) {
+                      setState(() {
+                        _hasPeerPressure = value;
+                      });
+                    },
+                  ),
+
+                  // Chronic Disease Field...
+                  DropdownButtonFormField<int>(
+                    value: _hasChronicDisease,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Chronic Disease'),
+                    onChanged: (value) {
+                      setState(() {
+                        _hasChronicDisease = value;
+                      });
+                    },
+                  ),
+
+                  // Fatigue Field...
+                  DropdownButtonFormField<int>(
+                    value: _hasFatigue,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Fatigue'),
+                    onChanged: (value) {
+                      setState(() {
+                        _hasFatigue = value;
+                      });
+                    },
+                  ),
+
+                  // Allergy Field...
+                  DropdownButtonFormField<int>(
+                    value: _hasAllergy,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Allergy'),
+                    onChanged: (value) {
+                      setState(() {
+                        _hasAllergy = value;
+                      });
+                    },
+                  ),
+
+                  // Wheezing Field...
+                  DropdownButtonFormField<int>(
+                    value: _isWheezing,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Wheezing'),
+                    onChanged: (value) {
+                      setState(() {
+                        _isWheezing = value;
+                      });
+                    },
+                  ),
+
+                  // Alcoholic Field...
+                  DropdownButtonFormField<int>(
+                    value: _isAlcoholic,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Alcoholic'),
+                    onChanged: (value) {
+                      setState(() {
+                        _isAlcoholic = value;
+                      });
+                    },
+                  ),
+
+                  DropdownButtonFormField<int>(
+                    value: _isCoughing,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Coughing'),
+                    onChanged: (value) {
+                      setState(() {
+                        _isCoughing = value;
+                      });
+                    },
+                  ),
+
+                  // Shortness of Breath Field...
+                  DropdownButtonFormField<int>(
+                    value: _hasShortnessOfBreath,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Shortness of Breath'),
+                    onChanged: (value) {
+                      setState(() {
+                        _hasShortnessOfBreath = value;
+                      });
+                    },
+                  ),
+
+                  // Swallowing Difficulty Field...
+                  DropdownButtonFormField<int>(
+                    value: _hasSwallowingDifficulty,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Swallowing Difficulty'),
+                    onChanged: (value) {
+                      setState(() {
+                        _hasSwallowingDifficulty = value;
+                      });
+                    },
+                  ),
+
+                  // Chest Pain Field...
+                  DropdownButtonFormField<int>(
+                    value: _hasChestPain,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text('Yes')),
+                      DropdownMenuItem(value: 1, child: Text('No')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Chest Pain'),
+                    onChanged: (value) {
+                      setState(() {
+                        _hasChestPain = value;
+                      });
+                    },
+                  ),
+                ],
               ),
-              const SizedBox(height: 30.0),
-              Form(
-                key: _formKey,
-                child: GridView.count(
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0,
-                  childAspectRatio: 3,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    // Gender Field...
-                    DropdownButtonFormField<String>(
-                      value: _gender,
-                      items: const [
-                        DropdownMenuItem(value: 'M', child: Text('Male')),
-                        DropdownMenuItem(value: 'F', child: Text('Female')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Gender'),
-                      onChanged: (value) {
-                        setState(() {
-                          _gender = value;
-                        });
-                      },
-                    ),
-
-                    // Age Field...
-                    TextFormField(
-                      controller: _age,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration: _decoration(
-                        labelText: 'Age',
-                        suffixText: 'years',
-                      ),
-                    ),
-
-                    // Smoking Field...
-                    DropdownButtonFormField<int>(
-                      value: _smoking,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Smoking'),
-                      onChanged: (value) {
-                        setState(() {
-                          _smoking = value;
-                        });
-                      },
-                    ),
-
-                    // Yellow Fingers Field...
-                    DropdownButtonFormField<int>(
-                      value: _hasYellowFingers,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Yellow Fingers'),
-                      onChanged: (value) {
-                        setState(() {
-                          _hasYellowFingers = value;
-                        });
-                      },
-                    ),
-
-                    // Anxiety Field...
-                    DropdownButtonFormField<int>(
-                      value: _hasAnxiety,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Anxiety'),
-                      onChanged: (value) {
-                        setState(() {
-                          _hasAnxiety = value;
-                        });
-                      },
-                    ),
-
-                    // Peer Pressure Field...
-                    DropdownButtonFormField<int>(
-                      value: _hasPeerPressure,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Peer Pressure'),
-                      onChanged: (value) {
-                        setState(() {
-                          _hasPeerPressure = value;
-                        });
-                      },
-                    ),
-
-                    // Chronic Disease Field...
-                    DropdownButtonFormField<int>(
-                      value: _hasChronicDisease,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Chronic Disease'),
-                      onChanged: (value) {
-                        setState(() {
-                          _hasChronicDisease = value;
-                        });
-                      },
-                    ),
-
-                    // Fatigue Field...
-                    DropdownButtonFormField<int>(
-                      value: _hasFatigue,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Fatigue'),
-                      onChanged: (value) {
-                        setState(() {
-                          _hasFatigue = value;
-                        });
-                      },
-                    ),
-
-                    // Allergy Field...
-                    DropdownButtonFormField<int>(
-                      value: _hasAllergy,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Allergy'),
-                      onChanged: (value) {
-                        setState(() {
-                          _hasAllergy = value;
-                        });
-                      },
-                    ),
-
-                    // Wheezing Field...
-                    DropdownButtonFormField<int>(
-                      value: _isWheezing,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Wheezing'),
-                      onChanged: (value) {
-                        setState(() {
-                          _isWheezing = value;
-                        });
-                      },
-                    ),
-
-                    // Alcoholic Field...
-                    DropdownButtonFormField<int>(
-                      value: _isAlcoholic,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Alcoholic'),
-                      onChanged: (value) {
-                        setState(() {
-                          _isAlcoholic = value;
-                        });
-                      },
-                    ),
-
-                    DropdownButtonFormField<int>(
-                      value: _isCoughing,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Coughing'),
-                      onChanged: (value) {
-                        setState(() {
-                          _isCoughing = value;
-                        });
-                      },
-                    ),
-
-                    // Shortness of Breath Field...
-                    DropdownButtonFormField<int>(
-                      value: _hasShortnessOfBreath,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Shortness of Breath'),
-                      onChanged: (value) {
-                        setState(() {
-                          _hasShortnessOfBreath = value;
-                        });
-                      },
-                    ),
-
-                    // Swallowing Difficulty Field...
-                    DropdownButtonFormField<int>(
-                      value: _hasSwallowingDifficulty,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration:
-                          _decoration(labelText: 'Swallowing Difficulty'),
-                      onChanged: (value) {
-                        setState(() {
-                          _hasSwallowingDifficulty = value;
-                        });
-                      },
-                    ),
-
-                    // Chest Pain Field...
-                    DropdownButtonFormField<int>(
-                      value: _hasChestPain,
-                      items: const [
-                        DropdownMenuItem(value: 2, child: Text('Yes')),
-                        DropdownMenuItem(value: 1, child: Text('No')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Chest Pain'),
-                      onChanged: (value) {
-                        setState(() {
-                          _hasChestPain = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              PrimaryButton(
-                text: 'Lung Cancer Prediction',
-                onPressed: () async {
-                  await _makePrediction(context);
-                },
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 20.0),
+            PrimaryButton(
+              text: 'Lung Cancer Prediction',
+              onPressed: () async {
+                await _makePrediction(context);
+              },
+            ),
+          ],
         ),
       ),
     );

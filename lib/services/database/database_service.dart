@@ -17,7 +17,7 @@ class DatabaseServices {
   }
 
   // Setting Username and Gender to main collection (user-data)...
-  Future setUserData(
+  Future<void> setUserData(
     String username,
     DateTime dateOfBirth,
     String gender,
@@ -31,12 +31,12 @@ class DatabaseServices {
         'created-on': createdOn,
       });
     } catch (error) {
-      return error.toString();
+      throw Exception(error.toString());
     }
   }
 
   // Adding new predictions to the 'predictions' collection..
-  Future<dynamic> addPrediction(Map<String, Object?> data) async {
+  Future<void> addPrediction(Map<String, Object?> data) async {
     try {
       await _predictionCollectionRef.add(data);
     } catch (error) {

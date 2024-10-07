@@ -71,221 +71,217 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
         title: const Text('Heart Disease'),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              Text(
-                'Please provide us with your medical details.',
-                style: Theme.of(context).textTheme.bodyLarge,
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            Text(
+              'Please provide us with your medical details.',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 30.0),
+            Form(
+              key: _formKey,
+              child: GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+                childAspectRatio: 3,
+                physics: const NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  // Age Field...
+                  TextFormField(
+                    controller: _age,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration:
+                        _decoration(labelText: 'Age', suffixText: 'years'),
+                  ),
+
+                  // Gender Field...
+                  DropdownButtonFormField<int>(
+                    value: _gender,
+                    items: const [
+                      DropdownMenuItem(value: 1, child: Text('Male')),
+                      DropdownMenuItem(value: 0, child: Text('Female')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Gender'),
+                    onChanged: (int? value) {
+                      setState(() => _gender = value);
+                    },
+                  ),
+
+                  // Chest Pain Type Field...
+                  DropdownButtonFormField<int>(
+                    value: _chestPainType,
+                    items: const [
+                      DropdownMenuItem(value: 0, child: Text('Typical Angina')),
+                      DropdownMenuItem(
+                          value: 1, child: Text('Atypical Angina')),
+                      DropdownMenuItem(
+                          value: 2, child: Text('Non — Anginal Pain')),
+                      DropdownMenuItem(value: 3, child: Text('Asymptotic')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Chest Pain Type'),
+                    onChanged: (int? value) {
+                      setState(() => _chestPainType = value);
+                    },
+                  ),
+
+                  // Resting Blood Pressure Field...
+                  TextFormField(
+                    controller: _restingBloodPressure,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(
+                        labelText: 'Resting Blood Pressure',
+                        hintText: 'Systolic',
+                        suffixText: 'mmHg'),
+                  ),
+
+                  // Serum Cholesterol Field...
+                  TextFormField(
+                    controller: _serumCholesterol,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(
+                        labelText: 'Serum Cholesterol',
+                        hintText: 'LDL + HDL',
+                        suffixText: 'mg/dL'),
+                  ),
+
+                  // Resting ECG Field...
+                  DropdownButtonFormField<int>(
+                    value: _restingECG,
+                    items: const [
+                      DropdownMenuItem(value: 0, child: Text('Normal')),
+                      DropdownMenuItem(
+                          value: 1,
+                          child: Text('Having ST-T Wave Abnormality')),
+                      DropdownMenuItem(
+                          value: 2,
+                          child: Text('Left Ventricular Hypertrophy')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Resting ECG'),
+                    onChanged: (int? value) {
+                      setState(() => _restingECG = value);
+                    },
+                  ),
+
+                  // Max Heart Rate Field...
+                  TextFormField(
+                    controller: _maxHeartRate,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(
+                      labelText: 'Max Heart Rate',
+                      suffixText: 'bps',
+                    ),
+                  ),
+
+                  // ST Depression Field...
+                  TextFormField(
+                    controller: _stDepression,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'ST Depression'),
+                  ),
+
+                  // Peak ST Segment Field...
+                  DropdownButtonFormField<int>(
+                    value: _peakSTSegment,
+                    items: const [
+                      DropdownMenuItem(value: 0, child: Text('Up-sloping')),
+                      DropdownMenuItem(value: 1, child: Text('Flat')),
+                      DropdownMenuItem(value: 2, child: Text('Down-sloping')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Peak ST Segment'),
+                    onChanged: (int? value) {
+                      setState(() => _peakSTSegment = value);
+                    },
+                  ),
+
+                  // Major Vessels Field...
+                  TextFormField(
+                    controller: _majorVessels,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Major Vessels (0 - 3)'),
+                  ),
+
+                  // Thalassemia Field...
+                  DropdownButtonFormField<int>(
+                    value: _thalassemia,
+                    items: const [
+                      DropdownMenuItem(value: 0, child: Text('Normal')),
+                      DropdownMenuItem(value: 1, child: Text('Fixed Defect')),
+                      DropdownMenuItem(
+                          value: 2, child: Text('Reversible Defect')),
+                    ],
+                    isExpanded: true,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Thalassemia'),
+                    onChanged: (int? value) {
+                      setState(() => _thalassemia = value);
+                    },
+                  ),
+                ],
               ),
-              const SizedBox(height: 30.0),
-              Form(
-                key: _formKey,
-                child: GridView.count(
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0,
-                  childAspectRatio: 3,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    // Age Field...
-                    TextFormField(
-                      controller: _age,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration:
-                          _decoration(labelText: 'Age', suffixText: 'years'),
-                    ),
-        
-                    // Gender Field...
-                    DropdownButtonFormField<int>(
-                      value: _gender,
-                      items: const [
-                        DropdownMenuItem(value: 1, child: Text('Male')),
-                        DropdownMenuItem(value: 0, child: Text('Female')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Gender'),
-                      onChanged: (int? value) {
-                        setState(() => _gender = value);
-                      },
-                    ),
-        
-                    // Chest Pain Type Field...
-                    DropdownButtonFormField<int>(
-                      value: _chestPainType,
-                      items: const [
-                        DropdownMenuItem(
-                            value: 0, child: Text('Typical Angina')),
-                        DropdownMenuItem(
-                            value: 1, child: Text('Atypical Angina')),
-                        DropdownMenuItem(
-                            value: 2, child: Text('Non — Anginal Pain')),
-                        DropdownMenuItem(value: 3, child: Text('Asymptotic')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Chest Pain Type'),
-                      onChanged: (int? value) {
-                        setState(() => _chestPainType = value);
-                      },
-                    ),
-        
-                    // Resting Blood Pressure Field...
-                    TextFormField(
-                      controller: _restingBloodPressure,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration: _decoration(
-                          labelText: 'Resting Blood Pressure',
-                          hintText: 'Systolic',
-                          suffixText: 'mmHg'),
-                    ),
-        
-                    // Serum Cholesterol Field...
-                    TextFormField(
-                      controller: _serumCholesterol,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration: _decoration(
-                          labelText: 'Serum Cholesterol',
-                          hintText: 'LDL + HDL',
-                          suffixText: 'mg/dL'),
-                    ),
-        
-                    // Resting ECG Field...
-                    DropdownButtonFormField<int>(
-                      value: _restingECG,
-                      items: const [
-                        DropdownMenuItem(value: 0, child: Text('Normal')),
-                        DropdownMenuItem(
-                            value: 1,
-                            child: Text('Having ST-T Wave Abnormality')),
-                        DropdownMenuItem(
-                            value: 2,
-                            child: Text('Left Ventricular Hypertrophy')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Resting ECG'),
-                      onChanged: (int? value) {
-                        setState(() => _restingECG = value);
-                      },
-                    ),
-        
-                    // Max Heart Rate Field...
-                    TextFormField(
-                      controller: _maxHeartRate,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration: _decoration(
-                        labelText: 'Max Heart Rate',
-                        suffixText: 'bps',
-                      ),
-                    ),
-        
-                    // ST Depression Field...
-                    TextFormField(
-                      controller: _stDepression,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'ST Depression'),
-                    ),
-        
-                    // Peak ST Segment Field...
-                    DropdownButtonFormField<int>(
-                      value: _peakSTSegment,
-                      items: const [
-                        DropdownMenuItem(value: 0, child: Text('Up-sloping')),
-                        DropdownMenuItem(value: 1, child: Text('Flat')),
-                        DropdownMenuItem(value: 2, child: Text('Down-sloping')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Peak ST Segment'),
-                      onChanged: (int? value) {
-                        setState(() => _peakSTSegment = value);
-                      },
-                    ),
-        
-                    // Major Vessels Field...
-                    TextFormField(
-                      controller: _majorVessels,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.number,
-                      validator: _validateForm,
-                      decoration:
-                          _decoration(labelText: 'Major Vessels (0 - 3)'),
-                    ),
-        
-                    // Thalassemia Field...
-                    DropdownButtonFormField<int>(
-                      value: _thalassemia,
-                      items: const [
-                        DropdownMenuItem(value: 0, child: Text('Normal')),
-                        DropdownMenuItem(value: 1, child: Text('Fixed Defect')),
-                        DropdownMenuItem(
-                            value: 2, child: Text('Reversible Defect')),
-                      ],
-                      isExpanded: true,
-                      validator: _validateForm,
-                      decoration: _decoration(labelText: 'Thalassemia'),
-                      onChanged: (int? value) {
-                        setState(() => _thalassemia = value);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              CheckboxListTile(
-                title: const Text('Exercise induced angina'),
-                controlAffinity: ListTileControlAffinity.leading,
-                value: _isExerciseInducedAngina == 1 ? true : false,
-                onChanged: (bool? value) {
-                  setState(() {
-                    value == true
-                        ? _isExerciseInducedAngina = 1
-                        : _isExerciseInducedAngina = 0;
-                  });
-                },
-              ),
-              const SizedBox(height: 20.0),
-              CheckboxListTile(
-                title: const Text('Fasting Blood Sugar > 120 mg/dL'),
-                controlAffinity: ListTileControlAffinity.leading,
-                value: _isFastingBloodSugar == 1 ? true : false,
-                onChanged: (bool? value) {
-                  setState(() {
-                    value == true
-                        ? _isFastingBloodSugar = 1
-                        : _isFastingBloodSugar = 0;
-                  });
-                },
-              ),
-              const SizedBox(height: 20.0),
-              PrimaryButton(
-                text: 'Heart Disease Prediction',
-                onPressed: () async {
-                  await _makePrediction(context);
-                },
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 20.0),
+            CheckboxListTile(
+              title: const Text('Exercise induced angina'),
+              controlAffinity: ListTileControlAffinity.leading,
+              value: _isExerciseInducedAngina == 1 ? true : false,
+              onChanged: (bool? value) {
+                setState(() {
+                  value == true
+                      ? _isExerciseInducedAngina = 1
+                      : _isExerciseInducedAngina = 0;
+                });
+              },
+            ),
+            const SizedBox(height: 20.0),
+            CheckboxListTile(
+              title: const Text('Fasting Blood Sugar > 120 mg/dL'),
+              controlAffinity: ListTileControlAffinity.leading,
+              value: _isFastingBloodSugar == 1 ? true : false,
+              onChanged: (bool? value) {
+                setState(() {
+                  value == true
+                      ? _isFastingBloodSugar = 1
+                      : _isFastingBloodSugar = 0;
+                });
+              },
+            ),
+            const SizedBox(height: 20.0),
+            PrimaryButton(
+              text: 'Heart Disease Prediction',
+              onPressed: () async {
+                await _makePrediction(context);
+              },
+            ),
+          ],
         ),
       ),
     );
