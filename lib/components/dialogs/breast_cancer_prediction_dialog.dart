@@ -53,7 +53,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Area Mean:',
+                    ' — Texture Mean:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[1].toString()),
@@ -66,7 +66,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Concavity Mean:',
+                    ' — Perimeter Mean:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[2].toString()),
@@ -79,7 +79,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Texture Mean:',
+                    ' — Area Mean:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[3].toString()),
@@ -105,7 +105,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Concave Points Mean:',
+                    ' — Compactness Mean:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[5].toString()),
@@ -118,7 +118,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Perimeter Mean:',
+                    ' — Concavity Mean:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[6].toString()),
@@ -131,7 +131,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Compactness Mean:',
+                    ' — Concave Points Mean:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[7].toString()),
@@ -170,7 +170,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Perimeter SE:',
+                    ' — Radius SE:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[10].toString()),
@@ -183,7 +183,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Compactness SE:',
+                    ' — Texture SE:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[11].toString()),
@@ -196,7 +196,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Radius SE:',
+                    ' — Perimeter SE:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[12].toString()),
@@ -222,7 +222,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Concavity SE:',
+                    ' — Smoothness SE:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[14].toString()),
@@ -235,7 +235,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Texture SE:',
+                    ' — Compactness SE:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[15].toString()),
@@ -248,7 +248,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Smoothness SE:',
+                    ' — Concavity SE:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[16].toString()),
@@ -287,7 +287,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Radius Worst:',
+                    ' — Fractal Dimension SE:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[19].toString()),
@@ -300,7 +300,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Area Worst:',
+                    ' — Radius Worst:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[20].toString()),
@@ -313,7 +313,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Fractal Dimension SE:',
+                    ' — Texture Worst:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[21].toString()),
@@ -326,7 +326,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Texture Worst:',
+                    ' — Perimeter Worst:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[22].toString()),
@@ -339,7 +339,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Smoothness Worst:',
+                    ' — Area Worst:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[23].toString()),
@@ -352,7 +352,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Concavity Worst:',
+                    ' — Smoothness Worst:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[24].toString()),
@@ -365,7 +365,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Perimeter Worst:',
+                    ' — Compactness Worst:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[25].toString()),
@@ -378,7 +378,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Compactness Worst:',
+                    ' — Concavity Worst:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[26].toString()),
@@ -404,7 +404,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Fractal Dimension Worst:',
+                    ' — Symmetry Worst:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[28].toString()),
@@ -417,7 +417,7 @@ Future<bool> showBreastCancerPredictionDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    ' — Symmetry Worst:',
+                    ' — Fractal Dimension Worst:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(readings[29].toString()),

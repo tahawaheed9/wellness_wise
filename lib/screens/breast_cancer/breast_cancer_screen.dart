@@ -23,35 +23,35 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
   late final DatabaseServices _db;
 
   late final TextEditingController _radiusMean;
-  late final TextEditingController _areaMean;
-  late final TextEditingController _concavityMean;
   late final TextEditingController _textureMean;
-  late final TextEditingController _smoothnessMean;
-  late final TextEditingController _concavePointsMean;
   late final TextEditingController _perimeterMean;
+  late final TextEditingController _areaMean;
+  late final TextEditingController _smoothnessMean;
   late final TextEditingController _compactnessMean;
+  late final TextEditingController _concavityMean;
+  late final TextEditingController _concavePointsMean;
   late final TextEditingController _symmetryMean;
   late final TextEditingController _fractalDimensionMean;
-  late final TextEditingController _perimeterSE;
-  late final TextEditingController _compactnessSE;
   late final TextEditingController _radiusSE;
-  late final TextEditingController _areaSE;
-  late final TextEditingController _concavitySE;
   late final TextEditingController _textureSE;
+  late final TextEditingController _perimeterSE;
+  late final TextEditingController _areaSE;
   late final TextEditingController _smoothnessSE;
+  late final TextEditingController _compactnessSE;
+  late final TextEditingController _concavitySE;
   late final TextEditingController _concavePointsSE;
   late final TextEditingController _symmetrySE;
-  late final TextEditingController _radiusWorst;
-  late final TextEditingController _areaWorst;
   late final TextEditingController _fractalDimensionSE;
+  late final TextEditingController _radiusWorst;
   late final TextEditingController _textureWorst;
-  late final TextEditingController _smoothnessWorst;
-  late final TextEditingController _concavityWorst;
   late final TextEditingController _perimeterWorst;
+  late final TextEditingController _areaWorst;
+  late final TextEditingController _smoothnessWorst;
   late final TextEditingController _compactnessWorst;
+  late final TextEditingController _concavityWorst;
   late final TextEditingController _concavePointsWorst;
-  late final TextEditingController _fractalDimensionWorst;
   late final TextEditingController _symmetryWorst;
+  late final TextEditingController _fractalDimensionWorst;
 
   List<Object> _readingsList = [];
   String _response = '';
@@ -62,69 +62,69 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
     _diseaseModel = DiseaseModelServices();
     _db = DatabaseServices();
     _radiusMean = TextEditingController();
-    _areaMean = TextEditingController();
-    _concavityMean = TextEditingController();
     _textureMean = TextEditingController();
-    _smoothnessMean = TextEditingController();
-    _concavePointsMean = TextEditingController();
     _perimeterMean = TextEditingController();
+    _areaMean = TextEditingController();
+    _smoothnessMean = TextEditingController();
     _compactnessMean = TextEditingController();
+    _concavityMean = TextEditingController();
+    _concavePointsMean = TextEditingController();
     _symmetryMean = TextEditingController();
     _fractalDimensionMean = TextEditingController();
-    _perimeterSE = TextEditingController();
-    _compactnessSE = TextEditingController();
     _radiusSE = TextEditingController();
-    _areaSE = TextEditingController();
-    _concavitySE = TextEditingController();
     _textureSE = TextEditingController();
+    _perimeterSE = TextEditingController();
+    _areaSE = TextEditingController();
     _smoothnessSE = TextEditingController();
+    _compactnessSE = TextEditingController();
+    _concavitySE = TextEditingController();
     _concavePointsSE = TextEditingController();
     _symmetrySE = TextEditingController();
-    _radiusWorst = TextEditingController();
-    _areaWorst = TextEditingController();
     _fractalDimensionSE = TextEditingController();
+    _radiusWorst = TextEditingController();
     _textureWorst = TextEditingController();
-    _smoothnessWorst = TextEditingController();
-    _concavityWorst = TextEditingController();
     _perimeterWorst = TextEditingController();
+    _areaWorst = TextEditingController();
+    _smoothnessWorst = TextEditingController();
     _compactnessWorst = TextEditingController();
+    _concavityWorst = TextEditingController();
     _concavePointsWorst = TextEditingController();
-    _fractalDimensionWorst = TextEditingController();
     _symmetryWorst = TextEditingController();
+    _fractalDimensionWorst = TextEditingController();
   }
 
   @override
   void dispose() {
     _radiusMean.dispose();
-    _areaMean.dispose();
-    _concavityMean.dispose();
     _textureMean.dispose();
-    _smoothnessMean.dispose();
-    _concavePointsMean.dispose();
     _perimeterMean.dispose();
+    _areaMean.dispose();
+    _smoothnessMean.dispose();
     _compactnessMean.dispose();
+    _concavityMean.dispose();
+    _concavePointsMean.dispose();
     _symmetryMean.dispose();
     _fractalDimensionMean.dispose();
-    _perimeterSE.dispose();
-    _compactnessSE.dispose();
     _radiusSE.dispose();
-    _areaSE.dispose();
-    _concavitySE.dispose();
     _textureSE.dispose();
+    _perimeterSE.dispose();
+    _areaSE.dispose();
     _smoothnessSE.dispose();
+    _compactnessSE.dispose();
+    _concavitySE.dispose();
     _concavePointsSE.dispose();
     _symmetrySE.dispose();
-    _radiusWorst.dispose();
-    _areaWorst.dispose();
     _fractalDimensionSE.dispose();
+    _radiusWorst.dispose();
     _textureWorst.dispose();
-    _smoothnessWorst.dispose();
-    _concavityWorst.dispose();
     _perimeterWorst.dispose();
+    _areaWorst.dispose();
+    _smoothnessWorst.dispose();
     _compactnessWorst.dispose();
+    _concavityWorst.dispose();
     _concavePointsWorst.dispose();
-    _fractalDimensionWorst.dispose();
     _symmetryWorst.dispose();
+    _fractalDimensionWorst.dispose();
     super.dispose();
   }
 
@@ -163,26 +163,6 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     decoration: _decoration(labelText: 'Radius Mean'),
                   ),
 
-                  // Area Mean Field...
-                  TextFormField(
-                    controller: _areaMean,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: _decoration(labelText: 'Area Mean'),
-                  ),
-
-                  // Concavity Mean Field...
-                  TextFormField(
-                    controller: _concavityMean,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: _decoration(labelText: 'Concavity Mean'),
-                  ),
-
                   // Texture Mean Field...
                   TextFormField(
                     controller: _textureMean,
@@ -191,26 +171,6 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
                     decoration: _decoration(labelText: 'Texture Mean'),
-                  ),
-
-                  // Smoothness Mean Field...
-                  TextFormField(
-                    controller: _smoothnessMean,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: _decoration(labelText: 'Smoothness Mean'),
-                  ),
-
-                  // Concave Points Mean Field...
-                  TextFormField(
-                    controller: _concavePointsMean,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: _decoration(labelText: 'Concave Points Mean'),
                   ),
 
                   // Perimeter Mean Field...
@@ -223,6 +183,26 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     decoration: _decoration(labelText: 'Perimeter Mean'),
                   ),
 
+                  // Area Mean Field...
+                  TextFormField(
+                    controller: _areaMean,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Area Mean'),
+                  ),
+
+                  // Smoothness Mean Field...
+                  TextFormField(
+                    controller: _smoothnessMean,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Smoothness Mean'),
+                  ),
+
                   // Compactness Mean Field...
                   TextFormField(
                     controller: _compactnessMean,
@@ -231,6 +211,26 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
                     decoration: _decoration(labelText: 'Compactness Mean'),
+                  ),
+
+                  // Concavity Mean Field...
+                  TextFormField(
+                    controller: _concavityMean,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Concavity Mean'),
+                  ),
+
+                  // Concave Points Mean Field...
+                  TextFormField(
+                    controller: _concavePointsMean,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Concave Points Mean'),
                   ),
 
                   // Symmetry Mean Field...
@@ -254,26 +254,6 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                         _decoration(labelText: 'Fractal Dimension Mean'),
                   ),
 
-                  // Perimeter SE Field...
-                  TextFormField(
-                    controller: _perimeterSE,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: _decoration(labelText: 'Perimeter SE'),
-                  ),
-
-                  // Compactness SE Field...
-                  TextFormField(
-                    controller: _compactnessSE,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: _decoration(labelText: 'Compactness SE'),
-                  ),
-
                   // Radius SE Field...
                   TextFormField(
                     controller: _radiusSE,
@@ -282,26 +262,6 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
                     decoration: _decoration(labelText: 'Radius SE'),
-                  ),
-
-                  // Area SE Field...
-                  TextFormField(
-                    controller: _areaSE,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: _decoration(labelText: 'Area SE'),
-                  ),
-
-                  // Concavity Se Field...
-                  TextFormField(
-                    controller: _concavitySE,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: _decoration(labelText: 'Concavity SE'),
                   ),
 
                   // Texture SE Field...
@@ -314,6 +274,26 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     decoration: _decoration(labelText: 'Texture SE'),
                   ),
 
+                  // Perimeter SE Field...
+                  TextFormField(
+                    controller: _perimeterSE,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Perimeter SE'),
+                  ),
+
+                  // Area SE Field...
+                  TextFormField(
+                    controller: _areaSE,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Area SE'),
+                  ),
+
                   // Smoothness SE Field...
                   TextFormField(
                     controller: _smoothnessSE,
@@ -322,6 +302,26 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
                     decoration: _decoration(labelText: 'Smoothness SE'),
+                  ),
+
+                  // Compactness SE Field...
+                  TextFormField(
+                    controller: _compactnessSE,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Compactness SE'),
+                  ),
+
+                  // Concavity Se Field...
+                  TextFormField(
+                    controller: _concavitySE,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Concavity SE'),
                   ),
 
                   // Concave Points SE Field...
@@ -344,26 +344,6 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     decoration: _decoration(labelText: 'Symmetry SE'),
                   ),
 
-                  // Radius Worst Field...
-                  TextFormField(
-                    controller: _radiusWorst,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: _decoration(labelText: 'Radius Worst'),
-                  ),
-
-                  // Area Worst Field...
-                  TextFormField(
-                    controller: _areaWorst,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: _decoration(labelText: 'Area Worst'),
-                  ),
-
                   // Fractal Dimension SE Field...
                   TextFormField(
                     controller: _fractalDimensionSE,
@@ -372,6 +352,16 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
                     decoration: _decoration(labelText: 'Fractal Dimension SE'),
+                  ),
+
+                  // Radius Worst Field...
+                  TextFormField(
+                    controller: _radiusWorst,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Radius Worst'),
                   ),
 
                   // Texture Worst Field...
@@ -384,26 +374,6 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     decoration: _decoration(labelText: 'Texture Worst'),
                   ),
 
-                  // Smoothness Worst Field...
-                  TextFormField(
-                    controller: _smoothnessWorst,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: _decoration(labelText: 'Smoothness Worst'),
-                  ),
-
-                  // Concavity Worst Field...
-                  TextFormField(
-                    controller: _concavityWorst,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration: _decoration(labelText: 'Concavity Worst'),
-                  ),
-
                   // Perimeter Worst Field...
                   TextFormField(
                     controller: _perimeterWorst,
@@ -412,6 +382,26 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
                     decoration: _decoration(labelText: 'Perimeter Worst'),
+                  ),
+
+                  // Area Worst Field...
+                  TextFormField(
+                    controller: _areaWorst,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Area Worst'),
+                  ),
+
+                  // Smoothness Worst Field...
+                  TextFormField(
+                    controller: _smoothnessWorst,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Smoothness Worst'),
                   ),
 
                   // Compactness Worst Field...
@@ -424,6 +414,16 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     decoration: _decoration(labelText: 'Compactness Worst'),
                   ),
 
+                  // Concavity Worst Field...
+                  TextFormField(
+                    controller: _concavityWorst,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration: _decoration(labelText: 'Concavity Worst'),
+                  ),
+
                   // Concave Points Worst Field...
                   TextFormField(
                     controller: _concavePointsWorst,
@@ -434,17 +434,6 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     decoration: _decoration(labelText: 'Concave Points Worst'),
                   ),
 
-                  // Fractal Dimension Worst Field...
-                  TextFormField(
-                    controller: _fractalDimensionWorst,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    validator: _validateForm,
-                    decoration:
-                        _decoration(labelText: 'Fractal Dimension Worst'),
-                  ),
-
                   // Symmetry Worst Field...
                   TextFormField(
                     controller: _symmetryWorst,
@@ -453,6 +442,17 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
                     decoration: _decoration(labelText: 'Symmetry Worst'),
+                  ),
+
+                  // Fractal Dimension Worst Field...
+                  TextFormField(
+                    controller: _fractalDimensionWorst,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.number,
+                    validator: _validateForm,
+                    decoration:
+                    _decoration(labelText: 'Fractal Dimension Worst'),
                   ),
                 ],
               ),
@@ -496,35 +496,35 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
       setState(() {
         _readingsList = [
           double.parse(_radiusMean.text),
-          double.parse(_areaMean.text),
-          double.parse(_concavityMean.text),
           double.parse(_textureMean.text),
-          double.parse(_smoothnessMean.text),
-          double.parse(_concavePointsMean.text),
           double.parse(_perimeterMean.text),
+          double.parse(_areaMean.text),
+          double.parse(_smoothnessMean.text),
           double.parse(_compactnessMean.text),
+          double.parse(_concavityMean.text),
+          double.parse(_concavePointsMean.text),
           double.parse(_symmetryMean.text),
           double.parse(_fractalDimensionMean.text),
-          double.parse(_perimeterSE.text),
-          double.parse(_compactnessSE.text),
           double.parse(_radiusSE.text),
-          double.parse(_areaSE.text),
-          double.parse(_concavitySE.text),
           double.parse(_textureSE.text),
+          double.parse(_perimeterSE.text),
+          double.parse(_areaSE.text),
           double.parse(_smoothnessSE.text),
+          double.parse(_compactnessSE.text),
+          double.parse(_concavitySE.text),
           double.parse(_concavePointsSE.text),
           double.parse(_symmetrySE.text),
-          double.parse(_radiusWorst.text),
-          double.parse(_areaWorst.text),
           double.parse(_fractalDimensionSE.text),
+          double.parse(_radiusWorst.text),
           double.parse(_textureWorst.text),
-          double.parse(_smoothnessWorst.text),
-          double.parse(_concavityWorst.text),
           double.parse(_perimeterWorst.text),
+          double.parse(_areaWorst.text),
+          double.parse(_smoothnessWorst.text),
           double.parse(_compactnessWorst.text),
+          double.parse(_concavityWorst.text),
           double.parse(_concavePointsWorst.text),
-          double.parse(_fractalDimensionWorst.text),
           double.parse(_symmetryWorst.text),
+          double.parse(_fractalDimensionWorst.text),
         ];
       });
 
@@ -555,35 +555,35 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
                       'prediction': _response,
                       'readings': <String, Object>{
                         'radius-mean': _readingsList[0],
-                        'area-mean': _readingsList[1],
-                        'concavity-mean': _readingsList[2],
-                        'texture-mean': _readingsList[3],
+                        'texture-mean': _readingsList[1],
+                        'perimeter-mean': _readingsList[2],
+                        'area-mean': _readingsList[3],
                         'smoothness-mean': _readingsList[4],
-                        'concave-points-mean': _readingsList[5],
-                        'perimeter-mean': _readingsList[6],
-                        'compactness-mean': _readingsList[7],
+                        'compactness-mean': _readingsList[5],
+                        'concavity-mean': _readingsList[6],
+                        'concave-points-mean': _readingsList[7],
                         'symmetry-mean': _readingsList[8],
                         'fractal-dimension-mean': _readingsList[9],
-                        'perimeter-se': _readingsList[10],
-                        'compactness-se': _readingsList[11],
-                        'radius-se': _readingsList[12],
+                        'radius-se': _readingsList[10],
+                        'texture-se': _readingsList[11],
+                        'perimeter-se': _readingsList[12],
                         'area-se': _readingsList[13],
-                        'concavity-se': _readingsList[14],
-                        'texture-se': _readingsList[15],
-                        'smoothness-se': _readingsList[16],
+                        'smoothness-se': _readingsList[14],
+                        'compactness-se': _readingsList[15],
+                        'concavity-se': _readingsList[16],
                         'concave-points-se': _readingsList[17],
                         'symmetry-se': _readingsList[18],
-                        'radius-worst': _readingsList[19],
-                        'area-worst': _readingsList[20],
-                        'fractal-dimension-se': _readingsList[21],
-                        'texture-worst': _readingsList[22],
-                        'smoothness-worst': _readingsList[23],
-                        'concavity-worst': _readingsList[24],
-                        'perimeter-worst': _readingsList[25],
-                        'compactness-worst': _readingsList[26],
+                        'fractal-dimension-se': _readingsList[19],
+                        'radius-worst': _readingsList[20],
+                        'texture-worst': _readingsList[21],
+                        'perimeter-worst': _readingsList[22],
+                        'area-worst': _readingsList[23],
+                        'smoothness-worst': _readingsList[24],
+                        'compactness-worst': _readingsList[25],
+                        'concavity-worst': _readingsList[26],
                         'concave-points-worst': _readingsList[27],
-                        'fractal-dimension-worst': _readingsList[28],
-                        'symmetry-worst': _readingsList[29],
+                        'symmetry-worst': _readingsList[28],
+                        'fractal-dimension-worst': _readingsList[29],
                       },
                       'created-on': createdOn,
                     };
