@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/components/dialogs/breast_cancer_prediction_dialog.dart';
+import '/components/dialogs/save_prediction_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/failed_snack_bar.dart';
 import '../../components/primary_button.dart';
@@ -536,7 +538,62 @@ class _BreastCancerScreenState extends State<BreastCancerScreen> {
             .fetchBreastCancerPredictions(readings)
             .then((response) async {
           setState(() => _response = response);
-          if (context.mounted) {}
+          if (context.mounted) {
+            await showBreastCancerPredictionDialog(
+              context: context,
+              message: _response,
+              readings: _readingsList,
+            ).then(<bool>(value) async {
+              if (value) {
+                await showSavePredictionDialog(context)
+                    .then(<bool>(value) async {
+                  if (value) {
+                    final createdOn = DateTime.now();
+
+                    final Map<String, Object> data = {
+                      'disease': 'Breast Cancer',
+                      'prediction': _response,
+                      'readings': <String, Object>{
+                        'radius-mean': _readingsList[0],
+                        'area-mean': _readingsList[1],
+                        'concavity-mean': _readingsList[2],
+                        'texture-mean': _readingsList[3],
+                        'smoothness-mean': _readingsList[4],
+                        'concave-points-mean': _readingsList[5],
+                        'perimeter-mean': _readingsList[6],
+                        'compactness-mean': _readingsList[7],
+                        'symmetry-mean': _readingsList[8],
+                        'fractal-dimension-mean': _readingsList[9],
+                        'perimeter-se': _readingsList[10],
+                        'compactness-se': _readingsList[11],
+                        'radius-se': _readingsList[12],
+                        'area-se': _readingsList[13],
+                        'concavity-se': _readingsList[14],
+                        'texture-se': _readingsList[15],
+                        'smoothness-se': _readingsList[16],
+                        'concave-points-se': _readingsList[17],
+                        'symmetry-se': _readingsList[18],
+                        'radius-worst': _readingsList[19],
+                        'area-worst': _readingsList[20],
+                        'fractal-dimension-se': _readingsList[21],
+                        'texture-worst': _readingsList[22],
+                        'smoothness-worst': _readingsList[23],
+                        'concavity-worst': _readingsList[24],
+                        'perimeter-worst': _readingsList[25],
+                        'compactness-worst': _readingsList[26],
+                        'concave-points-worst': _readingsList[27],
+                        'fractal-dimension-worst': _readingsList[28],
+                        'symmetry-worst': _readingsList[29],
+                      },
+                      'created-on': createdOn,
+                    };
+
+                    await _savePrediction(context, data);
+                  }
+                });
+              }
+            });
+          }
         });
       } catch (error) {
         if (context.mounted) {
