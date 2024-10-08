@@ -146,4 +146,28 @@ class DiseaseModelServices {
           'Please, check your internet connection or contact support.');
     }
   }
+
+  // Fetching the Breast Cancer Predictions...
+  Future<String> fetchBreastCancerPredictions(
+      Map<String, List<Object>> readings) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$_apiKey/breast_cancer_prediction'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(readings),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        final message = data['response'];
+        return message;
+      } else {
+        throw Exception(
+            'Unable to retrieve predictions. Status code: ${response.statusCode}.');
+      }
+    } catch (_) {
+      throw Exception(
+          'Please, check your internet connection or contact support.');
+    }
+  }
 }
