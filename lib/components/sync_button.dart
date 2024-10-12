@@ -30,7 +30,7 @@ class SyncButton extends StatelessWidget {
           const Icon(Icons.sync_outlined),
           const SizedBox(width: 10.0),
           Text(
-            'Sync',
+            'Sync Data (Google Fit)',
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge

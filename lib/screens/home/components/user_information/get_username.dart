@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../../services/auth/auth_service.dart';
+import '/services/auth/auth_service.dart';
 
 class GetUsername extends StatefulWidget {
   const GetUsername({super.key});

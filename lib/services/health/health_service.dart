@@ -51,6 +51,8 @@ class HealthService {
         status = await Permission.activityRecognition.request();
       } catch (error) {
         debugPrint('Exception on requesting permission: $error');
+        throw Exception('An error occurred while requesting permission. '
+            'Please try again or contact the support.');
       }
     }
   }
@@ -83,6 +85,8 @@ class HealthService {
         heartRate = data.last.value.toJson()['numeric_value'].toString();
       } catch (error) {
         debugPrint('Exception in retrieving heart rate: $error');
+        throw Exception('Unable to fetch the heart rate. '
+            'Please make sure the information is updated on the Google Fit app.');
       }
     }
 
@@ -121,6 +125,8 @@ class HealthService {
         systolic = data.last.value.toJson()['numeric_value'].toString();
       } catch (error) {
         debugPrint('Exception in retrieving systolic bp: $error');
+        throw Exception('Unable to fetch the systolic blood pressure. '
+            'Please make sure the information is updated on the Google Fit app.');
       }
     }
 
@@ -159,6 +165,8 @@ class HealthService {
         diastolic = data.last.value.toJson()['numeric_value'].toString();
       } catch (error) {
         debugPrint('Exception in retrieving diastolic bp: $error');
+        throw Exception('Unable to fetch the diastolic blood pressure. '
+            'Please make sure the information is updated on the Google Fit app.');
       }
     }
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '/screens/main_screen_wrapper.dart';
 import '/services/auth/bloc/auth_event.dart';
 import '/screens/login/login_screen.dart';
 import '/screens/verification/email_verification_screen.dart';
-import '/screens/home/home_screen.dart';
 import '/screens/register/register_screen.dart';
 import '/screens/reset_password/reset_password_screen.dart';
 import '/services/auth/bloc/auth_state.dart';
@@ -30,7 +30,7 @@ class ScreenWrapper extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
-          return const HomeScreen();
+          return const MainScreenWrapper();
         } else if (state is AuthStateNeedsVerification) {
           return const EmailVerificationScreen();
         } else if (state is AuthStateLoggedOut) {

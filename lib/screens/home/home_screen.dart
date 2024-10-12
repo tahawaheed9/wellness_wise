@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../components/dialogs/logout_dialog.dart';
+import '../../../../components/named_divider.dart';
+import '../../../../controller/screen_navigation_controller.dart';
+import '../../../../services/auth/bloc/auth_bloc.dart';
+import '../../../../services/auth/bloc/auth_event.dart';
+import 'components/screen_navigation_card.dart';
 import 'components/trends/trends_list.dart';
-import '../../services/auth/bloc/auth_bloc.dart';
-import '../../services/auth/bloc/auth_event.dart';
-import '/components/dialogs/logout_dialog.dart';
-import '/controller/screen_navigation_controller.dart';
-import '/screens/home/components/screen_navigation_card.dart';
-import '../../components/named_divider.dart';
 import 'components/user_information/user_information_card.dart';
 
 class HomeScreen extends StatelessWidget {

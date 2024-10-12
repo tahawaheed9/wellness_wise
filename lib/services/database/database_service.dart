@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 import '../auth/auth_service.dart';
 
@@ -31,7 +32,8 @@ class DatabaseServices {
         'created-on': createdOn,
       });
     } catch (error) {
-      throw Exception(error.toString());
+      debugPrint(error.toString());
+      throw Exception('Unable to save the information.');
     }
   }
 
@@ -40,7 +42,17 @@ class DatabaseServices {
     try {
       await _predictionCollectionRef.add(data);
     } catch (error) {
-      throw Exception(error.toString());
+      debugPrint(error.toString());
+      throw Exception('Unable to save the prediction.');
+    }
+  }
+
+  Future<void> deletePrediction(String docId) async {
+    try {
+      await _predictionCollectionRef.doc(docId).delete();
+    } catch (error) {
+      debugPrint(error.toString());
+      throw Exception('Unable to delete the record.');
     }
   }
 }
