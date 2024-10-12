@@ -73,63 +73,59 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
             );
           }
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: snapshot.data?.docs.length,
-            itemBuilder: (context, index) {
-              // Fetching the documents...
-              final DocumentSnapshot<Map<String, dynamic>> document =
-                  snapshot.data!.docs[index];
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: snapshot.data?.docs.length,
+              itemBuilder: (context, index) {
+                // Fetching the documents...
+                final DocumentSnapshot<Map<String, dynamic>> document =
+                    snapshot.data!.docs[index];
 
-              // Fetching the data from the documents...
-              final Map<String, dynamic> data = document.data()!;
+                // Fetching the data from the documents...
+                final Map<String, dynamic> data = document.data()!;
 
-              // Assigning the data...
-              final disease = data['disease'] ?? 'N/A';
-              final description = data['description'] ?? data['prediction'];
-              final date = data['created-on'];
+                // Assigning the data...
+                final disease = data['disease'] ?? 'N/A';
+                final description = data['description'] ?? data['prediction'];
+                final date = data['created-on'];
 
-              // Formatting the date...
-              final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
+                // Formatting the date...
+                final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
 
-              return ListTile(
-                leading: Text(createdOn),
-                title: Text(
-                  disease,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
+                return ListTile(
+                  leading: Text(createdOn),
+                  title: Text(
+                    disease,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                subtitle: Text(
-                  description,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    IconButton(
-                      tooltip: 'Download',
-                      icon: Icon(Icons.download_outlined),
-                      onPressed: () {},
+                  subtitle: Text(
+                    description,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  trailing: IconButton(
+                    tooltip: 'Delete Prediction',
+                    icon: Icon(
+                      Icons.delete_forever,
+                      color: Colors.red,
                     ),
-                    IconButton(
-                      tooltip: 'Delete Prediction',
-                      icon: Icon(
-                        Icons.delete_forever,
-                        color: Colors.red,
-                      ),
-                      onPressed: () async {
-                        final docId = snapshot.data!.docs[index].id;
-                        await _deletePrediction(context, docId);
-                      },
-                    ),
-                  ],
-                ),
-                shape: RoundedRectangleBorder(),
-                onTap: () {},
-              );
-            },
+                    onPressed: () async {
+                      final docId = snapshot.data!.docs[index].id;
+                      await _deletePrediction(context, docId);
+                    },
+                  ),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  onTap: () {},
+                );
+              },
+            ),
           );
         },
       ),

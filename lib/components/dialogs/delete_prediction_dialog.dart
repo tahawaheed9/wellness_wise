@@ -6,7 +6,7 @@ Future<bool> showDeletePredictionDialog(BuildContext context) {
   return showGenericDialog(
     context: context,
     title: 'Alert',
-    content: const Text('Are you sure to delete this record?'),
+    content: const Text('Are you sure you want to delete this record?'),
     optionsBuilder: () => {
       'Cancel': false,
       'Confirm': true,
