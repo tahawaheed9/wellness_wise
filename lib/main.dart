@@ -3,11 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '/services/auth/firebase_auth_provider.dart';
-import 'constants/routes.dart';
-import 'firebase_options.dart';
-import 'services/auth/bloc/auth_bloc.dart';
-import 'screens/screen_wrapper.dart';
+import '/business/constants/routes.dart';
+import '/data/firebase_options.dart';
+import '/data/services/auth/bloc/auth_bloc.dart';
+import '/data/services/auth/firebase_auth_provider.dart';
+import '/presentation/screens/screen_wrapper.dart';
 
 void main() async {
   // Ensuring all the widgets are ready for use...
