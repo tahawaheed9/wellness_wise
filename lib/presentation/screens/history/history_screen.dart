@@ -3,9 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 import '/presentation/components/dialogs/error_dialog.dart';
-import '/presentation/components/success_snack_bar.dart';
 import '/data/services/database/database_service.dart';
-import '/presentation/components/failed_snack_bar.dart';
 import '/presentation/components/dialogs/delete_prediction_dialog.dart';
 import '/data/services/auth/auth_service.dart';
 
@@ -73,59 +71,59 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
             );
           }
-          return Padding(
+          return ListView.separated(
+            shrinkWrap: true,
             padding: const EdgeInsets.all(16.0),
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: snapshot.data?.docs.length,
-              itemBuilder: (context, index) {
-                // Fetching the documents...
-                final DocumentSnapshot<Map<String, dynamic>> document =
-                    snapshot.data!.docs[index];
+            itemCount: snapshot.data!.docs.length,
+            separatorBuilder: (context, index) => SizedBox(height: 20.0),
+            itemBuilder: (context, index) {
+              // Fetching the documents...
+              final DocumentSnapshot<Map<String, dynamic>> document =
+                  snapshot.data!.docs[index];
 
-                // Fetching the data from the documents...
-                final Map<String, dynamic> data = document.data()!;
+              // Fetching the data from the documents...
+              final Map<String, dynamic> data = document.data()!;
 
-                // Assigning the data...
-                final disease = data['disease'] ?? 'N/A';
-                final description = data['description'] ?? data['prediction'];
-                final date = data['created-on'];
+              // Assigning the data...
+              final disease = data['disease'] ?? 'N/A';
+              final description = data['description'] ?? data['prediction'];
+              final date = data['created-on'];
 
-                // Formatting the date...
-                final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
+              // Formatting the date...
+              final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
 
-                return ListTile(
-                  leading: Text(createdOn),
-                  title: Text(
-                    disease,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+              return ListTile(
+                horizontalTitleGap: 30,
+                leading: Text(createdOn),
+                title: Text(
+                  disease,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
-                  subtitle: Text(
-                    description,
-                    overflow: TextOverflow.ellipsis,
+                ),
+                subtitle: Text(
+                  description,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                trailing: IconButton(
+                  tooltip: 'Delete Prediction',
+                  icon: Icon(
+                    Icons.delete_forever,
+                    color: Colors.red,
                   ),
-                  trailing: IconButton(
-                    tooltip: 'Delete Prediction',
-                    icon: Icon(
-                      Icons.delete_forever,
-                      color: Colors.red,
-                    ),
-                    onPressed: () async {
-                      final docId = snapshot.data!.docs[index].id;
-                      await _deletePrediction(context, docId);
-                    },
-                  ),
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  onTap: () {},
-                );
-              },
-            ),
+                  onPressed: () async {
+                    final docId = snapshot.data!.docs[index].id;
+                    await _deletePrediction(context, docId);
+                  },
+                ),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 1),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                onTap: () {},
+              );
+            },
           );
         },
       ),
@@ -134,35 +132,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   // Delete Prediction...
   Future<void> _deletePrediction(BuildContext context, String docId) async {
-    bool isRecordDeleted = false;
     try {
-      await showDeletePredictionDialog(context)
-          .then(<bool>(value) async {
+      await showDeletePredictionDialog(context).then(<bool>(value) async {
         if (value) {
-          await _db
-              .deletePrediction(docId)
-              .whenComplete(<bool>() {
-            setState(() {
-              isRecordDeleted = true;
-            });
-            if (isRecordDeleted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                showSuccessSnackBar(
-                  context,
-                  'Successfully deleted.',
-                  Icons.check_circle_outline,
-                ),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                showFailedSnackBar(
-                  context,
-                  'Could not delete. Please try again or contact support.',
-                  Icons.cancel_outlined,
-                ),
-              );
-            }
-          });
+          await _db.deletePrediction(docId);
         }
       });
     } catch (error) {

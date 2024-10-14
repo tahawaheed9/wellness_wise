@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '/presentation/components/dialogs/breast_cancer_prediction_dialog.dart';
 import '/presentation/components/dialogs/save_prediction_dialog.dart';
-import '../../components/dialogs/error_dialog.dart';
-import '../../components/failed_snack_bar.dart';
-import '../../components/primary_button.dart';
-import '../../components/success_snack_bar.dart';
+import '/presentation/components/dialogs/error_dialog.dart';
+import '/presentation/components/failed_snack_bar.dart';
+import '/presentation/components/primary_button.dart';
+import '/presentation/components/success_snack_bar.dart';
 import '/data/services/database/database_service.dart';
 import '/data/services/disease_model/disease_model_services.dart';
 
