@@ -11,12 +11,9 @@ class MainScreenWrapper extends StatefulWidget {
 }
 
 class _MainScreenWrapperState extends State<MainScreenWrapper> {
-  int _currentIndex = 0;
+  final _pageController = PageController(initialPage: 0);
 
-  final List<Widget> _pages = [
-    const HomeScreen(),
-    const HistoryScreen(),
-  ];
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +23,11 @@ class _MainScreenWrapperState extends State<MainScreenWrapper> {
         backgroundColor: Colors.transparent,
         onDestinationSelected: (int index) {
           setState(() {
-            _currentIndex = index;
+            _pageController.animateToPage(
+              index,
+              duration: Duration(seconds: 1),
+              curve: Curves.ease,
+            );
           });
         },
         destinations: <Widget>[
@@ -44,7 +45,18 @@ class _MainScreenWrapperState extends State<MainScreenWrapper> {
           ),
         ],
       ),
-      body: _pages[_currentIndex],
+      body: PageView(
+        controller: _pageController,
+                onPageChanged: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        children: <Widget>[
+          const HomeScreen(),
+          const HistoryScreen(),
+        ],
+      ),
     );
   }
 }
