@@ -52,3 +52,8 @@ void pushLungCancerScreen(BuildContext context) {
 void pushBreastCancerScreen(BuildContext context) {
   Navigator.of(context).pushNamed(breastCancerScreenRoute);
 }
+
+// Notifications...
+void pushNotificationScreen(BuildContext context) {
+  Navigator.of(context).pushNamed(notificationScreenRoute);
+}

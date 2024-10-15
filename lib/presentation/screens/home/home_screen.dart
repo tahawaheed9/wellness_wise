@@ -19,6 +19,13 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Wellness Wise'),
         centerTitle: true,
+        leading: IconButton(
+          tooltip: 'Notifications',
+          icon: Icon(Icons.notifications_none_outlined),
+          onPressed: () {
+            pushNotificationScreen(context);
+          },
+        ),
         actions: <Widget>[
           // Log out Button...
           IconButton(

@@ -47,14 +47,14 @@ class _MainScreenWrapperState extends State<MainScreenWrapper> {
       ),
       body: PageView(
         controller: _pageController,
-                onPageChanged: (int index) {
+        onPageChanged: (int index) {
           setState(() {
             _currentIndex = index;
           });
         },
-        children: <Widget>[
-          const HomeScreen(),
-          const HistoryScreen(),
+        children: const <Widget>[
+          HomeScreen(),
+          HistoryScreen(),
         ],
       ),
     );
