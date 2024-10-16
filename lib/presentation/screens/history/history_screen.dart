@@ -49,6 +49,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const CircularProgressIndicator(),
+                  const SizedBox(height: 5.0),
                   Text(
                     'Fetching...',
                     style: Theme.of(context).textTheme.bodyLarge,

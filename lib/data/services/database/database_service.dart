@@ -9,12 +9,16 @@ class DatabaseServices {
 
   late final DocumentReference _userDataDocumentRef;
   late final CollectionReference _predictionCollectionRef;
+  late final CollectionReference _notificationCollectionRef;
 
   // Initializing the Document & Collection References...
   DatabaseServices() {
     _userDataDocumentRef = _firestore.collection('user-data').doc(_docId);
 
     _predictionCollectionRef = _userDataDocumentRef.collection('predictions');
+
+    _notificationCollectionRef =
+        _userDataDocumentRef.collection('notifications');
   }
 
   // Setting Username and Gender to main collection (user-data)...
@@ -37,7 +41,7 @@ class DatabaseServices {
     }
   }
 
-  // Adding new predictions to the 'predictions' collection..
+  // Adding new predictions to the 'predictions' collection...
   Future<void> addPrediction(Map<String, Object?> data) async {
     try {
       await _predictionCollectionRef.add(data);
@@ -47,12 +51,22 @@ class DatabaseServices {
     }
   }
 
+  // Deleting a prediction...
   Future<void> deletePrediction(String docId) async {
     try {
       await _predictionCollectionRef.doc(docId).delete();
     } catch (error) {
       debugPrint(error.toString());
       throw Exception('Unable to delete the record.');
+    }
+  }
+
+  // Adding notifications to the 'notifications' collection...
+  Future<void> addNotification(Map<String, Object> data) async {
+    try {
+      await _notificationCollectionRef.add(data);
+    } catch (error) {
+      debugPrint(error.toString());
     }
   }
 }

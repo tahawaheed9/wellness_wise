@@ -5,7 +5,7 @@ import '/presentation/components/dialogs/generic_dialog.dart';
 Future<bool> showDeletePredictionDialog(BuildContext context) {
   return showGenericDialog(
     context: context,
-    title: 'Alert',
+    title: 'Delete Prediction',
     content: const Text('Are you sure you want to delete this record?'),
     optionsBuilder: () => {
       'Cancel': false,

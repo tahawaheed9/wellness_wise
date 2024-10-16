@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  // Setting up notifications for background...
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   // Setting Preferred Orientation to PortraitUp...
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -36,6 +40,14 @@ void main() async {
     ),
   );
   runApp(const MyApp());
+}
+
+// This keyword defines an entry point for your app...
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class MyApp extends StatelessWidget {

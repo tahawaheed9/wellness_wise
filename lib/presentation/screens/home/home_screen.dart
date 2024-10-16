@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '/data/services/notifications/notification_services.dart';
 import '/presentation/components/dialogs/logout_dialog.dart';
 import '/presentation/components/named_divider.dart';
 import '/business/controller/screen_navigation_controller.dart';
@@ -10,15 +11,28 @@ import 'components/screen_navigation_card.dart';
 import 'components/trends/trends_list.dart';
 import 'components/user_information/user_information_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  NotificationServices notificationServices = NotificationServices();
+
+  @override
+  void initState() {
+    super.initState();
+    notificationServices.requestNotificationPermission();
+    notificationServices.initializeFirebaseMessaging(context);
+    notificationServices.setupInteractMessage(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Wellness Wise'),
-        centerTitle: true,
         leading: IconButton(
           tooltip: 'Notifications',
           icon: Icon(Icons.notifications_none_outlined),
@@ -26,6 +40,8 @@ class HomeScreen extends StatelessWidget {
             pushNotificationScreen(context);
           },
         ),
+        title: const Text('Wellness Wise'),
+        centerTitle: true,
         actions: <Widget>[
           // Log out Button...
           IconButton(
