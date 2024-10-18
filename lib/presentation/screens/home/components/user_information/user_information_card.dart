@@ -52,8 +52,8 @@ class UserInformationCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              GetAge(),
               GetGender(),
+              GetAge(),
             ],
           ),
         ],

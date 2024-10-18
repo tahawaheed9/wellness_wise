@@ -45,7 +45,7 @@ class _GetAgeState extends State<GetAge> {
           final formattedAge = years.toString();
 
           return Text(
-            '$formattedAge y',
+            '$formattedAge years',
             style: Theme.of(context).textTheme.bodyLarge,
           );
         } else {
