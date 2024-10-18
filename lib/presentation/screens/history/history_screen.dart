@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import '/presentation/components/dialogs/error_dialog.dart';
 import '/data/services/database/database_service.dart';
-import '/presentation/components/dialogs/delete_prediction_dialog.dart';
+import '/presentation/components/dialogs/delete_dialog.dart';
 import '/data/services/auth/auth_service.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -76,7 +76,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             shrinkWrap: true,
             padding: const EdgeInsets.all(16.0),
             itemCount: snapshot.data!.docs.length,
-            separatorBuilder: (context, index) => SizedBox(height: 20.0),
+            separatorBuilder: (context, index) => SizedBox(height: 30.0),
             itemBuilder: (context, index) {
               // Fetching the documents...
               final DocumentSnapshot<Map<String, dynamic>> document =
@@ -111,7 +111,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   tooltip: 'Delete Prediction',
                   icon: Icon(
                     Icons.delete_forever,
-                    color: Colors.red,
+                    color: Colors.redAccent,
                   ),
                   onPressed: () async {
                     final docId = snapshot.data!.docs[index].id;
@@ -122,7 +122,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   side: BorderSide(width: 1),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                onTap: () {},
               );
             },
           );
@@ -134,7 +133,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   // Delete Prediction...
   Future<void> _deletePrediction(BuildContext context, String docId) async {
     try {
-      await showDeletePredictionDialog(context).then(<bool>(value) async {
+      await showDeleteDialog(context).then(<bool>(value) async {
         if (value) {
           await _db.deletePrediction(docId);
         }

@@ -57,7 +57,7 @@ class DatabaseServices {
       await _predictionCollectionRef.doc(docId).delete();
     } catch (error) {
       debugPrint(error.toString());
-      throw Exception('Unable to delete the record.');
+      throw Exception('Unable to delete the prediction.');
     }
   }
 
@@ -67,6 +67,15 @@ class DatabaseServices {
       await _notificationCollectionRef.add(data);
     } catch (error) {
       debugPrint(error.toString());
+    }
+  }
+
+  Future<void> deleteNotification(String docId) async {
+    try {
+      await _notificationCollectionRef.doc(docId).delete();
+    } catch (error) {
+      debugPrint(error.toString());
+      throw Exception('Unable to delete the notification.');
     }
   }
 }

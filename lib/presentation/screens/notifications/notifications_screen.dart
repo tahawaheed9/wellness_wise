@@ -3,6 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 import '/data/services/auth/auth_service.dart';
+import '/data/services/database/database_service.dart';
+import '/presentation/components/dialogs/error_dialog.dart';
+import '/presentation/components/success_snack_bar.dart';
+import '/presentation/components/dialogs/delete_dialog.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -12,7 +16,14 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
+  late final DatabaseServices _db;
   final userId = AuthService.firebase().currentUser!.id;
+
+  @override
+  void initState() {
+    super.initState();
+    _db = DatabaseServices();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +72,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             shrinkWrap: true,
             padding: const EdgeInsets.all(16.0),
             itemCount: snapshot.data!.docs.length,
-            separatorBuilder: (context, index) => SizedBox(height: 20.0),
+            separatorBuilder: (context, index) => SizedBox(height: 30.0),
             itemBuilder: (context, index) {
               // Fetching the documents...
               final DocumentSnapshot<Map<String, dynamic>> document =
@@ -71,6 +82,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               final Map<String, dynamic> data = document.data()!;
 
               // Assigning the data...
+              final docId = snapshot.data!.docs[index].id;
               final notificationTitle = data['title'] ?? 'N/A';
               final notificationBody = data['body'];
               final date = data['created-on'];
@@ -78,23 +90,59 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               // Formatting the date...
               final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
 
-              return ListTile(
-                horizontalTitleGap: 30,
-                leading: Text(createdOn),
-                title: Text(
-                  notificationTitle,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
+              return ClipRRect(
+                borderRadius:
+                    BorderRadius.horizontal(left: Radius.circular(10.0)),
+                child: Dismissible(
+                  key: Key(docId),
+                  direction: DismissDirection.startToEnd,
+                  confirmDismiss: <bool>(_) async {
+                    await _deleteNotification(docId);
+                  },
+                  background: Container(
+                    color: Colors.redAccent,
+                    padding: EdgeInsets.only(left: 20.0),
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Icon(Icons.delete_forever, color: Colors.white),
+                        SizedBox(width: 10.0),
+                        Text(
+                          'Delete'.toUpperCase(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                subtitle: Text(
-                  notificationBody,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 1),
-                  borderRadius: BorderRadius.circular(10.0),
+                  child: ListTile(
+                    horizontalTitleGap: 30,
+                    tileColor: Colors.black12,
+                    leading: CircleAvatar(
+                      maxRadius: 32,
+                      backgroundColor: Colors.black12,
+                      child: Icon(Icons.notifications),
+                    ),
+                    title: Text(
+                      notificationTitle,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      notificationBody,
+                      softWrap: true,
+                    ),
+                    trailing: Text(createdOn),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
                 ),
               );
             },
@@ -102,5 +150,27 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         },
       ),
     );
+  }
+
+  Future<void> _deleteNotification(String docId) async {
+    try {
+      await showDeleteDialog(context).then(<bool>(value) async {
+        if (value) {
+          await _db.deleteNotification(docId).whenComplete(<bool>() {
+            ScaffoldMessenger.of(context).showSnackBar(
+              showSuccessSnackBar(
+                context,
+                'Successfully deleted.',
+                Icons.check_circle_outline,
+              ),
+            );
+          });
+        }
+      });
+    } catch (error) {
+      if (context.mounted) {
+        await showErrorDialog(context, error.toString());
+      }
+    }
   }
 }
