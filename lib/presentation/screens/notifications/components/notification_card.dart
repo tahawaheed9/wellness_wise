@@ -48,6 +48,7 @@ class NotificationCard extends StatelessWidget {
                     'Delete'.toUpperCase(),
                     style: const TextStyle(
                       color: Colors.redAccent,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),

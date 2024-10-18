@@ -52,13 +52,20 @@ class HistoryCard extends StatelessWidget {
                         'Delete'.toUpperCase(),
                         style: const TextStyle(
                           color: Colors.redAccent,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                     const SizedBox(width: 20.0),
                     InkWell(
                       onTap: downloadOnTap,
-                      child: Text('Download'.toUpperCase()),
+                      child: Text(
+                        'Download'.toUpperCase(),
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ],
                 ),
