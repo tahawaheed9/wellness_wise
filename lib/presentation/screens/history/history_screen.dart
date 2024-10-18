@@ -125,11 +125,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   child: ListTile(
                     horizontalTitleGap: 30,
                     tileColor: Colors.black12,
-                    leading: CircleAvatar(
-                      maxRadius: 32,
-                      backgroundColor: Colors.black12,
-                      child: Icon(Icons.batch_prediction),
-                    ),
+                    leading: Text(createdOn),
                     title: Text(
                       disease,
                       overflow: TextOverflow.ellipsis,
@@ -139,9 +135,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     ),
                     subtitle: Text(
                       description,
+                      softWrap: true,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    trailing: Text(createdOn),
+                    trailing: IconButton(
+                      tooltip: 'Download Report',
+                      icon: Icon(Icons.download_outlined),
+                      onPressed: () {},
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
