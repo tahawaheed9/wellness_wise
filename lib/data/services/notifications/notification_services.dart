@@ -35,7 +35,7 @@ class NotificationServices {
   // Initializing the Firebase Messaging to get the notifications
   // from the firebase...
   void initializeFirebaseMessaging(BuildContext context) {
-    FirebaseMessaging.onMessage.listen((message) {
+    FirebaseMessaging.onMessage.listen((message) async {
       if (Platform.isAndroid) {
         if (context.mounted) {
           initializeLocalNotifications(context, message);
@@ -104,9 +104,6 @@ class NotificationServices {
         );
       },
     );
-
-    // Saving notification to the cloud firestore...
-    await saveNotification(message);
   }
 
   Future<void> setupInteractMessage(BuildContext context) async {
@@ -117,7 +114,6 @@ class NotificationServices {
       if (context.mounted) {
         handleNotification(context, initialMessage);
       }
-      await saveNotification(initialMessage);
     }
 
     // When the application is in the background...
@@ -125,7 +121,6 @@ class NotificationServices {
       if (context.mounted) {
         handleNotification(context, message);
       }
-      await saveNotification(message);
     });
   }
 
