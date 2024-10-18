@@ -91,8 +91,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
 
               return ClipRRect(
-                borderRadius:
-                    BorderRadius.horizontal(left: Radius.circular(10.0)),
+                borderRadius: BorderRadius.circular(10.0),
                 child: Dismissible(
                   key: Key(docId),
                   direction: DismissDirection.startToEnd,

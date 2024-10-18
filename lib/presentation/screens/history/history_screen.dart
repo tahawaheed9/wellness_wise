@@ -86,6 +86,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               final Map<String, dynamic> data = document.data()!;
 
               // Assigning the data...
+              final docId = snapshot.data!.docs[index].id;
               final disease = data['disease'] ?? 'N/A';
               final description = data['description'] ?? data['prediction'];
               final date = data['created-on'];
@@ -93,34 +94,58 @@ class _HistoryScreenState extends State<HistoryScreen> {
               // Formatting the date...
               final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
 
-              return ListTile(
-                horizontalTitleGap: 30,
-                leading: Text(createdOn),
-                title: Text(
-                  disease,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle: Text(
-                  description,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                trailing: IconButton(
-                  tooltip: 'Delete Prediction',
-                  icon: Icon(
-                    Icons.delete_forever,
-                    color: Colors.redAccent,
-                  ),
-                  onPressed: () async {
-                    final docId = snapshot.data!.docs[index].id;
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Dismissible(
+                  key: Key(docId),
+                  direction: DismissDirection.startToEnd,
+                  confirmDismiss: <bool>(direction) async {
                     await _deletePrediction(context, docId);
                   },
-                ),
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 1),
-                  borderRadius: BorderRadius.circular(10.0),
+                  background: Container(
+                    color: Colors.redAccent,
+                    padding: EdgeInsets.only(left: 20.0),
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Icon(Icons.delete_forever, color: Colors.white),
+                        SizedBox(width: 10.0),
+                        Text(
+                          'Delete'.toUpperCase(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  child: ListTile(
+                    horizontalTitleGap: 30,
+                    tileColor: Colors.black12,
+                    leading: CircleAvatar(
+                      maxRadius: 32,
+                      backgroundColor: Colors.black12,
+                      child: Icon(Icons.batch_prediction),
+                    ),
+                    title: Text(
+                      disease,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      description,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    trailing: Text(createdOn),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
                 ),
               );
             },
