@@ -7,6 +7,7 @@ import '/data/services/database/database_service.dart';
 import '/presentation/components/dialogs/error_dialog.dart';
 import '/presentation/components/success_snack_bar.dart';
 import '/presentation/components/dialogs/delete_dialog.dart';
+import '/presentation/screens/notifications/components/notification_card.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -90,59 +91,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               // Formatting the date...
               final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
 
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Dismissible(
-                  key: Key(docId),
-                  direction: DismissDirection.startToEnd,
-                  confirmDismiss: <bool>(_) async {
-                    await _deleteNotification(docId);
-                  },
-                  background: Container(
-                    color: Colors.redAccent,
-                    padding: EdgeInsets.only(left: 20.0),
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Icon(Icons.delete_forever, color: Colors.white),
-                        SizedBox(width: 10.0),
-                        Text(
-                          'Delete'.toUpperCase(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  child: ListTile(
-                    horizontalTitleGap: 30,
-                    tileColor: Colors.black12,
-                    leading: CircleAvatar(
-                      maxRadius: 32,
-                      backgroundColor: Colors.black12,
-                      child: Icon(Icons.notifications),
-                    ),
-                    title: Text(
-                      notificationTitle,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      notificationBody,
-                      softWrap: true,
-                    ),
-                    trailing: Text(createdOn),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
+              return NotificationCard(
+                title: notificationTitle,
+                body: notificationBody,
+                date: createdOn,
+                onTap: () async {
+                  await _deleteNotification(docId);
+                },
               );
             },
           );

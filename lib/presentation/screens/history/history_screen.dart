@@ -6,6 +6,7 @@ import '/presentation/components/dialogs/error_dialog.dart';
 import '/data/services/database/database_service.dart';
 import '/presentation/components/dialogs/delete_dialog.dart';
 import '/data/services/auth/auth_service.dart';
+import '/presentation/screens/history/components/history_card.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -94,60 +95,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
               // Formatting the date...
               final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
 
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Dismissible(
-                  key: Key(docId),
-                  direction: DismissDirection.startToEnd,
-                  confirmDismiss: <bool>(direction) async {
-                    await _deletePrediction(context, docId);
-                  },
-                  background: Container(
-                    color: Colors.redAccent,
-                    padding: EdgeInsets.only(left: 20.0),
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Icon(Icons.delete_forever, color: Colors.white),
-                        SizedBox(width: 10.0),
-                        Text(
-                          'Delete'.toUpperCase(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  child: ListTile(
-                    horizontalTitleGap: 30,
-                    tileColor: Colors.black12,
-                    leading: Text(createdOn),
-                    title: Text(
-                      disease,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      description,
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    trailing: IconButton(
-                      tooltip: 'Download Report',
-                      icon: Icon(Icons.download_outlined),
-                      onPressed: () {},
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
+              return HistoryCard(
+                title: disease,
+                description: description,
+                date: createdOn,
+                deleteOnTap: () async {
+                  await _deletePrediction(context, docId);
+                },
+                downloadOnTap: () {},
               );
             },
           );
