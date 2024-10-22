@@ -97,7 +97,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
               // Formatting the date...
               final createdOn =
-                  DateFormat.yMMMEd('en_US').format(date.toDate());
+                  DateFormat.yMMMd('en_US').format(date.toDate());
 
               return HistoryCard(
                 title: disease,
