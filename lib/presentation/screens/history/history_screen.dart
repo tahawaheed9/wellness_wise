@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
+import '/business/models/pdf/heart_disease_pdf_model.dart';
 import '/business/controller/save_and_open_pdf.dart';
 import '/business/models/pdf/general_disease_pdf_model.dart';
 import '/presentation/components/dialogs/error_dialog.dart';
@@ -96,8 +97,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               final date = data['created-on'];
 
               // Formatting the date...
-              final createdOn =
-                  DateFormat.yMMMd('en_US').format(date.toDate());
+              final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
 
               return HistoryCard(
                 title: disease,
@@ -138,7 +138,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     switch (title) {
       case 'Heart Disease':
-        // PDF Model...
+        final heartDisease =
+            await HeartDiseasePDFModel.heartDiseasePDFStructure(
+          userData,
+          predictionData,
+        );
+        SaveAndOpenDocument.openPDF(heartDisease);
         break;
 
       case 'Diabetes Predictions':

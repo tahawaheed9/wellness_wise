@@ -5,9 +5,9 @@ import 'package:pdf/widgets.dart';
 
 class UserInformationTable {
   userInformationTable(
-    Map<String, dynamic> userData,
-    Map<String, dynamic> predictionData,
-  ) {
+      Map<String, dynamic> userData,
+      Map<String, dynamic> predictionData,
+      ) {
     final date = userData['date-of-birth'];
     final age = _calculateAge(date);
 
@@ -113,7 +113,7 @@ class UserInformationTable {
   int _calculateAge(Timestamp date) {
     DateTime now = DateTime.now();
     DateTime birthDate =
-        DateTime.fromMillisecondsSinceEpoch(date.millisecondsSinceEpoch);
+    DateTime.fromMillisecondsSinceEpoch(date.millisecondsSinceEpoch);
     int age = now.year - birthDate.year;
     if (now.month < birthDate.month ||
         (now.month == birthDate.month && now.day < birthDate.day)) {

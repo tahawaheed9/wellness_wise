@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
 import '/business/models/pdf/components/user_information_table.dart';
@@ -15,12 +16,14 @@ class GeneralDiseasePDFModel {
 
     pdf.addPage(
       Page(
+        pageFormat: PdfPageFormat.a4,
         build: (_) => Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Header(text: 'Wellness Wise'),
-              SizedBox(height: 50.0),
+              Spacer(),
+
               // User Information...
               userInformationTable.userInformationTable(
                 userData,

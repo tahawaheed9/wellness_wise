@@ -123,7 +123,7 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
                       DropdownMenuItem(
                           value: 1, child: Text('Atypical Angina')),
                       DropdownMenuItem(
-                          value: 2, child: Text('Non — Anginal Pain')),
+                          value: 2, child: Text('Non - Anginal Pain')),
                       DropdownMenuItem(value: 3, child: Text('Asymptotic')),
                     ],
                     isExpanded: true,
@@ -352,6 +352,43 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
                     final Map<String, Object> data = {
                       'disease': 'Heart Disease',
                       'prediction': _response,
+                      'readings': <String, Object>{
+                        'age': int.parse(_age.text),
+                        'gender': _gender == 1 ? 'Male' : 'Female',
+                        'chest-pain-type': _chestPainType == 0
+                            ? 'Typical Angina'
+                            : _chestPainType == 1
+                                ? 'Atypical Angina'
+                                : _chestPainType == 2
+                                    ? 'Non - Anginal Pain'
+                                    : 'Asymptotic',
+                        'systolic-resting-blood-pressure':
+                            int.parse(_restingBloodPressure.text),
+                        'serum-cholesterol':
+                            double.parse(_serumCholesterol.text),
+                        'resting-ecg': _restingECG == 0
+                            ? 'Normal'
+                            : _restingECG == 1
+                                ? 'Having ST-T Wave Abnormality'
+                                : 'Left Ventricular Hypertrophy',
+                        'max-heart-rate': int.parse(_maxHeartRate.text),
+                        'st-depression': double.parse(_stDepression.text),
+                        'peak-st-segment': _peakSTSegment == 0
+                            ? 'Up-sloping'
+                            : _peakSTSegment == 1
+                                ? 'Flat'
+                                : 'Down-sloping',
+                        'major-vessels': int.parse(_majorVessels.text),
+                        'thalassemia': _thalassemia == 0
+                            ? 'Normal'
+                            : _thalassemia == 1
+                                ? 'Fixed Defect'
+                                : 'Reversible Defect',
+                        'exercise-induced-angina':
+                            _isExerciseInducedAngina == 1 ? 'Yes' : 'No',
+                        'fasting-blood-sugar':
+                            _isFastingBloodSugar == 1 ? 'Yes' : 'No',
+                      },
                       'created-on': createdOn,
                     };
 
