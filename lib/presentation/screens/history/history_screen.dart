@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
+import '/business/controller/save_and_open_pdf.dart';
+import '/business/models/pdf/general_disease_pdf_model.dart';
 import '/presentation/components/dialogs/error_dialog.dart';
 import '/data/services/database/database_service.dart';
 import '/presentation/components/dialogs/delete_dialog.dart';
@@ -17,6 +19,7 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   late final DatabaseServices _db;
+
   final userId = AuthService.firebase().currentUser!.id;
 
   @override
@@ -93,7 +96,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
               final date = data['created-on'];
 
               // Formatting the date...
-              final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
+              final createdOn =
+                  DateFormat.yMMMEd('en_US').format(date.toDate());
 
               return HistoryCard(
                 title: disease,
@@ -102,7 +106,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 deleteOnTap: () async {
                   await _deletePrediction(context, docId);
                 },
-                downloadOnTap: () {},
+                downloadOnTap: () async {
+                  await _downloadRecord(docId, disease);
+                },
               );
             },
           );
@@ -123,6 +129,41 @@ class _HistoryScreenState extends State<HistoryScreen> {
       if (context.mounted) {
         await showErrorDialog(context, error.toString());
       }
+    }
+  }
+
+  Future<void> _downloadRecord(String docId, String title) async {
+    final userData = await _db.fetchUserData();
+    final predictionData = await _db.fetchPredictionData(docId);
+
+    switch (title) {
+      case 'Heart Disease':
+        // PDF Model...
+        break;
+
+      case 'Diabetes Predictions':
+        // PDF Model...
+        break;
+
+      case 'Kidney Prediction':
+        // PDF Model...
+        break;
+
+      case 'Lung Cancer':
+        // PDF Model...
+        break;
+
+      case 'Breast Cancer':
+        // PDF Model...
+        break;
+
+      default:
+        final generalDiseasePDF =
+            await GeneralDiseasePDFModel.generalDiseasePDFStructure(
+          userData,
+          predictionData,
+        );
+        SaveAndOpenDocument.openPDF(generalDiseasePDF);
     }
   }
 }

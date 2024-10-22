@@ -35,17 +35,13 @@ class _GetAgeState extends State<GetAge> {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.data!.exists) {
-          final date = snapshot.data!['date-of-birth'].toDate();
+          final date = snapshot.data!['date-of-birth'];
 
           // Converting DOB to Age...
-          final now = DateTime.now();
-          final Duration age = now.difference(date);
-          final int years = age.inDays ~/ 365;
-
-          final formattedAge = years.toString();
+          final age = _calculateAge(date);
 
           return Text(
-            '$formattedAge years',
+            '$age years',
             style: Theme.of(context).textTheme.bodyLarge,
           );
         } else {
@@ -56,5 +52,17 @@ class _GetAgeState extends State<GetAge> {
         }
       },
     );
+  }
+
+  int _calculateAge(Timestamp date) {
+    DateTime now = DateTime.now();
+    DateTime birthDate =
+    DateTime.fromMillisecondsSinceEpoch(date.millisecondsSinceEpoch);
+    int age = now.year - birthDate.year;
+    if (now.month < birthDate.month ||
+        (now.month == birthDate.month && now.day < birthDate.day)) {
+      age--;
+    }
+    return age;
   }
 }

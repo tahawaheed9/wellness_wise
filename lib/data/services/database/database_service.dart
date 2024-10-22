@@ -41,14 +41,49 @@ class DatabaseServices {
     }
   }
 
+  // Fetching the user data...
+  Future<Map<String, dynamic>> fetchUserData() async {
+    late final Map<String, dynamic> data;
+
+    try {
+      final DocumentSnapshot documentSnapshot =
+          await _userDataDocumentRef.get();
+
+      if (documentSnapshot.exists) {
+        data = documentSnapshot.data()! as Map<String, dynamic>;
+      }
+    } catch (error) {
+      debugPrint(error.toString());
+      throw Exception('Unable to fetch the user data.');
+    }
+    return data;
+  }
+
   // Adding new predictions to the 'predictions' collection...
   Future<void> addPrediction(Map<String, Object?> data) async {
     try {
       await _predictionCollectionRef.add(data);
     } catch (error) {
       debugPrint(error.toString());
-      throw Exception('Unable to save the prediction.');
+      throw Exception('Unable to save the predicted data.');
     }
+  }
+
+  // Fetch Prediction data...
+  Future<Map<String, dynamic>> fetchPredictionData(String docId) async {
+    late final Map<String, dynamic> data;
+    try {
+      final DocumentSnapshot documentSnapshot =
+          await _predictionCollectionRef.doc(docId).get();
+
+      if (documentSnapshot.exists) {
+        data = documentSnapshot.data()! as Map<String, dynamic>;
+      }
+    } catch (error) {
+      debugPrint(error.toString());
+      throw Exception('Unable to fetch the data.');
+    }
+    return data;
   }
 
   // Deleting a prediction...
