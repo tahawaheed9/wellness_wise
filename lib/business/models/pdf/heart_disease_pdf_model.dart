@@ -22,7 +22,7 @@ class HeartDiseasePDFModel {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Header(text: 'Heart Disease'),
+              Header(text: 'Wellness Wise'),
               Spacer(),
 
               // User Information Table...

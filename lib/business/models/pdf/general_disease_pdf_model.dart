@@ -30,6 +30,16 @@ class GeneralDiseasePDFModel {
                 predictionData,
               ),
 
+              // Symptoms...
+              Text(
+                'Symptoms: ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 5.0),
+              Text(predictionData['symptoms'].map((item) => '$item, ').join()),
+              Divider(),
+              SizedBox(height: 10.0),
+
               // Title...
               Row(
                 children: <Widget>[
@@ -77,16 +87,7 @@ class GeneralDiseasePDFModel {
               Text(predictionData['precautions']
                   .map((item) => ' - $item\n')
                   .join()),
-              Divider(),
               SizedBox(height: 10.0),
-
-              // Symptoms...
-              Text(
-                'Symptoms: ',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 5.0),
-              Text(predictionData['symptoms'].map((item) => '$item, ').join()),
 
               Spacer(),
               Divider(),
