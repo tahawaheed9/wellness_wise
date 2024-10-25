@@ -31,15 +31,24 @@ class HeartDiseasePDFModel {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(height: 50.0),
+                SizedBox(height: 20.0),
+                Center(
+                  child: Text(
+                    'Heart Disease Prediction Report',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                      decorationThickness: 2,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.0),
 
                 // User Information Table...
                 userInformationTable.userInformationTable(
                   userData,
                   predictionData,
                 ),
-
-                // Readings Table...
                 Text(
                   'Readings: ',
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -168,7 +177,7 @@ class HeartDiseasePDFModel {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Exercise induced angina: ',
+                      'Exercise Induced Angina: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(readings['exercise-induced-angina']),
@@ -181,14 +190,14 @@ class HeartDiseasePDFModel {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Fasting blood sugar > 120 mg/dL: ',
+                      'Fasting Blood Sugar > 120 mg/dL: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(readings['fasting-blood-sugar']),
                   ],
                 ),
                 Divider(),
-                SizedBox(height: 30.0),
+                SizedBox(height: 20.0),
 
                 // Prediction Result...
                 Row(
@@ -202,7 +211,6 @@ class HeartDiseasePDFModel {
                   ],
                 ),
                 Divider(),
-                SizedBox(height: 30.0),
               ],
             ),
           ),

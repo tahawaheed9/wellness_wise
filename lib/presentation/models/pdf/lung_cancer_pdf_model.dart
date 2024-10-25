@@ -6,8 +6,8 @@ import 'package:pdf/widgets.dart';
 import '/business/controller/save_and_open_pdf.dart';
 import '/presentation/models/pdf/components/user_information_table.dart';
 
-class DiabetesPredictionPdfModel {
-  static Future<File> diabetesPredictionPDFStructure(
+class LungCancerPDFModel {
+  static Future<File> lungCancerPDFStructure(
       Map<String, dynamic> userData,
       Map<String, dynamic> predictionData,
       ) async {
@@ -19,7 +19,7 @@ class DiabetesPredictionPdfModel {
       MultiPage(
         header: (_) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget> [
+          children: <Widget>[
             Text('Wellness Wise'),
             Divider(),
           ],
@@ -34,7 +34,7 @@ class DiabetesPredictionPdfModel {
                 SizedBox(height: 20.0),
                 Center(
                   child: Text(
-                    'Diabetes Prediction Report',
+                    'Lung Cancer Prediction Report',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline,
@@ -49,101 +49,177 @@ class DiabetesPredictionPdfModel {
                   userData,
                   predictionData,
                 ),
-
-                // Readings Table...
                 Text(
                   'Readings: ',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Divider(),
 
-                // Number of pregnancies Field...
+                // Smoking Field...
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Number of Pregnancies: ',
+                      'Smoking: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text(readings['number-of-pregnancies'].toString()),
+                    Text(readings['smoking']),
                   ],
                 ),
                 Divider(),
 
-                // Glucose Level Field...
+                // Yellow Fingers Field...
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Glucose Level: ',
+                      'Yellow Fingers: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text('${readings['glucose-level']} mg/dL'),
+                    Text(readings['yellow-fingers']),
                   ],
                 ),
                 Divider(),
 
-                // Diastolic Blood Pressure Field...
+                // Anxiety Field...
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Diastolic Blood Pressure: ',
+                      'Anxiety: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text('${readings['blood-pressure-levels']} mmHg'),
+                    Text(readings['anxiety']),
                   ],
                 ),
                 Divider(),
 
-                // Skin thickness value Field...
+                // Peer Pressure Field...
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Skin Thickness Value: ',
+                      'Peer Pressure: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text(readings['skin-thickness-value'].toString()),
+                    Text(readings['peer-pressure']),
                   ],
                 ),
                 Divider(),
 
-                // Insulin value Field...
+                //  Chronic Disease Field...
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Insulin Value: ',
+                      'Chronic Disease: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text(readings['insulin-value'].toString()),
+                    Text(readings['chronic-disease']),
                   ],
                 ),
                 Divider(),
 
-                // BMI value Field...
+                // Fatigue Field...
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'BMI Value: ',
+                      'Fatigue: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text(readings['bmi-value'].toString()),
+                    Text(readings['fatigue']),
                   ],
                 ),
                 Divider(),
 
-                // Diabetes Pedigree Function value Field...
+                // Allergy Field...
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Diabetes Pedigree Function Value: ',
+                      'Allergy: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text(readings['diabetes-pedigree-function-value'].toString()),
+                    Text(readings['allergy']),
+                  ],
+                ),
+                Divider(),
+
+                // Wheezing Field...
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Wheezing: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(readings['wheezing']),
+                  ],
+                ),
+                Divider(),
+
+                // Alcoholic Field...
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Alcoholic: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(readings['alcoholic']),
+                  ],
+                ),
+                Divider(),
+
+                // Coughing Field...
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Coughing: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(readings['coughing']),
+                  ],
+                ),
+                Divider(),
+
+                // Shortness of Breath Field...
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Shortness of Breath: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(readings['shortness-of-breath']),
+                  ],
+                ),
+                Divider(),
+
+                // Swallowing Difficulty Field...
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Swallowing Difficulty: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(readings['swallowing-difficulty']),
+                  ],
+                ),
+                Divider(),
+
+                // Chest Pain Field...
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Chest Pain: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(readings['chest-pain']),
                   ],
                 ),
                 Divider(),
@@ -161,7 +237,6 @@ class DiabetesPredictionPdfModel {
                   ],
                 ),
                 Divider(),
-                SizedBox(height: 30.0),
               ],
             ),
           ),
@@ -175,7 +250,7 @@ class DiabetesPredictionPdfModel {
       ),
     );
     return SaveAndOpenDocument.savePDF(
-      name: 'wellness_wise_diabetes_report.pdf',
+      name: 'wellness_wise_lung_cancer_report.pdf',
       pdf: pdf,
     );
   }

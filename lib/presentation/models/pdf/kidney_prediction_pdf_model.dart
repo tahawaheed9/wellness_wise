@@ -25,8 +25,8 @@ class KidneyPredictionPdfModel {
         maxPages: 2,
         pageFormat: PdfPageFormat.a4,
         build: (_) => <Widget>[
-          pageOne(userData, predictionData),
-          secondPage(predictionData),
+          _pageOne(userData, predictionData),
+          _secondPage(predictionData),
         ],
         footer: (_) => Column(
           children: <Widget>[
@@ -46,7 +46,7 @@ class KidneyPredictionPdfModel {
     );
   }
 
-  static Widget pageOne(
+  static Widget _pageOne(
     Map<String, dynamic> userData,
     Map<String, dynamic> predictionData,
   ) {
@@ -57,7 +57,19 @@ class KidneyPredictionPdfModel {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height:  50.0),
+          SizedBox(height: 20.0),
+          Center(
+            child: Text(
+              'Kidney Prediction Report',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+                decorationThickness: 2,
+              ),
+            ),
+          ),
+          SizedBox(height: 20.0),
+
           // User Information Table...
           userInformationTable.userInformationTable(
             userData,
@@ -219,7 +231,7 @@ class KidneyPredictionPdfModel {
     );
   }
 
-  static Widget secondPage(Map<String, dynamic> predictionData) {
+  static Widget _secondPage(Map<String, dynamic> predictionData) {
     final readings = predictionData['readings'];
     return Center(
       child: Column(

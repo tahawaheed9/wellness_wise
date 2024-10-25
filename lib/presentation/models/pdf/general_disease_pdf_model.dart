@@ -29,14 +29,24 @@ class GeneralDiseasePDFModel {
             Divider(),
           ],
         ),
-        maxPages: 1,
         pageFormat: PdfPageFormat.a4,
         build: (_) => <Widget>[
           Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(height: 50.0),
+                SizedBox(height: 20.0),
+                Center(
+                  child: Text(
+                    'General Disease Prediction Report',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                      decorationThickness: 2,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.0),
 
                 // User Information...
                 userInformationTable.userInformationTable(

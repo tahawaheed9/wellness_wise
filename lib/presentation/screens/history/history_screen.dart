@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
+import '/presentation/models/pdf/lung_cancer_pdf_model.dart';
 import '/presentation/models/pdf/kidney_prediction_pdf_model.dart';
 import '/presentation/models/pdf/diabetes_prediction_pdf_model.dart';
 import '/presentation/models/pdf/heart_disease_pdf_model.dart';
@@ -167,7 +168,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
         break;
 
       case 'Lung Cancer':
-        // PDF Model...
+        final lungCancer = await LungCancerPDFModel.lungCancerPDFStructure(
+          userData,
+          predictionData,
+        );
+        SaveAndOpenDocument.openPDF(lungCancer);
         break;
 
       case 'Breast Cancer':
