@@ -46,7 +46,7 @@ class HistoryCard extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    InkWell(
+                    GestureDetector(
                       onTap: deleteOnTap,
                       child: Text(
                         'Delete'.toUpperCase(),
@@ -57,7 +57,7 @@ class HistoryCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 20.0),
-                    InkWell(
+                    GestureDetector(
                       onTap: downloadOnTap,
                       child: Text(
                         'Download'.toUpperCase(),
