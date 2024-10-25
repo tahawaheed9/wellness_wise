@@ -4,13 +4,13 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
 import '/business/controller/save_and_open_pdf.dart';
-import '/business/models/pdf/components/user_information_table.dart';
+import '/presentation/models/pdf/components/user_information_table.dart';
 
-class HeartDiseasePDFModel {
-  static Future<File> heartDiseasePDFStructure(
-    Map<String, dynamic> userData,
-    Map<String, dynamic> predictionData,
-  ) async {
+class DiabetesPredictionPdfModel {
+  static Future<File> diabetesPredictionPDFStructure(
+      Map<String, dynamic> userData,
+      Map<String, dynamic> predictionData,
+      ) async {
     final userInformationTable = UserInformationTable();
     final pdf = Document();
     final readings = predictionData['readings'];
@@ -38,152 +38,99 @@ class HeartDiseasePDFModel {
               ),
               Divider(),
 
-              // Chest Pain Type Field...
+              // Number of pregnancies Field...
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Chest Pain Type: ',
+                    'Number of pregnancies: ',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text(readings['chest-pain-type']),
+                  Text(readings['number-of-pregnancies'].toString()),
                 ],
               ),
               Divider(),
 
-              // Resting Blood Pressure Field...
+              // Glucose Level Field...
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Resting Blood Pressure (Systolic): ',
+                    'Glucose Level: ',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text('${readings['systolic-resting-blood-pressure']} mmHg'),
+                  Text('${readings['glucose-level']} mg/dL'),
                 ],
               ),
               Divider(),
 
-              // Serum Cholesterol Field...
+              // Diastolic Blood Pressure Field...
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Serum Cholesterol (LDL + HDL): ',
+                    'Diastolic Blood Pressure: ',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text('${readings['serum-cholesterol']} mg/dL'),
+                  Text('${readings['blood-pressure-levels']} mmHg'),
                 ],
               ),
               Divider(),
 
-              // Resting ECG Field...
+              // Skin thickness value Field...
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Resting ECG: ',
+                    'Skin thickness value: ',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text(readings['resting-ecg']),
+                  Text(readings['skin-thickness-value'].toString()),
                 ],
               ),
               Divider(),
 
-              // Max Heart Rate...
+              // Insulin value Field...
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Max Heart Rate: ',
+                    'Insulin value: ',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text('${readings['max-heart-rate']} bps'),
+                  Text(readings['insulin-value'].toString()),
                 ],
               ),
               Divider(),
 
-              // ST Depression Field...
+              // BMI value Field...
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'ST Depression',
+                    'BMI value: ',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text(readings['st-depression'].toString()),
+                  Text(readings['bmi-value'].toString()),
                 ],
               ),
               Divider(),
 
-              // Peak ST Segment Field...
+              // Diabetes Pedigree Function value Field...
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Peak ST Segment: ',
+                    'Diabetes Pedigree Function value: ',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text(readings['peak-st-segment']),
-                ],
-              ),
-              Divider(),
-
-              // Major Vessels Field...
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Major Vessels: ',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(readings['major-vessels'].toString()),
-                ],
-              ),
-              Divider(),
-
-              // Thalassemia Field...
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Thalassemia: ',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(readings['thalassemia']),
-                ],
-              ),
-              Divider(),
-
-              // Exercise Induced Angina Field...
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Exercise induced angina: ',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(readings['exercise-induced-angina']),
-                ],
-              ),
-              Divider(),
-
-              // Fasting Blood Sugar Field...
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Fasting blood sugar > 120 mg/dL: ',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(readings['fasting-blood-sugar']),
+                  Text(readings['diabetes-pedigree-function-value'].toString()),
                 ],
               ),
               Divider(),
               SizedBox(height: 30.0),
 
               // Prediction Result...
-              Divider(),
               Row(
                 children: <Widget>[
                   Text(
@@ -194,6 +141,7 @@ class HeartDiseasePDFModel {
                   Text(predictionData['prediction']),
                 ],
               ),
+              Divider(),
               SizedBox(height: 30.0),
 
               Spacer(),

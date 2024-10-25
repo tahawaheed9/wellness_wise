@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-import '/business/models/pdf/heart_disease_pdf_model.dart';
+import '/presentation/models/pdf/diabetes_prediction_pdf_model.dart';
+import '/presentation/models/pdf/heart_disease_pdf_model.dart';
 import '/business/controller/save_and_open_pdf.dart';
-import '/business/models/pdf/general_disease_pdf_model.dart';
+import '/presentation/models/pdf/general_disease_pdf_model.dart';
 import '/presentation/components/dialogs/error_dialog.dart';
 import '/data/services/database/database_service.dart';
 import '/presentation/components/dialogs/delete_dialog.dart';
@@ -147,7 +148,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
         break;
 
       case 'Diabetes Predictions':
-        // PDF Model...
+        final diabetesPrediction =
+            await DiabetesPredictionPdfModel.diabetesPredictionPDFStructure(
+          userData,
+          predictionData,
+        );
+        SaveAndOpenDocument.openPDF(diabetesPrediction);
         break;
 
       case 'Kidney Prediction':

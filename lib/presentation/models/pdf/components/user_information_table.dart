@@ -111,10 +111,17 @@ class UserInformationTable {
   }
 
   int _calculateAge(Timestamp date) {
+    // Getting the today's date...
     DateTime now = DateTime.now();
+
+    // Calculating the age by converting it into the milliseconds...
     DateTime birthDate =
     DateTime.fromMillisecondsSinceEpoch(date.millisecondsSinceEpoch);
+
+    // Subtracting the age from today's date...
     int age = now.year - birthDate.year;
+
+    // Handling leap year and updating the date only on the user's birthdate...
     if (now.month < birthDate.month ||
         (now.month == birthDate.month && now.day < birthDate.day)) {
       age--;
