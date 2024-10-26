@@ -24,14 +24,13 @@ class DiabetesPredictionPdfModel {
             Divider(),
           ],
         ),
-        maxPages: 1,
         pageFormat: PdfPageFormat.a4,
         build: (_) => <Widget>[
           Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(height: 20.0),
+                SizedBox(height: 30.0),
                 Center(
                   child: Text(
                     'Diabetes Prediction Report',
@@ -42,7 +41,7 @@ class DiabetesPredictionPdfModel {
                     ),
                   ),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 30.0),
 
                 // User Information Table...
                 userInformationTable.userInformationTable(

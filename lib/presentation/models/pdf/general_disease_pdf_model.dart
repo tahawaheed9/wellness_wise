@@ -35,7 +35,7 @@ class GeneralDiseasePDFModel {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(height: 20.0),
+                SizedBox(height: 30.0),
                 Center(
                   child: Text(
                     'General Disease Prediction Report',
@@ -46,7 +46,7 @@ class GeneralDiseasePDFModel {
                     ),
                   ),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 30.0),
 
                 // User Information...
                 userInformationTable.userInformationTable(

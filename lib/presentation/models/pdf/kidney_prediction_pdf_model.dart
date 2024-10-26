@@ -22,11 +22,10 @@ class KidneyPredictionPdfModel {
             Divider(),
           ],
         ),
-        maxPages: 2,
         pageFormat: PdfPageFormat.a4,
         build: (_) => <Widget>[
           _pageOne(userData, predictionData),
-          _secondPage(predictionData),
+          _pageTwo(predictionData),
         ],
         footer: (_) => Column(
           children: <Widget>[
@@ -57,7 +56,7 @@ class KidneyPredictionPdfModel {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 20.0),
+          SizedBox(height: 30.0),
           Center(
             child: Text(
               'Kidney Prediction Report',
@@ -68,7 +67,7 @@ class KidneyPredictionPdfModel {
               ),
             ),
           ),
-          SizedBox(height: 20.0),
+          SizedBox(height: 30.0),
 
           // User Information Table...
           userInformationTable.userInformationTable(
@@ -231,15 +230,21 @@ class KidneyPredictionPdfModel {
     );
   }
 
-  static Widget _secondPage(Map<String, dynamic> predictionData) {
+  static Widget _pageTwo(Map<String, dynamic> predictionData) {
     final readings = predictionData['readings'];
     return Center(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 100.0),
+          SizedBox(height: 50.0),
+
+          Text(
+            'Readings: ',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Divider(),
 
           // Sodium Field...
-          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -408,7 +413,6 @@ class KidneyPredictionPdfModel {
             ],
           ),
           Divider(),
-          SizedBox(height: 30.0),
         ],
       ),
     );
