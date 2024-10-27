@@ -4,7 +4,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
 import '/business/controller/save_and_open_pdf.dart';
-import '/presentation/models/pdf/components/user_information_table.dart';
+import '/business/models/pdf/components/user_information_table.dart';
 
 class DiabetesPredictionPdfModel {
   static Future<File> diabetesPredictionPDFStructure(

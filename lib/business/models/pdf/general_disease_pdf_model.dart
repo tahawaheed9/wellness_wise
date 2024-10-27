@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
-import '/presentation/models/pdf/components/user_information_table.dart';
+import '/business/models/pdf/components/user_information_table.dart';
 import '/business/controller/save_and_open_pdf.dart';
 
 extension StringExtension on String {

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-import '/presentation/models/pdf/lung_cancer_pdf_model.dart';
-import '/presentation/models/pdf/kidney_prediction_pdf_model.dart';
-import '/presentation/models/pdf/diabetes_prediction_pdf_model.dart';
-import '/presentation/models/pdf/heart_disease_pdf_model.dart';
+import '/business/models/pdf/lung_cancer_pdf_model.dart';
+import '/business/models/pdf/kidney_prediction_pdf_model.dart';
+import '/business/models/pdf/diabetes_prediction_pdf_model.dart';
+import '/business/models/pdf/heart_disease_pdf_model.dart';
 import '/business/controller/save_and_open_pdf.dart';
-import '/presentation/models/pdf/general_disease_pdf_model.dart';
+import '/business/models/pdf/general_disease_pdf_model.dart';
 import '/presentation/components/dialogs/error_dialog.dart';
 import '/data/services/database/database_service.dart';
 import '/presentation/components/dialogs/delete_dialog.dart';
