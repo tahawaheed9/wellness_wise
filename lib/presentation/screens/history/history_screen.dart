@@ -50,6 +50,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             .collection('user-data')
             .doc(userId)
             .collection('predictions')
+            .orderBy('created-on', descending: true)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
