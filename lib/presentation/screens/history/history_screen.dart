@@ -86,7 +86,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             shrinkWrap: true,
             padding: const EdgeInsets.all(16.0),
             itemCount: snapshot.data!.docs.length,
-            separatorBuilder: (context, index) => SizedBox(height: 30.0),
+            separatorBuilder: (context, _) => SizedBox(height: 30.0),
             itemBuilder: (context, index) {
               // Fetching the documents...
               final DocumentSnapshot<Map<String, dynamic>> document =
