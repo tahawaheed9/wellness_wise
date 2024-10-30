@@ -13,9 +13,9 @@ class TrendsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: screenWidth(context) * 0.45,
+      width: screenWidth(context) * 0.60,
       child: Card(
-        elevation: 3,
+        elevation: 10,
         color: Theme.of(context).colorScheme.primaryContainer,
         child: Padding(
           padding: const EdgeInsets.all(16.0),

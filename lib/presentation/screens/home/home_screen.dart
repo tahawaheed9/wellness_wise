@@ -131,6 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const NamedDivider(title: 'Trends'),
               const TrendsList(),
+              const SizedBox(height: 10.0),
             ],
           ),
         ),

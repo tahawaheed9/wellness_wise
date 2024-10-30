@@ -54,9 +54,10 @@ class _TrendsListState extends State<TrendsList> {
         return SizedBox(
           height: screenHeight(context) * 0.18,
           width: double.infinity,
-          child: ListView.builder(
+          child: ListView.separated(
             shrinkWrap: true,
-            itemCount: snapshot.data?.docs.length,
+            itemCount: snapshot.data!.docs.length,
+            separatorBuilder: (context, index) => SizedBox(width: 10.0),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               // Fetching the documents...
