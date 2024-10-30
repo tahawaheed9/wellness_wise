@@ -8,6 +8,7 @@ import '/business/controller/screen_navigation_controller.dart';
 import '/data/services/auth/bloc/auth_bloc.dart';
 import '/data/services/auth/bloc/auth_event.dart';
 import 'components/screen_navigation_card.dart';
+import 'components/trends/trends_list.dart';
 import 'components/user_information/user_information_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -128,7 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              NamedDivider(title: 'Chart'),
+              const NamedDivider(title: 'Trends'),
+              const TrendsList(),
             ],
           ),
         ),

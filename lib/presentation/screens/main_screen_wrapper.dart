@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/presentation/screens/charts/charts_screen.dart';
 import '/presentation/screens/history/history_screen.dart';
 import '/presentation/screens/home/home_screen.dart';
 
@@ -23,11 +24,7 @@ class _MainScreenWrapperState extends State<MainScreenWrapper> {
         backgroundColor: Colors.transparent,
         onDestinationSelected: (int index) {
           setState(() {
-            _pageController.animateToPage(
-              index,
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeIn,
-            );
+            _pageController.jumpToPage(index);
           });
         },
         destinations: <Widget>[
@@ -36,6 +33,12 @@ class _MainScreenWrapperState extends State<MainScreenWrapper> {
             selectedIcon: Icon(Icons.home),
             label: 'Home',
             tooltip: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.bar_chart_outlined),
+            selectedIcon: Icon(Icons.bar_chart),
+            label: 'Charts',
+            tooltip: 'Charts',
           ),
           NavigationDestination(
             icon: Icon(Icons.history_outlined),
@@ -54,6 +57,7 @@ class _MainScreenWrapperState extends State<MainScreenWrapper> {
         },
         children: const <Widget>[
           HomeScreen(),
+          ChartsScreen(),
           HistoryScreen(),
         ],
       ),
