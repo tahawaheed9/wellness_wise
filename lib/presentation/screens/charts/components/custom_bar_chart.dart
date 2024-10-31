@@ -140,6 +140,23 @@ class _CustomBarChartState extends State<CustomBarChart> {
             ),
           ),
         ),
+        // Indicator Section
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Wrap(
+            direction: Axis.horizontal,
+            alignment: WrapAlignment.spaceAround,
+            runAlignment: WrapAlignment.start,
+            spacing: 16.0,
+            runSpacing: 8.0,
+            children: widget.dataList.asMap().entries.map((entry) {
+              final data = entry.value;
+              final color = data.barData['color'] as Color;
+              final text = data.barData['text'] as String;
+              return _Indicator(color: color, text: text);
+            }).toList(),
+          ),
+        ),
       ],
     );
   }
@@ -155,12 +172,9 @@ class BarData {
 
 class _Indicator extends StatefulWidget {
   final Color color;
-  final bool isSelected;
+  final String text;
 
-  const _Indicator({
-    required this.color,
-    required this.isSelected,
-  });
+  const _Indicator({required this.color, required this.text});
 
   @override
   State<_Indicator> createState() => _IndicatorState();
@@ -169,15 +183,19 @@ class _Indicator extends StatefulWidget {
 class _IndicatorState extends State<_Indicator> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: ShapeDecoration(
-        shape: CircleBorder(
-          side: BorderSide(
+    return Row(
+      children: <Widget>[
+        Container(
+          height: 12,
+          width: 12,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
             color: widget.color,
-            width: 5,
           ),
         ),
-      ),
+        const SizedBox(width: 10.0),
+        Text(widget.text),
+      ],
     );
   }
 }

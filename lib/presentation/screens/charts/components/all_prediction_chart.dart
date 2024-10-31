@@ -173,7 +173,7 @@ class _AllPredictionChartState extends State<AllPredictionChart> {
                   barData: {
                     'text': 'Lung Cancer',
                     'value': countList[4],
-                    'color': Colors.deepOrangeAccent,
+                    'color': Colors.lightGreenAccent,
                   },
                 ),
                 BarData(
