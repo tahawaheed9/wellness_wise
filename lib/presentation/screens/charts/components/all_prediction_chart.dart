@@ -15,7 +15,7 @@ class AllPredictionChart extends StatefulWidget {
 }
 
 class _AllPredictionChartState extends State<AllPredictionChart> {
-  final docId = AuthService.firebase().currentUser!.id;
+  final userId = AuthService.firebase().currentUser!.id;
 
   String? _selectedValue;
   DateTime? _date;
@@ -46,7 +46,7 @@ class _AllPredictionChartState extends State<AllPredictionChart> {
         StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream: FirebaseFirestore.instance
               .collection('user-data')
-              .doc(docId)
+              .doc(userId)
               .collection('predictions')
               .where('created-on', isGreaterThan: _date)
               .snapshots(),

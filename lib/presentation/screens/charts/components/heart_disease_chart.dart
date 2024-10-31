@@ -15,7 +15,7 @@ class HeartDiseaseChart extends StatefulWidget {
 }
 
 class _HeartDiseaseChartState extends State<HeartDiseaseChart> {
-  final docId = AuthService.firebase().currentUser!.id;
+  final userId = AuthService.firebase().currentUser!.id;
 
   String? _selectedValue;
   DateTime? _date;
@@ -46,7 +46,7 @@ class _HeartDiseaseChartState extends State<HeartDiseaseChart> {
         StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream: FirebaseFirestore.instance
               .collection('user-data')
-              .doc(docId)
+              .doc(userId)
               .collection('predictions')
               .where('disease', isEqualTo: 'Heart Disease')
               .where('created-on', isGreaterThan: _date)

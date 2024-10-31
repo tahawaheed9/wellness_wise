@@ -15,7 +15,7 @@ class KidneyPredictionChart extends StatefulWidget {
 }
 
 class _KidneyPredictionChartState extends State<KidneyPredictionChart> {
-  final docId = AuthService.firebase().currentUser!.id;
+  final userId = AuthService.firebase().currentUser!.id;
 
   String? _selectedValue;
   DateTime? _date;
@@ -46,7 +46,7 @@ class _KidneyPredictionChartState extends State<KidneyPredictionChart> {
         StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream: FirebaseFirestore.instance
               .collection('user-data')
-              .doc(docId)
+              .doc(userId)
               .collection('predictions')
               .where('disease', isEqualTo: 'Kidney Prediction')
               .where('created-on', isGreaterThan: _date)

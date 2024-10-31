@@ -15,7 +15,7 @@ class LungCancerChart extends StatefulWidget {
 }
 
 class _LungCancerChartState extends State<LungCancerChart> {
-  final docId = AuthService.firebase().currentUser!.id;
+  final userId = AuthService.firebase().currentUser!.id;
 
   String? _selectedValue;
   DateTime? _date;
@@ -28,7 +28,7 @@ class _LungCancerChartState extends State<LungCancerChart> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Lung Cancer',
+              'Lung Cancer Predictions',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -46,7 +46,7 @@ class _LungCancerChartState extends State<LungCancerChart> {
         StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream: FirebaseFirestore.instance
               .collection('user-data')
-              .doc(docId)
+              .doc(userId)
               .collection('predictions')
               .where('disease', isEqualTo: 'Lung Cancer')
               .where('created-on', isGreaterThan: _date)
