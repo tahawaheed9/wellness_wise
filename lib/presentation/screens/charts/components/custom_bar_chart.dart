@@ -45,7 +45,7 @@ class _CustomBarChartState extends State<CustomBarChart> {
         Padding(
           padding: const EdgeInsets.all(24.0),
           child: AspectRatio(
-            aspectRatio: 1.4,
+            aspectRatio: MediaQuery.devicePixelRatioOf(context),
             child: BarChart(
               BarChartData(
                 alignment: BarChartAlignment.spaceEvenly,

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
 const List<String> _filterList = <String>[
-  'All Time',
-  'Past 24 Hours',
-  'Past Week',
-  'Past Month',
+  'All time',
+  'Past 24 hours',
+  'Past week',
+  'Past month',
 ];
 
 class CustomFilter extends StatefulWidget {
-  const CustomFilter({super.key});
+  final Function(String) onChanged;
+
+  const CustomFilter({
+    super.key,
+    required this.onChanged,
+  });
 
   @override
   State<CustomFilter> createState() => _CustomFilterState();
@@ -35,6 +40,7 @@ class _CustomFilterState extends State<CustomFilter> {
             setState(() {
               value = selectedValue!;
             });
+            widget.onChanged(value);
           },
         ),
       ],
