@@ -20,7 +20,7 @@ class CustomFilter extends StatefulWidget {
 }
 
 class _CustomFilterState extends State<CustomFilter> {
-  String value = _filterList.first;
+  String? value = _filterList.first;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _CustomFilterState extends State<CustomFilter> {
             setState(() {
               value = selectedValue!;
             });
-            widget.onChanged(value);
+            widget.onChanged(value!);
           },
         ),
       ],

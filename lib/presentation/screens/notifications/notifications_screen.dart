@@ -54,13 +54,20 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               ],
             ),
             StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirebaseFirestore.instance
-                  .collection('user-data')
-                  .doc(userId)
-                  .collection('notifications')
-                  .where('created-on', isGreaterThan: _date)
-                  .orderBy('created-on', descending: true)
-                  .snapshots(),
+              stream: (_date != null)
+                  ? FirebaseFirestore.instance
+                      .collection('user-data')
+                      .doc(userId)
+                      .collection('notifications')
+                      .where('created-on', isGreaterThan: _date)
+                      .orderBy('created-on', descending: true)
+                      .snapshots()
+                  : FirebaseFirestore.instance
+                      .collection('user-data')
+                      .doc(userId)
+                      .collection('notifications')
+                      .orderBy('created-on', descending: true)
+                      .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -133,7 +140,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 
-  DateTime _calculateTime(String filter) {
+  DateTime? _calculateTime(String filter) {
     switch (filter) {
       case 'Past 24 hours':
         final now = DateTime.now();
@@ -151,8 +158,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         return pastMonth;
 
       default:
-        final allTime = DateTime.now();
-        return allTime;
+        // All time case...
+        return null;
     }
   }
 

@@ -11,7 +11,8 @@ class DiabetesPredictionChart extends StatefulWidget {
   const DiabetesPredictionChart({super.key});
 
   @override
-  State<DiabetesPredictionChart> createState() => _DiabetesPredictionChartState();
+  State<DiabetesPredictionChart> createState() =>
+      _DiabetesPredictionChartState();
 }
 
 class _DiabetesPredictionChartState extends State<DiabetesPredictionChart> {
@@ -44,13 +45,20 @@ class _DiabetesPredictionChartState extends State<DiabetesPredictionChart> {
           ],
         ),
         StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: FirebaseFirestore.instance
-              .collection('user-data')
-              .doc(userId)
-              .collection('predictions')
-              .where('disease', isEqualTo: 'Diabetes Predictions')
-              .where('created-on', isGreaterThan: _date)
-              .snapshots(),
+          stream: (_date != null)
+              ? FirebaseFirestore.instance
+                  .collection('user-data')
+                  .doc(userId)
+                  .collection('predictions')
+                  .where('disease', isEqualTo: 'Diabetes Predictions')
+                  .where('created-on', isGreaterThan: _date)
+                  .snapshots()
+              : FirebaseFirestore.instance
+                  .collection('user-data')
+                  .doc(userId)
+                  .collection('predictions')
+                  .where('disease', isEqualTo: 'Diabetes Predictions')
+                  .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -134,7 +142,7 @@ class _DiabetesPredictionChartState extends State<DiabetesPredictionChart> {
     );
   }
 
-  DateTime _calculateTime(String filter) {
+  DateTime? _calculateTime(String filter) {
     switch (filter) {
       case 'Past 24 hours':
         final now = DateTime.now();
@@ -152,8 +160,8 @@ class _DiabetesPredictionChartState extends State<DiabetesPredictionChart> {
         return pastMonth;
 
       default:
-        final allTime = DateTime.now();
-        return allTime;
+        // All time case...
+        return null;
     }
   }
 }

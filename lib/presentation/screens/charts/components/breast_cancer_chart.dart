@@ -44,13 +44,20 @@ class _BreastCancerChartState extends State<BreastCancerChart> {
           ],
         ),
         StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: FirebaseFirestore.instance
-              .collection('user-data')
-              .doc(userId)
-              .collection('predictions')
-              .where('disease', isEqualTo: 'Breast Cancer')
-              .where('created-on', isGreaterThan: _date)
-              .snapshots(),
+          stream: (_date != null)
+              ? FirebaseFirestore.instance
+                  .collection('user-data')
+                  .doc(userId)
+                  .collection('predictions')
+                  .where('disease', isEqualTo: 'Breast Cancer')
+                  .where('created-on', isGreaterThan: _date)
+                  .snapshots()
+              : FirebaseFirestore.instance
+                  .collection('user-data')
+                  .doc(userId)
+                  .collection('predictions')
+                  .where('disease', isEqualTo: 'Breast Cancer')
+                  .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -134,7 +141,7 @@ class _BreastCancerChartState extends State<BreastCancerChart> {
     );
   }
 
-  DateTime _calculateTime(String filter) {
+  DateTime? _calculateTime(String filter) {
     switch (filter) {
       case 'Past 24 hours':
         final now = DateTime.now();
@@ -152,8 +159,8 @@ class _BreastCancerChartState extends State<BreastCancerChart> {
         return pastMonth;
 
       default:
-        final allTime = DateTime.now();
-        return allTime;
+        // All time case...
+        return null;
     }
   }
 }
