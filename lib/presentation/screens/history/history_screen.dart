@@ -53,13 +53,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            CustomFilter(
-              onChanged: (value) {
-                _selectedValue = value;
-                setState(() {
-                  _date = _calculateTime(_selectedValue!);
-                });
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                CustomFilter(
+                  onChanged: (value) {
+                    _selectedValue = value;
+                    setState(() {
+                      _date = _calculateTime(_selectedValue!);
+                    });
+                  },
+                ),
+              ],
             ),
             StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: FirebaseFirestore.instance
