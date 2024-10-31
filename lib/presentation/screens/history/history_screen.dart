@@ -53,7 +53,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            Divider(),
             CustomFilter(
               onChanged: (value) {
                 _selectedValue = value;
@@ -62,7 +61,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 });
               },
             ),
-            Divider(),
             StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: FirebaseFirestore.instance
                   .collection('user-data')
