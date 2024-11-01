@@ -50,11 +50,13 @@ class _AllPredictionChartState extends State<AllPredictionChart> {
                   .doc(userId)
                   .collection('predictions')
                   .where('created-on', isGreaterThan: _date)
+                  .orderBy('created-on', descending: true)
                   .snapshots()
               : FirebaseFirestore.instance
                   .collection('user-data')
                   .doc(userId)
                   .collection('predictions')
+                  .orderBy('created-on', descending: true)
                   .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {

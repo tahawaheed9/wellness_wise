@@ -51,12 +51,14 @@ class _KidneyPredictionChartState extends State<KidneyPredictionChart> {
                   .collection('predictions')
                   .where('disease', isEqualTo: 'Kidney Prediction')
                   .where('created-on', isGreaterThan: _date)
+                  .orderBy('created-on', descending: true)
                   .snapshots()
               : FirebaseFirestore.instance
                   .collection('user-data')
                   .doc(userId)
                   .collection('predictions')
                   .where('disease', isEqualTo: 'Kidney Prediction')
+                  .orderBy('created-on', descending: true)
                   .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
