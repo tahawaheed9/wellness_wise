@@ -77,7 +77,7 @@ class DiabetesPredictionPdfModel {
                       'Glucose Level: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text('${readings['glucose-level']} mg/dL'),
+                    Text('${readings['glucose-levels']} mg/dL'),
                   ],
                 ),
                 Divider(),

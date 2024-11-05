@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/data/services/health/health_service.dart';
+import '/presentation/components/sync_button.dart';
 import '/presentation/components/dialogs/generic_prediction_dialog.dart';
 import '/presentation/components/dialogs/save_prediction_dialog.dart';
 import '/data/services/database/database_service.dart';
@@ -18,6 +20,8 @@ class HeartDiseaseScreen extends StatefulWidget {
 
 class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  late final HealthService _healthService;
 
   late final TextEditingController _age;
   int? _gender;
@@ -43,6 +47,7 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
   @override
   void initState() {
     super.initState();
+    _healthService = HealthService();
     _age = TextEditingController();
     _restingBloodPressure = TextEditingController();
     _serumCholesterol = TextEditingController();
@@ -275,6 +280,12 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
               },
             ),
             const SizedBox(height: 20.0),
+            SyncButton(
+              onPressed: () async {
+                await _fetchAPIData(context);
+              },
+            ),
+            const SizedBox(height: 20.0),
             PrimaryButton(
               text: 'Heart Disease Prediction',
               onPressed: () async {
@@ -306,6 +317,27 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
       return 'Required';
     }
     return null;
+  }
+
+  Future<void> _fetchAPIData(BuildContext context) async {
+    try {
+      final data = await _healthService.initialize('Heart');
+      if (data[0] != null) {
+        setState(() {
+          _restingBloodPressure.text = data[0].toString();
+        });
+      }
+
+      if (data[1] != null) {
+        setState(() {
+          _maxHeartRate.text = data[1].toString();
+        });
+      }
+    } catch (error) {
+      if (context.mounted) {
+        await showErrorDialog(context, error.toString());
+      }
+    }
   }
 
   Future<void> _makePrediction(BuildContext context) async {

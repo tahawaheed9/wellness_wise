@@ -7,18 +7,26 @@ import 'package:permission_handler/permission_handler.dart';
 class HealthService {
   final Health _health = Health();
 
-  final types = [
+  // Setting up the specific data types...
+  static final types = [
     HealthDataType.HEART_RATE,
     HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
     HealthDataType.BLOOD_PRESSURE_DIASTOLIC,
+    HealthDataType.BLOOD_GLUCOSE,
+    HealthDataType.BODY_MASS_INDEX,
   ];
 
+  // Requesting permission...
   List<HealthDataAccess> get permissions =>
       types.map((e) => HealthDataAccess.READ).toList();
 
   // Initializing...
-  Future<List<String?>> initialize() async {
-    requestPermission();
+  Future<List<String?>> initialize(String disease) async {
+    _health.configure();
+
+    _installHealthConnect();
+
+    _requestPermission();
 
     late final List<String?> data;
 
@@ -29,22 +37,26 @@ class HealthService {
     );
 
     if (hasPermission) {
-      // Accessing the data...
-      final String? heartRate = await fetchHeartRate();
-      final String? systolic = await fetchSystolicBP();
-      final String? diastolic = await fetchDiastolicBP();
+      switch (disease) {
+        case 'Heart':
+          data = await _heartDiseaseData();
 
-      data = [
-        heartRate,
-        systolic,
-        diastolic,
-      ];
+        case 'Diabetes':
+          data = await _diabetesData();
+
+        case 'Kidney':
+          data = await _kidneyData();
+      }
     }
     return data;
   }
 
+  // Installing Health Connect App on the current device...
+  Future<void> _installHealthConnect() async =>
+      await _health.installHealthConnect();
+
   // Getting permission to access relevant health data...
-  Future<void> requestPermission() async {
+  Future<void> _requestPermission() async {
     var status = await Permission.activityRecognition.status;
     if (!status.isGranted) {
       try {
@@ -57,13 +69,57 @@ class HealthService {
     }
   }
 
+  Future<List<String?>> _heartDiseaseData() async {
+    List<String?> data;
+
+    final restingSystolicBloodPressure = await _fetchSystolicBP();
+    final heartRate = await _fetchHeartRate();
+
+    data = [
+      restingSystolicBloodPressure,
+      heartRate,
+    ];
+
+    return data;
+  }
+
+  Future<List<String?>> _diabetesData() async {
+    List<String?> data;
+
+    final glucoseLevel = await _fetchBloodGlucose();
+    final diastolicBloodPressure = await _fetchDiastolicBP();
+    final bmi = await _fetchBMI();
+
+    data = [
+      glucoseLevel,
+      diastolicBloodPressure,
+      bmi,
+    ];
+
+    return data;
+  }
+
+  Future<List<String?>> _kidneyData() async {
+    List<String?> data;
+
+    final systolicBloodPressure = await _fetchSystolicBP();
+    final bloodGlucose = await _fetchBloodGlucose();
+
+    data = [
+      systolicBloodPressure,
+      bloodGlucose,
+    ];
+
+    return data;
+  }
+
   // Fetching the heart rate...
-  Future<String?> fetchHeartRate() async {
+  Future<String?> _fetchHeartRate() async {
     String? heartRate;
 
     // defining the date range...
     final now = DateTime.now();
-    final midNight = DateTime(now.year, now.month, now.day);
+    final yesterday = now.subtract(const Duration(hours: 24));
 
     bool hasPermission =
         await _health.hasPermissions([HealthDataType.HEART_RATE]) ?? false;
@@ -78,7 +134,7 @@ class HealthService {
         // Fetching the heart rate data...
         List<HealthDataPoint> data = await _health.getHealthDataFromTypes(
           types: [HealthDataType.HEART_RATE],
-          startTime: midNight,
+          startTime: yesterday,
           endTime: now,
         );
 
@@ -89,20 +145,17 @@ class HealthService {
             'Please make sure the information is updated on the Google Fit app.');
       }
     }
-
-    if (heartRate == null) {
-      return null;
-    }
+    debugPrint(heartRate);
     return heartRate;
   }
 
   // Fetching the systolic blood pressure...
-  Future<String?> fetchSystolicBP() async {
+  Future<String?> _fetchSystolicBP() async {
     String? systolic;
 
     // defining the date range...
     final now = DateTime.now();
-    final midNight = DateTime(now.year, now.month, now.day);
+    final yesterday = now.subtract(const Duration(hours: 24));
 
     bool hasPermission = await _health
             .hasPermissions([HealthDataType.BLOOD_PRESSURE_SYSTOLIC]) ??
@@ -118,7 +171,7 @@ class HealthService {
         // Fetching the systolic blood pressure data...
         List<HealthDataPoint> data = await _health.getHealthDataFromTypes(
           types: [HealthDataType.BLOOD_PRESSURE_SYSTOLIC],
-          startTime: midNight,
+          startTime: yesterday,
           endTime: now,
         );
 
@@ -129,20 +182,16 @@ class HealthService {
             'Please make sure the information is updated on the Google Fit app.');
       }
     }
-
-    if (systolic == null) {
-      return null;
-    }
     return systolic;
   }
 
   // Fetching the diastolic blood pressure...
-  Future<String?> fetchDiastolicBP() async {
+  Future<String?> _fetchDiastolicBP() async {
     String? diastolic;
 
     // defining the date range...
     final now = DateTime.now();
-    final midNight = DateTime(now.year, now.month, now.day);
+    final yesterday = now.subtract(const Duration(hours: 24));
 
     bool hasPermission = await _health
             .hasPermissions([HealthDataType.BLOOD_PRESSURE_DIASTOLIC]) ??
@@ -158,7 +207,7 @@ class HealthService {
         // Fetching the diastolic blood pressure data...
         List<HealthDataPoint> data = await _health.getHealthDataFromTypes(
           types: [HealthDataType.BLOOD_PRESSURE_DIASTOLIC],
-          startTime: midNight,
+          startTime: yesterday,
           endTime: now,
         );
 
@@ -169,10 +218,76 @@ class HealthService {
             'Please make sure the information is updated on the Google Fit app.');
       }
     }
-
-    if (diastolic == null) {
-      return null;
-    }
     return diastolic;
+  }
+
+  // Fetching the blood glucose...
+  Future<String?> _fetchBloodGlucose() async {
+    String? bloodGlucose;
+
+    // Defining the date range...
+    final now = DateTime.now();
+    final yesterday = now.subtract(const Duration(hours: 24));
+
+    bool hasPermission =
+        await _health.hasPermissions([HealthDataType.BLOOD_GLUCOSE]) ?? false;
+
+    if (!hasPermission) {
+      hasPermission =
+          await _health.requestAuthorization([HealthDataType.BLOOD_GLUCOSE]);
+    }
+
+    if (hasPermission) {
+      try {
+        // Fetching the blood glucose data...
+        List<HealthDataPoint> data = await _health.getHealthDataFromTypes(
+          types: [HealthDataType.BLOOD_GLUCOSE],
+          startTime: yesterday,
+          endTime: now,
+        );
+
+        bloodGlucose = data.last.value.toJson()['numeric_value'].toString();
+      } catch (error) {
+        debugPrint('Exception in retrieving blood glucose: $error');
+        throw Exception('Unable to fetch the blood glucose. Please make sure '
+            'the information is updated on the Google Fit app.');
+      }
+    }
+    return bloodGlucose;
+  }
+
+  // Fetching the BMI...
+  Future<String?> _fetchBMI() async {
+    String? bmi;
+
+    // Defining the date range...
+    final now = DateTime.now();
+    final yesterday = now.subtract(const Duration(hours: 24));
+
+    bool hasPermission =
+        await _health.hasPermissions([HealthDataType.BODY_MASS_INDEX]) ?? false;
+
+    if (!hasPermission) {
+      hasPermission =
+          await _health.requestAuthorization([HealthDataType.BODY_MASS_INDEX]);
+    }
+
+    if (hasPermission) {
+      try {
+        // Fetching the BMI data...
+        List<HealthDataPoint> data = await _health.getHealthDataFromTypes(
+          types: [HealthDataType.BODY_MASS_INDEX],
+          startTime: yesterday,
+          endTime: now,
+        );
+
+        bmi = data.last.value.toJson()['numeric_value'].toString();
+      } catch (error) {
+        debugPrint('Exception in retrieving BMI: $error');
+        throw Exception('Unable to fetch the BMI. Please make sure the '
+            'information is updated on the Google Fit app.');
+      }
+    }
+    return bmi;
   }
 }

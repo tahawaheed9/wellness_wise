@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/data/services/health/health_service.dart';
+import '/presentation/components/sync_button.dart';
 import '/presentation/components/dialogs/generic_prediction_dialog.dart';
 import '/presentation/components/dialogs/save_prediction_dialog.dart';
 import '/presentation/components/dialogs/error_dialog.dart';
@@ -22,6 +24,7 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
 
   late final DiseaseModelServices _diseaseModel;
   late final DatabaseServices _db;
+  late final HealthService _healthService;
 
   late final TextEditingController _age;
   late final TextEditingController _systolicBloodPressure;
@@ -57,6 +60,7 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
     super.initState();
     _diseaseModel = DiseaseModelServices();
     _db = DatabaseServices();
+    _healthService = HealthService();
     _age = TextEditingController();
     _systolicBloodPressure = TextEditingController();
     _specificGravity = TextEditingController();
@@ -470,6 +474,30 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
                   ),
                 ],
               ),
+            ),
+            const SizedBox(height: 20.0),
+            SyncButton(
+              onPressed: () async {
+                try {
+                  final data = await _healthService.initialize('Kidney');
+
+                  if (data[0] != null) {
+                    setState(() {
+                      _systolicBloodPressure.text = data[0].toString();
+                    });
+                  }
+
+                  if (data[1] != null) {
+                    setState(() {
+                      _randomGlucose.text = data[1].toString();
+                    });
+                  }
+                } catch (error) {
+                  if (context.mounted) {
+                    await showErrorDialog(context, error.toString());
+                  }
+                }
+              },
             ),
             const SizedBox(height: 20.0),
             PrimaryButton(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/data/services/health/health_service.dart';
+import '/presentation/components/sync_button.dart';
 import '/presentation/components/dialogs/diabetes_prediction_dialog.dart';
 import '/presentation/components/dialogs/save_prediction_dialog.dart';
 import '/presentation/components/dialogs/error_dialog.dart';
@@ -22,6 +24,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
 
   late final DiseaseModelServices _diseaseModel;
   late final DatabaseServices _db;
+  late final HealthService _healthService;
 
   late final TextEditingController _pregnancies;
   late final TextEditingController _glucose;
@@ -41,6 +44,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
     super.initState();
     _diseaseModel = DiseaseModelServices();
     _db = DatabaseServices();
+    _healthService = HealthService();
     _pregnancies = TextEditingController();
     _glucose = TextEditingController();
     _bloodPressure = TextEditingController();
@@ -179,6 +183,12 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
               ),
             ),
             const SizedBox(height: 20.0),
+            SyncButton(
+              onPressed: () async {
+                await _fetchAPIData(context);
+              },
+            ),
+            const SizedBox(height: 20.0),
             PrimaryButton(
               text: 'Diabetes Prediction',
               onPressed: () async {
@@ -210,6 +220,33 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
       return 'Required';
     }
     return null;
+  }
+
+  Future<void> _fetchAPIData(BuildContext context) async {
+    try {
+      final data = await _healthService.initialize('Diabetes');
+      if (data[0] != null) {
+        setState(() {
+          _glucose.text = data[0].toString();
+        });
+      }
+
+      if (data[1] != null) {
+        setState(() {
+          _bloodPressure.text = data[1].toString();
+        });
+      }
+
+      if (data[2] != null) {
+        setState(() {
+          _bmiValue.text = data[2].toString();
+        });
+      }
+    } catch (error) {
+      if (context.mounted) {
+        await showErrorDialog(context, error.toString());
+      }
+    }
   }
 
   Future<void> _makePrediction(BuildContext context) async {
