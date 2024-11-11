@@ -142,7 +142,7 @@ class HealthService {
       } catch (error) {
         debugPrint('Exception in retrieving heart rate: $error');
         throw Exception('Unable to fetch the heart rate. '
-            'Please make sure the information is updated on the Google Fit app.');
+            'Could not find any data for the past 24 hours.');
       }
     }
     debugPrint(heartRate);
@@ -179,7 +179,7 @@ class HealthService {
       } catch (error) {
         debugPrint('Exception in retrieving systolic bp: $error');
         throw Exception('Unable to fetch the systolic blood pressure. '
-            'Please make sure the information is updated on the Google Fit app.');
+            'Could not find any data for the past 24 hours.');
       }
     }
     return systolic;
@@ -215,7 +215,7 @@ class HealthService {
       } catch (error) {
         debugPrint('Exception in retrieving diastolic bp: $error');
         throw Exception('Unable to fetch the diastolic blood pressure. '
-            'Please make sure the information is updated on the Google Fit app.');
+            'Could not find any data for the past 24 hours.');
       }
     }
     return diastolic;
@@ -249,8 +249,8 @@ class HealthService {
         bloodGlucose = data.last.value.toJson()['numeric_value'].toString();
       } catch (error) {
         debugPrint('Exception in retrieving blood glucose: $error');
-        throw Exception('Unable to fetch the blood glucose. Please make sure '
-            'the information is updated on the Google Fit app.');
+        throw Exception('Unable to fetch the blood glucose. '
+            'Could not find any data for the past 24 hours.');
       }
     }
     return bloodGlucose;
@@ -284,8 +284,8 @@ class HealthService {
         bmi = data.last.value.toJson()['numeric_value'].toString();
       } catch (error) {
         debugPrint('Exception in retrieving BMI: $error');
-        throw Exception('Unable to fetch the BMI. Please make sure the '
-            'information is updated on the Google Fit app.');
+        throw Exception('Unable to fetch the BMI. '
+            'Could not find any data for the past 24 hours.');
       }
     }
     return bmi;
