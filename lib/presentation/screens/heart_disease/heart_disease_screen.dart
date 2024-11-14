@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '/data/services/health/health_service.dart';
-import '/presentation/components/sync_button.dart';
 import '/presentation/components/dialogs/generic_prediction_dialog.dart';
 import '/presentation/components/dialogs/save_prediction_dialog.dart';
 import '/data/services/database/database_service.dart';
@@ -147,9 +146,28 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
                     decoration: _decoration(
-                        labelText: 'Resting Blood Pressure',
-                        hintText: 'Systolic',
-                        suffixText: 'mmHg'),
+                      labelText: 'Resting Blood Pressure',
+                      hintText: 'Systolic',
+                      suffixText: 'mmHg',
+                      iconButton: IconButton(
+                        onPressed: () async {
+                          try {
+                            final data = await _healthService.fetchSystolicBP();
+                            if (data != null) {
+                              setState(() {
+                                _restingBloodPressure.text = data.toString();
+                              });
+                            }
+                          } catch (error) {
+                            if (context.mounted) {
+                              await showErrorDialog(context, error.toString());
+                            }
+                          }
+                        },
+                        tooltip: 'Sync Data',
+                        icon: Icon(Icons.sync_outlined),
+                      ),
+                    ),
                   ),
 
                   // Serum Cholesterol Field...
@@ -195,6 +213,24 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
                     decoration: _decoration(
                       labelText: 'Max Heart Rate',
                       suffixText: 'bps',
+                      iconButton: IconButton(
+                        onPressed: () async {
+                          try {
+                            final data = await _healthService.fetchHeartRate();
+                            if (data != null) {
+                              setState(() {
+                                _maxHeartRate.text = data.toString();
+                              });
+                            }
+                          } catch (error) {
+                            if (context.mounted) {
+                              await showErrorDialog(context, error.toString());
+                            }
+                          }
+                        },
+                        tooltip: 'Sync Data',
+                        icon: Icon(Icons.sync_outlined),
+                      ),
                     ),
                   ),
 
@@ -280,12 +316,6 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
               },
             ),
             const SizedBox(height: 20.0),
-            SyncButton(
-              onPressed: () async {
-                await _fetchAPIData(context);
-              },
-            ),
-            const SizedBox(height: 20.0),
             PrimaryButton(
               text: 'Heart Disease Prediction',
               onPressed: () async {
@@ -302,12 +332,14 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
     required String labelText,
     String? hintText,
     String? suffixText,
+    Widget? iconButton,
   }) {
     return InputDecoration(
       labelText: labelText,
       hintText: hintText,
       floatingLabelBehavior: FloatingLabelBehavior.always,
       suffixText: suffixText,
+      suffixIcon: iconButton,
       border: const OutlineInputBorder(),
     );
   }
@@ -317,27 +349,6 @@ class _HeartDiseaseScreenState extends State<HeartDiseaseScreen> {
       return 'Required';
     }
     return null;
-  }
-
-  Future<void> _fetchAPIData(BuildContext context) async {
-    try {
-      final data = await _healthService.initialize('Heart');
-      if (data[0] != null) {
-        setState(() {
-          _restingBloodPressure.text = data[0].toString();
-        });
-      }
-
-      if (data[1] != null) {
-        setState(() {
-          _maxHeartRate.text = data[1].toString();
-        });
-      }
-    } catch (error) {
-      if (context.mounted) {
-        await showErrorDialog(context, error.toString());
-      }
-    }
   }
 
   Future<void> _makePrediction(BuildContext context) async {

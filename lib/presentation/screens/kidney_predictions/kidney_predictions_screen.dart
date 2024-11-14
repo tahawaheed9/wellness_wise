@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '/data/services/health/health_service.dart';
-import '/presentation/components/sync_button.dart';
 import '/presentation/components/dialogs/generic_prediction_dialog.dart';
 import '/presentation/components/dialogs/save_prediction_dialog.dart';
 import '/presentation/components/dialogs/error_dialog.dart';
@@ -144,6 +143,25 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
                     decoration: _decoration(
                       labelText: 'Systolic Blood Pressure',
                       suffixText: 'mmHg',
+                      iconButton: IconButton(
+                        onPressed: () async {
+                          try {
+                            final data = await _healthService.fetchSystolicBP();
+
+                            if (data != null) {
+                              setState(() {
+                                _systolicBloodPressure.text = data.toString();
+                              });
+                            }
+                          } catch (error) {
+                            if (context.mounted) {
+                              await showErrorDialog(context, error.toString());
+                            }
+                          }
+                        },
+                        tooltip: 'Sync Data',
+                        icon: Icon(Icons.sync_outlined),
+                      ),
                     ),
                   ),
 
@@ -263,6 +281,26 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
                     decoration: _decoration(
                       labelText: 'Random Blood Glucose',
                       suffixText: 'mg/dL',
+                      iconButton: IconButton(
+                        onPressed: () async {
+                          try {
+                            final data =
+                                await _healthService.fetchBloodGlucose();
+
+                            if (data != null) {
+                              setState(() {
+                                _randomGlucose.text = data.toString();
+                              });
+                            }
+                          } catch (error) {
+                            if (context.mounted) {
+                              await showErrorDialog(context, error.toString());
+                            }
+                          }
+                        },
+                        tooltip: 'Sync Data',
+                        icon: Icon(Icons.sync_outlined),
+                      ),
                     ),
                   ),
 
@@ -476,30 +514,6 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
               ),
             ),
             const SizedBox(height: 20.0),
-            SyncButton(
-              onPressed: () async {
-                try {
-                  final data = await _healthService.initialize('Kidney');
-
-                  if (data[0] != null) {
-                    setState(() {
-                      _systolicBloodPressure.text = data[0].toString();
-                    });
-                  }
-
-                  if (data[1] != null) {
-                    setState(() {
-                      _randomGlucose.text = data[1].toString();
-                    });
-                  }
-                } catch (error) {
-                  if (context.mounted) {
-                    await showErrorDialog(context, error.toString());
-                  }
-                }
-              },
-            ),
-            const SizedBox(height: 20.0),
             PrimaryButton(
               text: 'Kidney Prediction',
               onPressed: () async {
@@ -516,12 +530,14 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
     required String labelText,
     String? hintText,
     String? suffixText,
+    Widget? iconButton,
   }) {
     return InputDecoration(
       labelText: labelText,
       hintText: hintText,
       floatingLabelBehavior: FloatingLabelBehavior.always,
       suffixText: suffixText,
+      suffixIcon: iconButton,
       border: const OutlineInputBorder(),
     );
   }

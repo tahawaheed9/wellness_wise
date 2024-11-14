@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '/data/services/health/health_service.dart';
-import '/presentation/components/sync_button.dart';
 import '/presentation/components/dialogs/diabetes_prediction_dialog.dart';
 import '/presentation/components/dialogs/save_prediction_dialog.dart';
 import '/presentation/components/dialogs/error_dialog.dart';
@@ -113,6 +112,26 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                     decoration: _decoration(
                       labelText: 'Glucose Level',
                       suffixText: 'mg/dL',
+                      iconButton: IconButton(
+                        onPressed: () async {
+                          try {
+                            final data =
+                                await _healthService.fetchBloodGlucose();
+
+                            if (data != null) {
+                              setState(() {
+                                _glucose.text = data.toString();
+                              });
+                            }
+                          } catch (error) {
+                            if (context.mounted) {
+                              await showErrorDialog(context, error.toString());
+                            }
+                          }
+                        },
+                        tooltip: 'Sync Data',
+                        icon: Icon(Icons.sync_outlined),
+                      ),
                     ),
                   ),
 
@@ -124,8 +143,29 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                     keyboardType: TextInputType.number,
                     validator: _validateForm,
                     decoration: _decoration(
-                        labelText: 'Diastolic Blood Pressure',
-                        suffixText: 'mmHg'),
+                      labelText: 'Diastolic Blood Pressure',
+                      suffixText: 'mmHg',
+                      iconButton: IconButton(
+                        onPressed: () async {
+                          try {
+                            final data =
+                                await _healthService.fetchDiastolicBP();
+
+                            if (data != null) {
+                              setState(() {
+                                _bloodPressure.text = data.toString();
+                              });
+                            }
+                          } catch (error) {
+                            if (context.mounted) {
+                              await showErrorDialog(context, error.toString());
+                            }
+                          }
+                        },
+                        tooltip: 'Sync Data',
+                        icon: Icon(Icons.sync_outlined),
+                      ),
+                    ),
                   ),
 
                   // Skin Thickness Value Field...
@@ -183,12 +223,6 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
               ),
             ),
             const SizedBox(height: 20.0),
-            SyncButton(
-              onPressed: () async {
-                await _fetchAPIData(context);
-              },
-            ),
-            const SizedBox(height: 20.0),
             PrimaryButton(
               text: 'Diabetes Prediction',
               onPressed: () async {
@@ -205,12 +239,14 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
     required String labelText,
     String? hintText,
     String? suffixText,
+    Widget? iconButton,
   }) {
     return InputDecoration(
       labelText: labelText,
       hintText: hintText,
       floatingLabelBehavior: FloatingLabelBehavior.always,
       suffixText: suffixText,
+      suffixIcon: iconButton,
       border: const OutlineInputBorder(),
     );
   }
@@ -220,33 +256,6 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
       return 'Required';
     }
     return null;
-  }
-
-  Future<void> _fetchAPIData(BuildContext context) async {
-    try {
-      final data = await _healthService.initialize('Diabetes');
-      if (data[0] != null) {
-        setState(() {
-          _glucose.text = data[0].toString();
-        });
-      }
-
-      if (data[1] != null) {
-        setState(() {
-          _bloodPressure.text = data[1].toString();
-        });
-      }
-
-      if (data[2] != null) {
-        setState(() {
-          _bmiValue.text = data[2].toString();
-        });
-      }
-    } catch (error) {
-      if (context.mounted) {
-        await showErrorDialog(context, error.toString());
-      }
-    }
   }
 
   Future<void> _makePrediction(BuildContext context) async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '/data/services/notifications/notification_services.dart';
+// import '/data/services/notifications/notification_services.dart';
 import '/presentation/components/dialogs/logout_dialog.dart';
 import '/presentation/components/named_divider.dart';
 import '/business/controller/screen_navigation_controller.dart';
@@ -19,14 +19,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  NotificationServices notificationServices = NotificationServices();
+  // NotificationServices notificationServices = NotificationServices();
 
   @override
   void initState() {
     super.initState();
-    notificationServices.requestNotificationPermission();
-    notificationServices.initializeFirebaseMessaging(context);
-    notificationServices.setupInteractMessage(context);
+    // notificationServices.requestNotificationPermission();
+    // notificationServices.initializeFirebaseMessaging(context);
+    // notificationServices.setupInteractMessage(context);
   }
 
   @override
