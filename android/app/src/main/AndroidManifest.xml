@@ -18,8 +18,6 @@
     <!--Permissions for Health Connect-->
     <uses-permission android:name="android.permission.health.READ_HEART_RATE"/>
     <uses-permission android:name="android.permission.health.READ_BLOOD_PRESSURE"/>
-    <uses-permission android:name="android.permission.health.READ_BLOOD_GLUCOSE"/>
-    <uses-permission android:name="android.permission.health.READ_BODY_MASS_INDEX"/>
 
     <application
         android:label="Wellness Wise"
@@ -69,6 +67,6 @@
             android:value="2" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="High Priority" />
+            android:value="high_importance_channel" />
     </application>
 </manifest>
