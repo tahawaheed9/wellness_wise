@@ -281,26 +281,6 @@ class _KidneyPredictionsScreenState extends State<KidneyPredictionsScreen> {
                     decoration: _decoration(
                       labelText: 'Random Blood Glucose',
                       suffixText: 'mg/dL',
-                      iconButton: IconButton(
-                        onPressed: () async {
-                          try {
-                            final data =
-                                await _healthService.fetchBloodGlucose();
-
-                            if (data != null) {
-                              setState(() {
-                                _randomGlucose.text = data.toString();
-                              });
-                            }
-                          } catch (error) {
-                            if (context.mounted) {
-                              await showErrorDialog(context, error.toString());
-                            }
-                          }
-                        },
-                        tooltip: 'Sync Data',
-                        icon: Icon(Icons.sync_outlined),
-                      ),
                     ),
                   ),
 

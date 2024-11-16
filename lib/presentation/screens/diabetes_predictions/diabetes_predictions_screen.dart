@@ -112,26 +112,6 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                     decoration: _decoration(
                       labelText: 'Glucose Level',
                       suffixText: 'mg/dL',
-                      iconButton: IconButton(
-                        onPressed: () async {
-                          try {
-                            final data =
-                                await _healthService.fetchBloodGlucose();
-
-                            if (data != null) {
-                              setState(() {
-                                _glucose.text = data.toString();
-                              });
-                            }
-                          } catch (error) {
-                            if (context.mounted) {
-                              await showErrorDialog(context, error.toString());
-                            }
-                          }
-                        },
-                        tooltip: 'Sync Data',
-                        icon: Icon(Icons.sync_outlined),
-                      ),
                     ),
                   ),
 

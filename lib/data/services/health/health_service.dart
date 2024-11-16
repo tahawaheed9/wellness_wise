@@ -10,7 +10,6 @@ class HealthService {
     HealthDataType.HEART_RATE,
     HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
     HealthDataType.BLOOD_PRESSURE_DIASTOLIC,
-    HealthDataType.BLOOD_GLUCOSE,
   ];
 
   // Requesting permission...
@@ -157,42 +156,5 @@ class HealthService {
       }
     }
     return diastolic;
-  }
-
-  // Fetching the blood glucose...
-  Future<int?> fetchBloodGlucose() async {
-    await _initialize();
-
-    int? bloodGlucose;
-
-    // Defining the date range...
-    final now = DateTime.now();
-    final yesterday = now.subtract(const Duration(hours: 24));
-
-    bool hasPermission =
-        await _health.hasPermissions([HealthDataType.BLOOD_GLUCOSE]) ?? false;
-
-    if (!hasPermission) {
-      hasPermission =
-          await _health.requestAuthorization([HealthDataType.BLOOD_GLUCOSE]);
-    }
-
-    if (hasPermission) {
-      try {
-        // Fetching the blood glucose data...
-        List<HealthDataPoint> data = await _health.getHealthDataFromTypes(
-          types: [HealthDataType.BLOOD_GLUCOSE],
-          startTime: yesterday,
-          endTime: now,
-        );
-
-        bloodGlucose = data.first.value.toJson()['numericValue'].toInt();
-      } catch (error) {
-        debugPrint('Exception in retrieving blood glucose: $error');
-        throw Exception('Unable to fetch the blood glucose. '
-            'Could not find any data for the past 24 hours.');
-      }
-    }
-    return bloodGlucose;
   }
 }
