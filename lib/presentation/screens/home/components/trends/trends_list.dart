@@ -13,6 +13,7 @@ class TrendsList extends StatefulWidget {
 }
 class _TrendsListState extends State<TrendsList> {
   final userId = AuthService.firebase().currentUser!.id;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -68,8 +69,10 @@ class _TrendsListState extends State<TrendsList> {
               // Assigning the data...
               final disease = data['disease'] ?? 'N/A';
               final date = data['created-on'];
+
               // Formatting the date...
               final createdOn = DateFormat.yMMMd('en_US').format(date.toDate());
+
               return TrendsCard(
                 diseaseTitle: disease,
                 date: createdOn,

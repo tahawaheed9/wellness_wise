@@ -26,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     notificationServices.requestNotificationPermission();
     notificationServices.initializeFirebaseMessaging(context);
-    notificationServices.setupInteractMessage(context);
   }
 
   @override

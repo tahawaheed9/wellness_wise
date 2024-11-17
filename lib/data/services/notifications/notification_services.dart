@@ -5,17 +5,16 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
-import '/business/controller/screen_navigation_controller.dart';
+import 'package:wellness_wise/data/services/database/database_service.dart';
 
 class NotificationServices {
   final messaging = FirebaseMessaging.instance;
   final localNotifications = FlutterLocalNotificationsPlugin();
+  final _db = DatabaseServices();
 
   // Initializing flutter local notifications to display notifications to
   // the user when the application is in the foreground (in-app)...
-  void initializeLocalNotifications(
-      BuildContext context, RemoteMessage message) async {
+  void initializeLocalNotifications(BuildContext context) async {
     final androidInitializationSettings =
         const AndroidInitializationSettings('mipmap/ic_launcher');
 
@@ -25,9 +24,6 @@ class NotificationServices {
 
     await localNotifications.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: (_) {
-        handleNotification(context, message);
-      },
     );
   }
 
@@ -37,9 +33,9 @@ class NotificationServices {
     FirebaseMessaging.onMessage.listen((message) async {
       if (Platform.isAndroid) {
         if (context.mounted) {
-          initializeLocalNotifications(context, message);
+          initializeLocalNotifications(context);
         }
-        showNotification(message);
+        showNotification(message, null);
       }
     });
   }
@@ -72,7 +68,10 @@ class NotificationServices {
   }
 
   // Displaying the notifications to the user...
-  Future<void> showNotification(RemoteMessage message) async {
+  Future<void> showNotification(
+    RemoteMessage? message,
+    List<String>? localMessage,
+  ) async {
     final androidNotificationChannel = AndroidNotificationChannel(
       Random.secure().nextInt(100000).toString(),
       'Wellness Wise Notification Channel',
@@ -96,55 +95,56 @@ class NotificationServices {
       Duration.zero,
       () {
         localNotifications.show(
-          1,
-          message.notification!.title.toString(),
-          message.notification!.body.toString(),
+          0,
+          localMessage != null
+              ? localMessage[0]
+              : message!.notification!.title.toString(),
+          localMessage != null
+              ? localMessage[1]
+              : message!.notification!.body.toString(),
           notificationDetails,
         );
       },
     );
   }
 
-  Future<void> setupInteractMessage(BuildContext context) async {
-    RemoteMessage? initialMessage = await messaging.getInitialMessage();
+  Future<void> sendLocalNotifications(String prediction) async {
+    late final List<String> localNotificationData;
 
-    // When the application is terminated / killed...
-    if (initialMessage != null) {
-      if (context.mounted) {
-        handleNotification(context, initialMessage);
-      }
+    late final String title;
+    late final String body;
+    late final String type;
+
+    if (prediction == 'Positive.') {
+      title = 'We\'re Sorry!';
+      body = 'Result of your last prediction was "Positive". '
+          'You are advised to consult your doctor for further evaluation.';
+      type = 'health-prediction';
+
+      localNotificationData = [
+        title,
+        body,
+        type,
+      ];
+    } else {
+      title = 'Congratulations!';
+      body = 'Result of your last prediction was "Negative". '
+          'You are advised to eat healthy and exercise regularly.';
+      type = 'health-prediction';
+
+      localNotificationData = [
+        title,
+        body,
+        type,
+      ];
     }
+    await showNotification(null, localNotificationData);
 
-    // When the application is in the background...
-    FirebaseMessaging.onMessageOpenedApp.listen((message) async {
-      if (context.mounted) {
-        handleNotification(context, message);
-      }
-    });
+    final Map<String, Object> data = {
+      'title': title,
+      'body': body,
+      'type': type,
+    };
+    await _db.addNotification(data);
   }
-
-  // Redirecting the user to the specific screens when notification is clicked...
-  void handleNotification(BuildContext context, RemoteMessage message) {
-    if (message.data['type'] == 'general-notification') {
-      pushNotificationScreen(context);
-    }
-  }
-
-  // Future<void> saveNotification(RemoteMessage message) async {
-  //   final db = DatabaseServices();
-  //
-  //   final notificationTitle = message.notification!.title.toString();
-  //   final notificationBody = message.notification!.body.toString();
-  //   final notificationType = message.data['type'].toString();
-  //   final createdOn = DateTime.now();
-  //
-  //   final Map<String, Object> data = {
-  //     'title': notificationTitle,
-  //     'body': notificationBody,
-  //     'type': notificationType,
-  //     'created-on': createdOn,
-  //   };
-  //
-  //   await db.addNotification(data);
-  // }
 }
