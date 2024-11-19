@@ -5,7 +5,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:wellness_wise/data/services/database/database_service.dart';
+
+import '/data/services/database/database_service.dart';
 
 class NotificationServices {
   final messaging = FirebaseMessaging.instance;
@@ -56,14 +57,15 @@ class NotificationServices {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      final deviceToken = await getDeviceToken();
-      debugPrint('Device Token: $deviceToken');
+      await getDeviceToken();
     }
   }
 
   // Getting the device's FCM Token....
   Future<String> getDeviceToken() async {
-    final deviceToken = await messaging.getToken();
+    final deviceToken = await messaging.getToken().then((token) async {
+      await _db.addFCMToken(token!);
+    });
     return deviceToken!;
   }
 
@@ -108,43 +110,95 @@ class NotificationServices {
     );
   }
 
-  Future<void> sendLocalNotifications(String prediction) async {
+  Future<void> sendLocalNotifications(
+    String diseaseTitle,
+    String? prediction,
+    double? probability,
+  ) async {
     late final List<String> localNotificationData;
 
     late final String title;
     late final String body;
     late final String type;
 
-    if (prediction == 'Positive.') {
-      title = 'We\'re Sorry!';
-      body = 'Result of your last prediction was "Positive". '
-          'You are advised to consult your doctor for further evaluation.';
-      type = 'health-prediction';
+    if (prediction != null) {
+      switch (prediction) {
+        case 'Positive.':
+          title = 'Chronic Disease Prediction';
+          body = 'We\'re Sorry! \n\n'
+              'Result of your last $diseaseTitle report was "Positive". \n\n'
+              'You are advised to consult your doctor for further '
+              'evaluation.';
+          type = 'chronic-disease-prediction';
+          break;
 
-      localNotificationData = [
-        title,
-        body,
-        type,
-      ];
-    } else {
-      title = 'Congratulations!';
-      body = 'Result of your last prediction was "Negative". '
-          'You are advised to eat healthy and exercise regularly.';
-      type = 'health-prediction';
-
-      localNotificationData = [
-        title,
-        body,
-        type,
-      ];
+        case 'Negative.':
+          title = 'Chronic Disease Prediction';
+          body = 'Congratulations! \n\n'
+              'Result of your last $diseaseTitle report was "Negative". \n\n'
+              'You are advised to eat healthy and exercise regularly to avoid '
+              'any future risks.';
+          type = 'chronic-disease-prediction';
+          break;
+      }
     }
-    await showNotification(null, localNotificationData);
 
-    final Map<String, Object> data = {
-      'title': title,
-      'body': body,
-      'type': type,
-    };
-    await _db.addNotification(data);
+    if (probability != null) {
+      switch (probability) {
+        case < 25.00:
+          title = 'General Disease Prediction';
+          body = 'Probability of your last $diseaseTitle report was '
+              '$probability%. \n\n'
+              'You are still advised to follow the precautions to '
+              'avoid any future risks.';
+          type = 'general-disease-prediction';
+          break;
+
+        case > 25.00 && <= 50.00:
+          title = 'General Disease Prediction';
+          body = 'Probability of your last $diseaseTitle report was '
+              '$probability%. \n\n'
+              'You are advised to follow the precautions to stay healthy '
+              'and check your symptoms regularly.';
+          type = 'general-disease-prediction';
+          break;
+
+        case > 50.00 && <= 75.00:
+          title = 'General Disease Prediction';
+          body = 'Probability of your last $diseaseTitle report was below '
+              '$probability%. \n\n'
+              'You are advised to follow the precautions and consult your '
+              'doctor for further evaluation.';
+          type = 'general-disease-prediction';
+          break;
+
+        default:
+          title = 'General Disease Prediction';
+          body = 'Probability of your last $diseaseTitle report was '
+              '$probability%. \n\n'
+              'It is critical! Your must consult your doctor for immediate '
+              'evaluation and treatment.';
+          type = 'general-disease-prediction';
+          break;
+      }
+    }
+
+    localNotificationData = [
+      title,
+      body,
+      type,
+    ];
+
+    await showNotification(null, localNotificationData).then((_) async {
+      final createdOn = DateTime.now();
+
+      final Map<String, Object> data = {
+        'title': title,
+        'body': body,
+        'type': type,
+        'created-on': createdOn,
+      };
+      await _db.addNotification(data);
+    });
   }
 }

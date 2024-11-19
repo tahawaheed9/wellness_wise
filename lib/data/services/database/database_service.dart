@@ -10,6 +10,7 @@ class DatabaseServices {
   late final DocumentReference _userDataDocumentRef;
   late final CollectionReference _predictionCollectionRef;
   late final CollectionReference _notificationCollectionRef;
+  late final CollectionReference _fcmTokenCollectionRef;
 
   // Initializing the Document & Collection References...
   DatabaseServices() {
@@ -19,6 +20,8 @@ class DatabaseServices {
 
     _notificationCollectionRef =
         _userDataDocumentRef.collection('notifications');
+
+    _fcmTokenCollectionRef = _userDataDocumentRef.collection('fcm-token');
   }
 
   // Setting Username and Gender to main collection (user-data)...
@@ -113,5 +116,37 @@ class DatabaseServices {
       debugPrint(error.toString());
       throw Exception('Unable to delete the notification.');
     }
+  }
+
+  // Adding the FCM Tokens...
+  Future<void> addFCMToken(String token) async {
+    try {
+      final createdOn = DateTime.now();
+      final Map<String, Object> tokenData = {
+        'token': token,
+        'created-on': createdOn,
+      };
+
+      await _fcmTokenCollectionRef.doc(_docId).set(tokenData);
+    } catch (error) {
+      debugPrint(error.toString());
+    }
+  }
+
+  // Getting the FCM Token...
+  Future<String> getFCMToken() async {
+    late final String token;
+    try {
+      final DocumentSnapshot documentSnapshot =
+          await _fcmTokenCollectionRef.doc(_docId).get();
+
+      if (documentSnapshot.exists) {
+        final data = documentSnapshot.data() as Map<String, dynamic>;
+        token = data['token'];
+      }
+    } catch (error) {
+      debugPrint(error.toString());
+    }
+    return token;
   }
 }

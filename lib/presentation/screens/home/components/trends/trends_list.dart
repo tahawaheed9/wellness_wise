@@ -8,9 +8,11 @@ import '/data/services/auth/auth_service.dart';
 
 class TrendsList extends StatefulWidget {
   const TrendsList({super.key});
+
   @override
   State<TrendsList> createState() => _TrendsListState();
 }
+
 class _TrendsListState extends State<TrendsList> {
   final userId = AuthService.firebase().currentUser!.id;
 
@@ -63,7 +65,7 @@ class _TrendsListState extends State<TrendsList> {
             itemBuilder: (context, index) {
               // Fetching the documents...
               final DocumentSnapshot<Map<String, dynamic>> document =
-              snapshot.data!.docs[index];
+                  snapshot.data!.docs[index];
               // Fetching the data from the documents...
               final Map<String, dynamic> data = document.data()!;
               // Assigning the data...
