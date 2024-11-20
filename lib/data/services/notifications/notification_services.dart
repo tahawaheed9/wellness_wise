@@ -62,11 +62,10 @@ class NotificationServices {
   }
 
   // Getting the device's FCM Token....
-  Future<String> getDeviceToken() async {
-    final deviceToken = await messaging.getToken().then((token) async {
+  Future<void> getDeviceToken() async {
+    await messaging.getToken().then((token) async {
       await _db.addFCMToken(token!);
     });
-    return deviceToken!;
   }
 
   // Displaying the notifications to the user...
