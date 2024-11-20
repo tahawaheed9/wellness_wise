@@ -13,8 +13,8 @@ class NotificationServices {
   final localNotifications = FlutterLocalNotificationsPlugin();
   final _db = DatabaseServices();
 
-  // Initializing flutter local notifications to display notifications to
-  // the user when the application is in the foreground (in-app)...
+// Initializing flutter local notifications to display notifications to
+// the user when the application is in the foreground (in-app)...
   void initializeLocalNotifications(BuildContext context) async {
     final androidInitializationSettings =
         const AndroidInitializationSettings('mipmap/ic_launcher');
@@ -28,8 +28,8 @@ class NotificationServices {
     );
   }
 
-  // Initializing the Firebase Messaging to get the notifications
-  // from the firebase...
+// Initializing the Firebase Messaging to get the notifications
+// from the firebase...
   void initializeFirebaseMessaging(BuildContext context) {
     FirebaseMessaging.onMessage.listen((message) async {
       if (Platform.isAndroid) {
@@ -41,7 +41,7 @@ class NotificationServices {
     });
   }
 
-  // Requesting notification permissions from the user...
+// Requesting notification permissions from the user...
   void requestNotificationPermission() async {
     final settings = await messaging.requestPermission(
       // Allows to display notifications to the user...
@@ -61,14 +61,14 @@ class NotificationServices {
     }
   }
 
-  // Getting the device's FCM Token....
+// Getting the device's FCM Token....
   Future<void> getDeviceToken() async {
     await messaging.getToken().then((token) async {
       await _db.addFCMToken(token!);
     });
   }
 
-  // Displaying the notifications to the user...
+// Displaying the notifications to the user...
   Future<void> showNotification(
     RemoteMessage? message,
     List<String>? localMessage,
@@ -112,7 +112,7 @@ class NotificationServices {
   Future<void> sendLocalNotifications(
     String diseaseTitle,
     String? prediction,
-    double? probability,
+    String? probability,
   ) async {
     late final List<String> localNotificationData;
 
@@ -143,7 +143,7 @@ class NotificationServices {
     }
 
     if (probability != null) {
-      switch (probability) {
+      switch (double.parse(probability)) {
         case < 25.00:
           title = 'General Disease Prediction';
           body = 'Probability of your last $diseaseTitle report was '
