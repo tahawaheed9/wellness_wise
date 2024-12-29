@@ -53,7 +53,7 @@ class _CustomBarChartState extends State<CustomBarChart> {
                   show: true,
                   border: Border.symmetric(
                     horizontal: BorderSide(
-                      color: Colors.black.withOpacity(0.2),
+                      color: Colors.black.withValues(alpha: 0.2),
                     ),
                   ),
                 ),
@@ -80,7 +80,7 @@ class _CustomBarChartState extends State<CustomBarChart> {
                   show: true,
                   drawVerticalLine: false,
                   getDrawingHorizontalLine: (value) => FlLine(
-                    color: Colors.black.withOpacity(0.2),
+                    color: Colors.black.withValues(alpha: 0.2),
                     strokeWidth: 1,
                   ),
                 ),
