@@ -1,0 +1,2 @@
+C:/Users/mineb/Desktop/wellness_wise/android/app/.cxx/RelWithDebInfo/246a2h2s/x86/CMakeFiles/edit_cache.dir
+C:/Users/mineb/Desktop/wellness_wise/android/app/.cxx/RelWithDebInfo/246a2h2s/x86/CMakeFiles/rebuild_cache.dir

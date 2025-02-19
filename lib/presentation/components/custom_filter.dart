@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 const List<String> _filterList = <String>[
   'All time',
   'Past 24 hours',
-  'Past week',
-  'Past month',
+  'Past 7 days',
+  'Past 30 days',
 ];
 
 class CustomFilter extends StatefulWidget {

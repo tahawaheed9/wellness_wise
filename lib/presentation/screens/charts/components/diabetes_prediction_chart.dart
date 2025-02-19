@@ -151,12 +151,12 @@ class _DiabetesPredictionChartState extends State<DiabetesPredictionChart> {
         final past24Hours = now.subtract(Duration(hours: 24));
         return past24Hours;
 
-      case 'Past week':
+      case 'Past 7 days':
         final now = DateTime.now();
         final pastWeek = now.subtract(Duration(days: 7));
         return pastWeek;
 
-      case 'Past month':
+      case 'Past 30 days':
         final now = DateTime.now();
         final pastMonth = now.subtract(Duration(days: 30));
         return pastMonth;
