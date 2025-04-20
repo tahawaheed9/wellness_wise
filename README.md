@@ -38,5 +38,5 @@ The primary goal of this project is to create a user-centric mobile solution tha
 ---
 
 ### 🖼️ Screenshots
-![Home Page](assets/screenshots/home_page.PNG)
+![Home Page](assets/screenshots/home_page.png)
 
