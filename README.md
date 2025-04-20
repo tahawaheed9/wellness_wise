@@ -38,5 +38,5 @@ The primary goal of this project is to create a user-centric mobile solution tha
 ---
 
 ### 🖼️ Screenshots
-![Home Page](assets/screenshots/home_page.png)
+![Home Page](assets/screenshots/home_page.png) | ![General Disease View](assets/screenshots/general_disease_screen.png)
 
