@@ -39,7 +39,7 @@ The primary goal of this project is to create a user-centric mobile solution tha
 
 ### 🖼️ Screenshots
 <br>
-- **Authentication Screen(s)**
+### Authentication Screen(s)
 <br>
 <picture>
   <source srcset="assets/screenshots/register_screen.png" media="(max-width: 400px)">
@@ -57,7 +57,7 @@ The primary goal of this project is to create a user-centric mobile solution tha
 </picture>
 
 <br>
-- **Home Screen**
+### Home Screen
 <br>
 <picture>
   <source srcset="assets/screenshots/home_page.png" media="(max-width: 400px)">
@@ -65,7 +65,7 @@ The primary goal of this project is to create a user-centric mobile solution tha
 </picture>
 
 <br>
-- **Disease Prediction Screen(s)**
+### Disease Prediction Screen(s)
 <br>
 <picture>
   <source srcset="assets/screenshots/general_disease_screen.png" media="(max-width: 400px)">
@@ -88,7 +88,7 @@ The primary goal of this project is to create a user-centric mobile solution tha
 </picture>
 
 <br>
-- **Chart & History Screens
+### Chart & History Screens
 <br>
 <picture>
   <source srcset="assets/screenshots/charts_screen.png" media="(max-width: 400px)">
