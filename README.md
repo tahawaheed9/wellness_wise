@@ -1,8 +1,8 @@
-## 📱 Wellness Navigator – AI-Powered Health Companion
+## 📱 Wellness Wise : Your AI Health Navigator
 
 ### 🧠 Overview
 
-**Wellness Navigator** is a Flutter-based mobile application designed to be a comprehensive guide and personal health assistant, empowering users on their journey toward improved well-being. Leveraging the power of **Artificial Intelligence (AI)**, this app analyzes user data to provide personalized health insights, predictions, and actionable recommendations.
+**Wellness Wise** is a Flutter-based mobile application designed to be a comprehensive guide and personal health assistant, empowering users on their journey toward improved well-being. Leveraging the power of **Artificial Intelligence (AI)**, this app analyzes user data to provide personalized health insights, predictions, and actionable recommendations.
 
 ### 🎯 Objectives
 
