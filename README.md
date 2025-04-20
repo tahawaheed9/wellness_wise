@@ -38,7 +38,7 @@ The primary goal of this project is to create a user-centric mobile solution tha
 ---
 
 ### 🖼️ Screenshots
-#### Authentication Screen(s)
+- **#### Authentication Screen(s)**
 <picture>
   <source srcset="assets/screenshots/register_screen.png" media="(max-width: 600px)">
   <img src="assets/screenshots/register_screen.png" width="300" alt="Logo">
