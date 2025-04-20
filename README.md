@@ -40,56 +40,55 @@ The primary goal of this project is to create a user-centric mobile solution tha
 ### 🖼️ Screenshots
 
 ### Authentication Screen(s)
-
-<picture>
-  <source srcset="assets/screenshots/register_screen.png" media="(max-width: 400px)">
-  <img src="assets/screenshots/register_screen.png" width="300" alt="Logo">
-</picture>
-&nbsp;&nbsp;&nbsp;
-<picture>
-  <source srcset="assets/screenshots/login_screen.png" media="(max-width: 400px)">
-  <img src="assets/screenshots/login_screen.png" width="300" alt="Logo">
-</picture>
-&nbsp;&nbsp;&nbsp;
-<picture>
-  <source srcset="assets/screenshots/reset_password_screen.png" media="(max-width: 400px)">
-  <img src="assets/screenshots/reset_password_screen.png" width="300" alt="Logo">
-</picture>
-
----
+<div>
+  <picture>
+    <source srcset="assets/screenshots/register_screen.png" media="(max-width: 400px)">
+    <img src="assets/screenshots/register_screen.png" width="300" alt="Logo">
+  </picture>
+  &nbsp;&nbsp;&nbsp;
+  <picture>
+    <source srcset="assets/screenshots/login_screen.png" media="(max-width: 400px)">
+    <img src="assets/screenshots/login_screen.png" width="300" alt="Logo">
+  </picture>
+  &nbsp;&nbsp;&nbsp;
+  <picture>
+    <source srcset="assets/screenshots/reset_password_screen.png" media="(max-width: 400px)">
+    <img src="assets/screenshots/reset_password_screen.png" width="300" alt="Logo">
+  </picture>
+</div>
 
 ### Home, Chart & History Screens
-
-<picture>
-  <source srcset="assets/screenshots/home_page.png" media="(max-width: 400px)">
-  <img src="assets/screenshots/home_page.png" width="300" alt="Logo">
-</picture>
-&nbsp;&nbsp;&nbsp;
-<picture>
-  <source srcset="assets/screenshots/charts_screen.png" media="(max-width: 400px)">
-  <img src="assets/screenshots/charts_screen.png" width="300" alt="Logo">
-</picture>
-&nbsp;&nbsp;&nbsp;
-<picture>
-  <source srcset="assets/screenshots/history_screen.png" media="(max-width: 400px)">
-  <img src="assets/screenshots/history_screen.png" width="300" alt="Logo">
-</picture>
-
----
+<div>
+  <picture>
+    <source srcset="assets/screenshots/home_page.png" media="(max-width: 400px)">
+    <img src="assets/screenshots/home_page.png" width="300" alt="Logo">
+  </picture>
+  &nbsp;&nbsp;&nbsp;
+  <picture>
+    <source srcset="assets/screenshots/charts_screen.png" media="(max-width: 400px)">
+    <img src="assets/screenshots/charts_screen.png" width="300" alt="Logo">
+  </picture>
+  &nbsp;&nbsp;&nbsp;
+  <picture>
+    <source srcset="assets/screenshots/history_screen.png" media="(max-width: 400px)">
+    <img src="assets/screenshots/history_screen.png" width="300" alt="Logo">
+  </picture>
+</div>
 
 ### Disease Prediction Screen(s)
-
-<picture>
-  <source srcset="assets/screenshots/heart_disease_screen.png" media="(max-width: 400px)">
-  <img src="assets/screenshots/heart_disease_screen.png" width="300" alt="Logo">
-</picture>
-&nbsp;&nbsp;&nbsp;
-<picture>
-  <source srcset="assets/screenshots/diabetes_prediction_screen.png" media="(max-width: 400px)">
-  <img src="assets/screenshots/diabetes_prediction_screen.png" width="300" alt="Logo">
-</picture>
-&nbsp;&nbsp;&nbsp;
-<picture>
-  <source srcset="assets/screenshots/lung_cancer_screen.png" media="(max-width: 400px)">
-  <img src="assets/screenshots/lung_cancer_screen.png" width="300" alt="Logo">
-</picture>
+<div>
+  <picture>
+    <source srcset="assets/screenshots/heart_disease_screen.png" media="(max-width: 400px)">
+    <img src="assets/screenshots/heart_disease_screen.png" width="300" alt="Logo">
+  </picture>
+  &nbsp;&nbsp;&nbsp;
+  <picture>
+    <source srcset="assets/screenshots/diabetes_prediction_screen.png" media="(max-width: 400px)">
+    <img src="assets/screenshots/diabetes_prediction_screen.png" width="300" alt="Logo">
+  </picture>
+  &nbsp;&nbsp;&nbsp;
+  <picture>
+    <source srcset="assets/screenshots/lung_cancer_screen.png" media="(max-width: 400px)">
+    <img src="assets/screenshots/lung_cancer_screen.png" width="300" alt="Logo">
+  </picture>
+</div>
