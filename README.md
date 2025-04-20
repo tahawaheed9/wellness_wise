@@ -38,9 +38,9 @@ The primary goal of this project is to create a user-centric mobile solution tha
 ---
 
 ### 🖼️ Screenshots
-<br>
+
 ### Authentication Screen(s)
-<br>
+
 <picture>
   <source srcset="assets/screenshots/register_screen.png" media="(max-width: 400px)">
   <img src="assets/screenshots/register_screen.png" width="300" alt="Logo">
@@ -56,17 +56,25 @@ The primary goal of this project is to create a user-centric mobile solution tha
   <img src="assets/screenshots/reset_password_screen.png" width="300" alt="Logo">
 </picture>
 
-<br>
-### Home Screen
-<br>
+### Home, Chart & History Screens
+
 <picture>
   <source srcset="assets/screenshots/home_page.png" media="(max-width: 400px)">
   <img src="assets/screenshots/home_page.png" width="300" alt="Logo">
 </picture>
+&nbsp;&nbsp;&nbsp;
+<picture>
+  <source srcset="assets/screenshots/charts_screen.png" media="(max-width: 400px)">
+  <img src="assets/screenshots/charts_screen.png" width="300" alt="Logo">
+</picture>
+&nbsp;&nbsp;&nbsp;
+<picture>
+  <source srcset="assets/screenshots/history_screen.png" media="(max-width: 400px)">
+  <img src="assets/screenshots/history_screen.png" width="300" alt="Logo">
+</picture>
 
-<br>
 ### Disease Prediction Screen(s)
-<br>
+
 <picture>
   <source srcset="assets/screenshots/general_disease_screen.png" media="(max-width: 400px)">
   <img src="assets/screenshots/general_disease_screen.png" width="300" alt="Logo">
@@ -85,17 +93,4 @@ The primary goal of this project is to create a user-centric mobile solution tha
 <picture>
   <source srcset="assets/screenshots/lung_cancer_screen.png" media="(max-width: 400px)">
   <img src="assets/screenshots/lung_cancer_screen.png" width="300" alt="Logo">
-</picture>
-
-<br>
-### Chart & History Screens
-<br>
-<picture>
-  <source srcset="assets/screenshots/charts_screen.png" media="(max-width: 400px)">
-  <img src="assets/screenshots/charts_screen.png" width="300" alt="Logo">
-</picture>
-&nbsp;&nbsp;&nbsp;
-<picture>
-  <source srcset="assets/screenshots/history_screen.png" media="(max-width: 400px)">
-  <img src="assets/screenshots/history_screen.png" width="300" alt="Logo">
 </picture>
