@@ -55,6 +55,7 @@ The primary goal of this project is to create a user-centric mobile solution tha
   <source srcset="assets/screenshots/reset_password_screen.png" media="(max-width: 400px)">
   <img src="assets/screenshots/reset_password_screen.png" width="300" alt="Logo">
 </picture>
+---
 
 ### Home, Chart & History Screens
 
@@ -72,14 +73,10 @@ The primary goal of this project is to create a user-centric mobile solution tha
   <source srcset="assets/screenshots/history_screen.png" media="(max-width: 400px)">
   <img src="assets/screenshots/history_screen.png" width="300" alt="Logo">
 </picture>
+---
 
 ### Disease Prediction Screen(s)
 
-<picture>
-  <source srcset="assets/screenshots/general_disease_screen.png" media="(max-width: 400px)">
-  <img src="assets/screenshots/general_disease_screen.png" width="300" alt="Logo">
-</picture>
-&nbsp;&nbsp;&nbsp;
 <picture>
   <source srcset="assets/screenshots/heart_disease_screen.png" media="(max-width: 400px)">
   <img src="assets/screenshots/heart_disease_screen.png" width="300" alt="Logo">
