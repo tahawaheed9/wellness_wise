@@ -3,6 +3,7 @@
 ### 🧠 Overview
 
 **Wellness Wise** is a Flutter-based mobile application designed to be a comprehensive guide and personal health assistant, empowering users on their journey toward improved well-being. Leveraging the power of **Artificial Intelligence (AI)**, this app analyzes user data to provide personalized health insights, predictions, and actionable recommendations.
+-----
 
 ### 🎯 Objectives
 
@@ -14,6 +15,7 @@ The primary goal of this project is to create a user-centric mobile solution tha
 - Delivers **tailored strategies and recommendations** for improving wellness
 - Encourages users to make **informed, proactive health decisions**
 - Ultimately enhances overall **quality of life** through better health management
+-----
 
 ### 💻 Technologies Used
 
@@ -23,6 +25,7 @@ The primary goal of this project is to create a user-centric mobile solution tha
 - **Flask** – Lightweight Python web framework for creating RESTful APIs  
 - **Firebase** – Cloud-based backend solution for real-time data storage and authentication  
 - **Bloc (Flutter)** – State management solution ensuring a reactive and maintainable codebase
+-----
 
 ### 🚀 Key Features
 
@@ -31,6 +34,7 @@ The primary goal of this project is to create a user-centric mobile solution tha
 - Dynamic wellness recommendations
 - User-friendly Flutter interface for smooth navigation
 - Support for integration with wearable devices (future scope)
+-----
 
 ### 🖼️ Screenshots
 
