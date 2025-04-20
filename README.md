@@ -42,4 +42,8 @@ The primary goal of this project is to create a user-centric mobile solution tha
   <source srcset="assets/screenshots/home_page.png" media="(max-width: 600px)">
   <img src="assets/screenshots/home_page.png" width="300" alt="Logo">
 </picture>
+<picture>
+  <source srcset="assets/screenshots/general_disease_screen.png" media="(max-width: 600px)">
+  <img src="assets/screenshots/general_disease_screen.png" width="300" alt="Logo">
+</picture>
 
