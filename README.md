@@ -32,6 +32,26 @@ The primary goal of this project is to create a user-centric mobile solution tha
 - User-friendly Flutter interface for smooth navigation
 - Support for integration with wearable devices (future scope)
 
+## Installation
+Use the following commands to run the application onto your local machine
+
+- Clone Repository:
+```bash
+git clone https://github.com/tahawaheed9/wellness_wise.git
+```
+- Navigate to the project's directory:
+```bash
+cd wellness_wise
+```
+- Get all the dependencies
+```bash
+flutter pub get
+```
+- Run the application
+```bash
+flutter run
+```
+
 ## 🖼️ Screenshots
 
 ### Authentication Screen(s)
