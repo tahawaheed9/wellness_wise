@@ -57,7 +57,7 @@ flutter pub get
 flutter run
 ```
 
-- **Note:** You will not be able to make any predictions because, the AI Model is not embedded into the application. But communicates using RESTful API (**The AI Model is not entended to used publicly**).
+- **Note:** You will not be able to make any predictions because, the AI Model is not embedded into the application. But communicates using the RESTful APIs (**The AI Model is not entended to be used publicly**).
 
 ## 🖼️ Screenshots
 
