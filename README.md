@@ -45,13 +45,13 @@ git clone https://github.com/tahawaheed9/wellness_wise.git
 cd wellness_wise
 ```
 
-3. **Install Flutter Dependencies**
+3. **Install Flutter Dependencies**  
 Make sure you have [Flutter](https://docs.flutter.dev/get-started/install) installed, then run:
 ```bash
 flutter pub get
 ```
 
-4. **Run the application**
+4. **Run the application**  
 Connect a device or start an emulator, then:
 ```bash
 flutter run
