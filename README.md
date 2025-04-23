@@ -57,6 +57,9 @@ flutter pub get
 flutter run
 ```
 
+5. **Note**
+   - You will not be able to make any predictions because, the AI Model is not embedded into the application. But communicates using RESTful API (**The AI Model is not entended to used publicly**).
+
 ## 🖼️ Screenshots
 
 ### Authentication Screen(s)
