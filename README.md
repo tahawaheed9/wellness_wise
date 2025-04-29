@@ -57,6 +57,8 @@ flutter pub get
 flutter run
 ```
 
+5. **Make sure to setup the backend on the [Firebase Console](https://console.firebase.google.com)**
+
 - **Note:** You will not be able to make any predictions because, the AI Model is not embedded into the application. But communicates using the RESTful APIs (**The AI Model is not entended to be used publicly**).
 
 ## 🖼️ Screenshots
