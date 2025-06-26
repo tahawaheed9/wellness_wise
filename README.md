@@ -32,35 +32,6 @@ The primary goal of this project is to create a user-centric mobile solution tha
 - User-friendly Flutter interface for smooth navigation
 - Support for integration with wearable devices (future scope)
 
-## 📦 Installation
-Use the following commands to run the application onto your local machine
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/tahawaheed9/wellness_wise.git
-```
-
-2. **Navigate to the project's directory**
-```bash
-cd wellness_wise
-```
-
-3. **Install Flutter Dependencies**
-   - Make sure you have [Flutter](https://docs.flutter.dev/get-started/install) installed, then run:
-```bash
-flutter pub get
-```
-
-4. **Run the application**
-   - Connect a device or start an emulator, then:
-```bash
-flutter run
-```
-
-5. **Make sure to setup the backend on the [Firebase Console](https://console.firebase.google.com)**
-
-- **Note:** You will not be able to make any predictions because, the AI Model is not embedded into the application. But communicates using the RESTful APIs (**The AI Model is not entended to be used publicly**).
-
 ## 🖼️ Screenshots
 
 ### Authentication Screen(s)
